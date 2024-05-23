@@ -17,6 +17,12 @@ Board managers and club members who want to organize games and schedule them to 
 
 ### What do they want to do?
 
+1. Add members to the waiting list when they arrive
+2. Notify the next member in waiting list to select a group to play a game/match
+3. Select members from the waiting list to form a group that is then queued to play
+4. Move the next group in the queue to the next available court and notify the members in that group
+5. Move the members coming off a court to the end of the waiting list
+
 ### What are their pains?
 
 # Development
@@ -26,9 +32,10 @@ Board managers and club members who want to organize games and schedule them to 
 1. yarn
 2. vuejs
 3. vuetify
-4. supabase
+4. Typescript
+5. supabase
    1. postgresql
-5. Figma
+6. Figma
 
 ## Environment Setup
 
