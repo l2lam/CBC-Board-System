@@ -29,13 +29,12 @@ Board managers and club members who want to organize games and schedule them to 
 
 ## Tools used
 
-1. yarn
-2. vuejs
-3. vuetify
-4. Typescript
-5. supabase
-   1. postgresql
-6. Figma
+1. Package manager: [yarn](https://yarnpkg.com)
+2. JS framework: [Vue](https://vuejs.org)
+3. Design language/lib: [Vuetify](https://vuetifyjs.com)
+4. Programming language: [Typescript](https://typescriptlang.org)
+5. Backend (data store): [Supabase](https://supabase.com)
+6. Design tool: [Figma](https://figma.com)
 
 ## Environment Setup
 
