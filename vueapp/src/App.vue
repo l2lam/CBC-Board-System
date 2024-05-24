@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <HelloWorld v-if="session" :session="session" />
+      <Playing v-if="session" :session="session" />
       <Auth v-else />
     </v-main>
   </v-app>

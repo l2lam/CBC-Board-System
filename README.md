@@ -1,6 +1,6 @@
 # What is this project about?
 
-A web app to manage players during a sports (eg. badminton) club session when there is limited courts available.
+A web app to manage players during a sports (eg. badminton) club session when there are limited courts available.
 
 # Who is this project for?
 

@@ -14,7 +14,7 @@ class Player {
 }
 
 const PLAYERS_STORE_ID = "players";
-let mock = true;
+let mock = false;
 
 export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
   state: () => ({ allPlayers: [] }),

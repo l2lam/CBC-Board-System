@@ -9,6 +9,11 @@ declare module 'vue' {
   export interface GlobalComponents {
     Account: typeof import('./src/components/Account.vue')['default']
     Auth: typeof import('./src/components/Auth.vue')['default']
+    copy: typeof import('./src/components/Waiting copy.vue')['default']
+    Courts: typeof import('./src/components/Courts.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
+    OnDeck: typeof import('./src/components/OnDeck.vue')['default']
+    Playing: typeof import('./src/components/Playing.vue')['default']
+    Waiting: typeof import('./src/components/Waiting.vue')['default']
   }
 }
