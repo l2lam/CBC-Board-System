@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@mdi/font": "6.2.95",
+    "@supabase/supabase-js": "^2.43.4",
     "pinia": "^2.1.7",
     "roboto-fontface": "*",
     "vue": "^3.4.21",

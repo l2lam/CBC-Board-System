@@ -5,7 +5,7 @@
 
       <div class="text-center">
         <div class="text-body-2 font-weight-light mb-n1">
-          Players count is {{ store.waitingQueue.length }}
+          Players count is {{ store.waitingPlayers.length }}
         </div>
         <div class="text-body-2 font-weight-light mb-n1">Welcome to</div>
 
@@ -152,7 +152,8 @@
 
 <script setup lang="ts">
 //
-import { playerStore } from "@/stores/players";
+import { usePlayerStore } from "@/stores/playerStore";
 
-const store = playerStore();
+const store = usePlayerStore();
+await store.loadPlayers();
 </script>
