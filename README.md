@@ -19,6 +19,12 @@ The project itself is used as an example to teach and practice multi-tiered web-
 
 # Design
 
+## Background
+
+The [Cambridge Badminton Club](https://www.cambridgebadmintonclub.com/) has been using a board system to run their club session for many years with great success. It is a physical system with a magnetic whiteboard and magnetic name tags. This system has proven very efficient in creating competitive games and getting players on and off the courts quickly.
+
+The objective of this project is to replicate this system digitally to make it more convenient for the club managers and to allow other clubs to adopt this system easily.
+
 ## Value proposition
 
 ### Target user/market
