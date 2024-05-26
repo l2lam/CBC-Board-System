@@ -27,6 +27,11 @@ Board managers and club members who want to organize games and schedule them to 
 
 ### What do they want to do?
 
+#### Player administration
+
+1. Add new members
+2. Change member profile, including activation/deactivation
+
 #### Waiting queue
 
 1. Add members to the waiting queue when they arrive
@@ -90,6 +95,18 @@ Board managers and club members who want to organize games and schedule them to 
 1. VS Code
    1. Prettier
    2. Code Spell Checker
+
+## Architecture
+
+### Backend
+
+Data is persisted in a Postgresql database hosted by Supabase.com. Supabase provides a database management GUI via its website; as well as an web-API to access the database from apps. JS can apps access this API via the convenient `supabase-js` library/module. User profile management is also handled through Supabase.
+
+The database holds data that needs to be persisted across playing sessions, including club and members hip information. Transient data like waiting and playing queues will be cached on the client side.
+
+### Frontend
+
+The user interface is a web-app built using VueJS.
 
 ## Environment setup
 
