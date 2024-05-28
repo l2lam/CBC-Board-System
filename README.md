@@ -118,6 +118,5 @@ The user interface is a web-app built using VueJS.
 
 1. Clone this repository
 2. Install software tools: latest version of nodejs, yarn, etc.
-3. Setup environment variables with secrets to access your supabase project
-4. Download dependencies
-5. Run the app locally
+3. Optionally install the [supabase CLI](https://supabase.com/docs/guides/cli) for local development (without connecting to a remote supabase account)
+4. The frontend Vue app is located in the [vueapp folder](./vueapp/), with its own documentation
