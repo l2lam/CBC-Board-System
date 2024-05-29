@@ -47,15 +47,16 @@ Board managers and club members who want to organize games and schedule them to 
 
 #### On-deck queue
 
-4. If there is space on the on-deck queue then notify the next player in waiting queue to select a group to play a game/match
-5. Select players from the waiting queue to form a group that is then queued to play in the on-deck queue
-6. Remove groups from the on-deck queue to cancel a game
-7. Rearrange the order of groups in the on-deck queue
+1. If there is space on the on-deck queue then notify the next player in waiting queue to select a group to play a game/match
+2. Select players from the waiting queue to form a group that is then queued to play in the on-deck queue
+3. Remove groups from the on-deck queue to cancel a game
+4. Rearrange the order of groups in the on-deck queue
 
 #### Courts
 
-8. Move the next group in the on-deck queue to the next available court and notify the players in that group
-9. Move the players coming off a court to the end of the waiting queue
+1. Move the next group in the on-deck queue to the next available court and notify the players in that group
+2. Move the players coming off a court to the end of the waiting queue
+3. Reserve courts to prevent regular play on them; for example when there are leaks in the cieling and water is dripping onto the courts or when courts are taken up by climbing walls every January >:(
 
 #### Challenges
 
@@ -83,6 +84,10 @@ Board managers and club members who want to organize games and schedule them to 
 ### What are their pains (from most to least painful) in general with managing a club session?
 
 1. TODO: need input from users
+
+## Prototype
+
+A Figma prototype can be [previewed here](https://www.figma.com/proto/7aTbnXOGmHze0HC74rLDUp/cbc-board-system?node-id=6-747&t=JuGjN68fyMp0S5d4-1&scaling=min-zoom&page-id=1%3A419&starting-point-node-id=6%3A747).
 
 # Development
 
