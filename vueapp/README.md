@@ -16,15 +16,24 @@ VITE_SUPABASE_ANON_KEY=<anon key for your remote supabase project>
 
 2. Run the app locally via `yarn dev`
 
+# Folder structure
+
+- **./models/** hold class definitions for entities like `Club`, `Player`, etc.
+- **./stores/** hold Pinia storage definitions
+- **./components/** hold Vue pages/components definitions
+- **./assets/** hold documents that are used in the app like images, sounds, etc.
+
 # Data storage strategies
 
-TODO: how data persisted and retrieved using Pinia, supabase, local storage, etc.
+We use the Pinia library to define our data-access layer, providing structured access to data that incorporates reactive bindings (so that our UI can react to data changes).
+
+This layer abstracts away where the data is actually stored and retrieved from. Some data like club and player information is persisted using supabase, while other, more transient data is persisted in local storage. Data from supabase is also cached in local storage which is used as a fall-back in case the remote supabase server can't be reached.
 
 # Components strategies
 
-TODO: page components
+Try to minimize the use of (modal) dialogs boxes and incorporate as many input controls into the main page as possible.
 
-# Vuetify (Default)
+# Vuetify (Default, generated documentation)
 
 This is the official scaffolding tool for Vuetify, designed to give you a head start in building your new Vuetify application. It sets up a base template with all the necessary configurations and standard directory structure, enabling you to begin development without the hassle of setting up the project from scratch.
 
