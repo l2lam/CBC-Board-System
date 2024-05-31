@@ -1,9 +1,9 @@
 import { defineStore } from "pinia";
 import { supabase } from "../supabase";
-import { Player } from "../models/player";
+import { Player, Member } from "../models/player";
 
 const PLAYERS_STORE_ID = "players";
-let mock = false;
+let mock = true;
 
 export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
   state: () => ({ allPlayers: [] }),
@@ -24,7 +24,9 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
         // Get players from the remote database
         // TODO: queries will not work until RSL (row-level-security) prolicies have been defined in supabase
         // console.log("supabase url", await supabase.auth.getUser());
-        const { data, error, status } = await supabase.from("players").select();
+        const { data, error, status } = await supabase
+          .from("members")
+          .select("id, name, avatar_url");
         // .select(`name, avatar_url`);
 
         if (error && status !== 406) {
@@ -34,7 +36,7 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
         } else {
           console.log(data);
           this.allPlayers = data?.map(
-            (player) => new Player(player.name, player.avatar_url)
+            (player) => new Member(player.id, player.name, player.avatar_url)
           );
           // cache this data in local storate
           localStorage.setItem(PLAYERS_STORE_ID, this.allPlayers);
