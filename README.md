@@ -56,7 +56,7 @@ Board managers and club members who want to organize games and schedule them to 
 
 1. Move the next group in the on-deck queue to the next available court and notify the players in that group
 2. Move the players coming off a court to the end of the waiting queue
-3. Reserve courts to prevent regular play on them; for example when there are leaks in the cieling and water is dripping onto the courts or when courts are taken up by climbing walls every January >:(
+3. Reserve courts to prevent regular play on them; for example, when there are leaks in the ceiling and water is dripping onto the courts or when courts are taken up by climbing walls every January >:(
 
 #### Challenges
 
