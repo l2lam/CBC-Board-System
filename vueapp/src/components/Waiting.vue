@@ -19,7 +19,7 @@
             <template v-slot:prepend>
               <v-icon
                 :icon="
-                  player.is_guest
+                  player.isGuest
                     ? 'mdi-account-box-outline'
                     : 'mdi-account-circle'
                 "
@@ -85,7 +85,7 @@ function returnToWaitingScreen() {
 
 function playerSelected(player) {
   currentPlayer.value = player;
-  if (player.is_guest) currentScreen.value = Screen.GUEST;
+  if (player.isGuest) currentScreen.value = Screen.GUEST;
   // else
   //   currentScreen = Screen.MEMBER
 }

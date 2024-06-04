@@ -6,21 +6,28 @@ const PLAYERS_STORE_ID = "players";
 let mock = true;
 
 export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
-  state: () => ({ allPlayers: [] }),
+  state: () => ({ allPlayers: [], allMembers: [] }),
   getters: {
-    waitingPlayers: (state) => state.allPlayers,
+    waitingPlayers: (state) => state.allPlayers, // TODO filter only players that are not already in a game
   },
   actions: {
     async loadPlayers() {
       console.log("loading players");
       if (mock) {
+        // Mock data for quick testing
+        this.allMembers = [
+          new Member(1, "Joe"),
+          new Member(2, "Karl"),
+          new Member(3, "Mark"),
+          new Member(4, "Peter"),
+        ];
         this.allPlayers = [
           new Player("Tim"),
           new Player("Tom"),
           new Player("Jane"),
-          new Member(1, "Joe"),
-          new Member(2, "Karl"),
           new Player("Sarah"),
+          new Member(5, "Sue"),
+          new Member(6, "Shane"),
         ];
       } else {
         // Get players from the remote database

@@ -16,8 +16,8 @@
     </div>
     <v-divider></v-divider>
     <v-card-actions>
-      <v-btn text="CANCEL" @click="emit('close')"></v-btn>
-      <v-btn :text="isNewPlayer ? 'ADD' : 'SAVE'" @click="save"></v-btn>
+      <v-btn v-if="isNewPlayer" text="CANCEL" @click="emit('close')"></v-btn>
+      <v-btn :text="isNewPlayer ? 'ADD' : 'DONE'" @click="save"></v-btn>
     </v-card-actions>
   </v-card>
 </template>
