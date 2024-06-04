@@ -24,12 +24,9 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
         ];
       } else {
         // Get players from the remote database
-        // TODO: queries will not work until RSL (row-level-security) prolicies have been defined in supabase
-        // console.log("supabase url", await supabase.auth.getUser());
         const { data, error, status } = await supabase
           .from("members")
           .select("id, name, avatar_url");
-        // .select(`name, avatar_url`);
 
         if (error && status !== 406) {
           console.error(error);
@@ -45,8 +42,9 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
         }
       }
     },
-    // increment() {
-    //   this.count++;
-    // },
+    addPlayer(player) {
+      // console.log("adding new player to the queue:", player);
+      this.allPlayers.push(player);
+    },
   },
 });

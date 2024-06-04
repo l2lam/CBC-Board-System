@@ -80,6 +80,7 @@ function addGuestPlayer() {
 
 function returnToWaitingScreen() {
   currentScreen.value = Screen.WAITING;
+  currentPlayer.value = null;
 }
 
 function playerSelected(player) {
