@@ -18,6 +18,8 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
           new Player("Tim"),
           new Player("Tom"),
           new Player("Jane"),
+          new Member(1, "Joe"),
+          new Member(2, "Karl"),
           new Player("Sarah"),
         ];
       } else {

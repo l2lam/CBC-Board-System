@@ -1,10 +1,12 @@
 export class Player {
   name: string;
   avatar_url: string;
+  is_guest: boolean;
 
-  constructor(name, avatar_url = "") {
+  constructor(name, is_guest = true, avatar_url = "") {
     this.name = name;
     this.avatar_url = avatar_url;
+    this.is_guest = is_guest;
   }
 }
 
@@ -15,7 +17,7 @@ export class Member extends Player {
   challenge_id: number;
 
   constructor(id, name, avatar_url = "") {
-    super(name, avatar_url);
+    super(name, false, avatar_url);
     this.id = id;
   }
 }
