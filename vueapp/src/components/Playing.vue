@@ -18,7 +18,10 @@
 <script setup lang="ts">
 //
 import { usePlayerStore } from "@/stores/playerStore";
+import { useLevelStore } from "@/stores/levelStore";
 
-const store = usePlayerStore();
-await store.loadPlayers();
+const playerStore = usePlayerStore();
+await playerStore.loadPlayers();
+const levelStore = useLevelStore();
+await levelStore.loadLevels();
 </script>
