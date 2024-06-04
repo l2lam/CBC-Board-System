@@ -12,9 +12,21 @@
       <v-container fluid fill-height class="d-flex flex-column">
         Waiting List
         <v-list>
-          <v-list-item v-for="player in store.waitingPlayers">{{
-            player.name
-          }}</v-list-item>
+          <v-list-item
+            v-for="player in store.waitingPlayers"
+            @click="playerSelected(player)"
+          >
+            <template v-slot:prepend>
+              <v-icon
+                :icon="
+                  player.is_guest
+                    ? 'mdi-account-box-outline'
+                    : 'mdi-account-circle'
+                "
+              ></v-icon>
+            </template>
+            {{ player.name }}</v-list-item
+          >
         </v-list>
       </v-container>
       <v-divider class="mb-4"></v-divider>
@@ -39,7 +51,10 @@
       </div>
     </v-sheet>
     <v-sheet v-else-if="currentScreen == Screen.GUEST">
-      <GuestUpsert :player="currentPlayer" @close="returnToWaitingScreen"></GuestUpsert>
+      <GuestUpsert
+        :player="currentPlayer"
+        @close="returnToWaitingScreen"
+      ></GuestUpsert>
     </v-sheet>
   </div>
 </template>
@@ -65,5 +80,12 @@ function addGuestPlayer() {
 
 function returnToWaitingScreen() {
   currentScreen.value = Screen.WAITING;
+}
+
+function playerSelected(player) {
+  currentPlayer.value = player;
+  if (player.is_guest) currentScreen.value = Screen.GUEST;
+  // else
+  //   currentScreen = Screen.MEMBER
 }
 </script>
