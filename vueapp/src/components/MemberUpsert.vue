@@ -9,7 +9,7 @@
       <div>
         <v-text-field
           label="Name"
-          placeholder="Please enter a unique name for the Guest"
+          placeholder="Please enter a unique name for the Member"
           v-model="guest.name"
           clearable
           :rules="[required]"

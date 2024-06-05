@@ -32,6 +32,8 @@
           min-width="140"
           prepend-icon="mdi-account-circle"
           :stacked="true"
+          @click="addMemberPlayers"
+
         >
           Add Member
         </v-btn>
@@ -52,6 +54,9 @@
     <v-sheet v-else-if="currentScreen == Screen.MEMBER">
       <MemberUpsert :player="currentPlayer" @close="returnToWaitingScreen"></MemberUpsert>
     </v-sheet>
+    <v-sheet v-else-if="currentScreen == Screen.SELECTMEMBERS">
+      <SelectMembers :player="currentPlayer" @close="returnToWaitingScreen"></SelectMembers>
+    </v-sheet>
   </div>
 </template>
 
@@ -63,6 +68,7 @@ enum Screen {
   WAITING,
   MEMBER,
   GUEST,
+  SELECTMEMBERS,
 }
 
 const store = usePlayerStore();
@@ -71,6 +77,11 @@ const currentPlayer = ref(null);
 
 function addGuestPlayer() {
   currentScreen.value = Screen.GUEST;
+  currentPlayer.value = null;
+}
+
+function addMemberPlayers() {
+  currentScreen.value = Screen.SELECTMEMBERS;
   currentPlayer.value = null;
 }
 
