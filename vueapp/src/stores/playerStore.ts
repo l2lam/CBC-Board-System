@@ -58,8 +58,11 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
       }
     },
     addPlayer(player) {
-      // console.log("adding new player to the queue:", player);
       this.allPlayers.push(player);
+    },
+    removePlayer(player) {
+      var index = this.allPlayers.indexOf(player);
+      if (index > -1) this.allPlayers.splice(index, 1);
     },
   },
 });

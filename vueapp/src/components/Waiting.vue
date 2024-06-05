@@ -9,20 +9,39 @@
       width="100%"
       height="100%"
     >
-      <v-container fluid fill-height class="d-flex flex-column" style="height: 90%">
+      <v-container
+        fluid
+        fill-height
+        class="d-flex flex-column"
+        style="height: 90%"
+      >
         Waiting List
         <v-list>
           <v-list-item
-            v-for="player in store.waitingPlayers"
+            v-for="player in playerStore.waitingPlayers"
             @click="playerSelected(player)"
           >
             <template v-slot:prepend>
               <v-icon
-                :icon="player.isGuest ? 'mdi-account-box-outline' : 'mdi-account-circle'"
+                :icon="
+                  player.isGuest
+                    ? 'mdi-account-box-outline'
+                    : 'mdi-account-circle'
+                "
               ></v-icon>
             </template>
-            {{ player.name }}</v-list-item
-          >
+            <v-list-item-title>
+              {{ player.name }}
+            </v-list-item-title>
+            <template v-slot:append>
+              <v-btn
+                color="pink"
+                icon="mdi-close-circle-outline"
+                variant="text"
+                @click.stop="removePlayer(player)"
+              ></v-btn>
+            </template>
+          </v-list-item>
         </v-list>
       </v-container>
       <v-divider class="mb-4"></v-divider>
@@ -47,7 +66,10 @@
       </div>
     </v-sheet>
     <v-sheet v-else-if="currentScreen == Screen.GUEST">
-      <GuestUpsert :player="currentPlayer" @close="returnToWaitingScreen"></GuestUpsert>
+      <GuestUpsert
+        :player="currentPlayer"
+        @close="returnToWaitingScreen"
+      ></GuestUpsert>
     </v-sheet>
   </div>
 </template>
@@ -62,7 +84,7 @@ enum Screen {
   GUEST,
 }
 
-const store = usePlayerStore();
+const playerStore = usePlayerStore();
 const currentScreen = ref(Screen.WAITING);
 const currentPlayer = ref(null);
 
@@ -81,5 +103,10 @@ function playerSelected(player) {
   if (player.isGuest) currentScreen.value = Screen.GUEST;
   // else
   //   currentScreen = Screen.MEMBER
+}
+
+function removePlayer(player) {
+  console.log("removing player:", player);
+  playerStore.removePlayer(player);
 }
 </script>
