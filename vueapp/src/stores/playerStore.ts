@@ -64,5 +64,8 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
       var index = this.allPlayers.indexOf(player);
       if (index > -1) this.allPlayers.splice(index, 1);
     },
+    removeAllPlayers() {
+      this.allPlayers = [];
+    },
   },
 });
