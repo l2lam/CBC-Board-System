@@ -28,6 +28,14 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
           new Player("Sarah"),
           new Member(5, "Sue"),
           new Member(6, "Shane"),
+          new Player("Paul"),
+          new Player("Pam"),
+          new Player("Pony"),
+          new Player("Ron"),
+          new Player("Russel"),
+          new Player("Ricky"),
+          new Player("Roger"),
+          new Player("Zebra"),
         ];
       } else {
         // Get players from the remote database

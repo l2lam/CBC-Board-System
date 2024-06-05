@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: 100%">
     <v-sheet
       v-if="currentScreen == Screen.WAITING"
       class="pa-4 mx-auto"
@@ -9,7 +9,7 @@
       width="100%"
       height="100%"
     >
-      <v-container fluid fill-height class="d-flex flex-column">
+      <v-container fluid fill-height class="d-flex flex-column" style="height: 90%">
         Waiting List
         <v-list>
           <v-list-item
@@ -18,11 +18,7 @@
           >
             <template v-slot:prepend>
               <v-icon
-                :icon="
-                  player.isGuest
-                    ? 'mdi-account-box-outline'
-                    : 'mdi-account-circle'
-                "
+                :icon="player.isGuest ? 'mdi-account-box-outline' : 'mdi-account-circle'"
               ></v-icon>
             </template>
             {{ player.name }}</v-list-item
@@ -30,7 +26,7 @@
         </v-list>
       </v-container>
       <v-divider class="mb-4"></v-divider>
-      <div class="text-end">
+      <div class="text-end" style="height: 10%">
         <v-btn
           height="72"
           min-width="140"
@@ -51,10 +47,7 @@
       </div>
     </v-sheet>
     <v-sheet v-else-if="currentScreen == Screen.GUEST">
-      <GuestUpsert
-        :player="currentPlayer"
-        @close="returnToWaitingScreen"
-      ></GuestUpsert>
+      <GuestUpsert :player="currentPlayer" @close="returnToWaitingScreen"></GuestUpsert>
     </v-sheet>
   </div>
 </template>

@@ -3,6 +3,8 @@
     prepend-icon="mdi-account-box-outline"
     text="Blah blah blah"
     :title="isNewPlayer ? 'New Guest' : 'Edit Guest'"
+    class="mx-auto"
+    width="90%"
   >
     <div>
       <v-text-field
@@ -22,6 +24,7 @@
     </div>
     <v-card-actions>
       <v-btn v-if="isNewPlayer" text="CANCEL" @click="done"></v-btn>
+      <v-spacer></v-spacer>
       <v-btn
         :text="isNewPlayer ? 'ADD' : 'DONE'"
         @click="save"
