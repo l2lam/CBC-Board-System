@@ -49,6 +49,9 @@
     <v-sheet v-else-if="currentScreen == Screen.GUEST">
       <GuestUpsert :player="currentPlayer" @close="returnToWaitingScreen"></GuestUpsert>
     </v-sheet>
+    <v-sheet v-else-if="currentScreen == Screen.MEMBER">
+      <MemberUpsert :player="currentPlayer" @close="returnToWaitingScreen"></MemberUpsert>
+    </v-sheet>
   </div>
 </template>
 
@@ -79,7 +82,7 @@ function returnToWaitingScreen() {
 function playerSelected(player) {
   currentPlayer.value = player;
   if (player.isGuest) currentScreen.value = Screen.GUEST;
-  // else
-  //   currentScreen = Screen.MEMBER
+  else
+     currentScreen.value = Screen.MEMBER
 }
 </script>
