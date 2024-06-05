@@ -32,6 +32,9 @@
           <v-list-item
             v-for="player in playerStore.waitingPlayers"
             @click="playerSelected(player)"
+            v-touch="{
+              left: () => playerStore.removePlayer(player),
+            }"
           >
             <template v-slot:prepend>
               <v-icon
