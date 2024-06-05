@@ -106,7 +106,6 @@ function playerSelected(player) {
 }
 
 function removePlayer(player) {
-  console.log("removing player:", player);
   playerStore.removePlayer(player);
 }
 </script>
