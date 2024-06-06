@@ -36,7 +36,7 @@ const store = usePlayerStore();
 const selected = ref([])
 
 function addSelectedMembers() {
-  //add selected members from array to waiting queue
+  //store.addPlayer(selected[0])
   done();
 }
   

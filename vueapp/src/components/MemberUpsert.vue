@@ -16,12 +16,13 @@
         </v-select>
       </div>
       <v-card-actions>
-        <v-btn text="Remove"></v-btn>
-        <v-spacer></v-spacer>
-        <v-btn text="Initiate challenge"></v-btn>
+        <v-btn 
+        text="Initiate challenge"
+        @click="initiateChallenge"
+        ></v-btn>
         <v-spacer></v-spacer>
         <v-btn
-          :text="isNewPlayer ? 'ADD' : 'DONE'"
+          text="DONE"
           @click="save"
           :disabled="disableSave()"
         ></v-btn>
@@ -41,6 +42,10 @@
   const guest = isNewPlayer.value ? ref(new Player("")) : ref(props.player);
   const levelStore = useLevelStore();
   const playerStore = usePlayerStore();
+
+  function initiateChallenge() {
+    // will initiate a challenge
+  }
   
   function disableSave() {
     return !guest.value.name;
