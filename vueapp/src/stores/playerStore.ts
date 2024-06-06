@@ -46,14 +46,14 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
         if (error && status !== 406) {
           console.error(error);
           // Fall back to data from local storage
-          this.allPlayers = localStorage.get(PLAYERS_STORE_ID) || [];
+          this.allMembers = localStorage.get(PLAYERS_STORE_ID) || [];
         } else {
           console.log(data);
-          this.allPlayers = data?.map(
+          this.allMembers = data?.map(
             (player) => new Member(player.id, player.name, player.avatar_url)
           );
           // cache this data in local storate
-          localStorage.setItem(PLAYERS_STORE_ID, this.allPlayers);
+          localStorage.setItem(PLAYERS_STORE_ID, this.allMembers);
         }
       }
     },
