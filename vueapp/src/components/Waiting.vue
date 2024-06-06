@@ -4,7 +4,7 @@
       width="100%" height="100%">
       <v-container fluid fill-height class="d-flex flex-column" style="height: 90%">
         Waiting List
-        <draggable :list="store.waitingPlayers" :pull="false" :push="false" :scroll-sensitivity="200">
+        <draggable :list="store.waitingPlayers" :pull="false" :push="false">
           <template #item="{ element }">
             <v-list-item @click="playerSelected(element)">
               <template v-slot:prepend>
