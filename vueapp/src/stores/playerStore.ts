@@ -6,10 +6,7 @@ const PLAYERS_STORE_ID = "players";
 let mock = true;
 
 export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
-  state: () => ({ allPlayers: [], allMembers: [] }),
-  getters: {
-    waitingPlayers: (state) => state.allPlayers, // TODO filter only players that are not already in a game
-  },
+  state: () => ({ waitingPlayers: [], allMembers: [] }),
   actions: {
     async loadPlayers() {
       console.log("loading players");
@@ -21,7 +18,7 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
           new Member(3, "Mark"),
           new Member(4, "Peter"),
         ];
-        this.allPlayers = [
+        this.waitingPlayers = [
           new Player("Tim"),
           new Player("Tom"),
           new Player("Jane"),
@@ -59,7 +56,7 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
     },
     addPlayer(player) {
       // console.log("adding new player to the queue:", player);
-      this.allPlayers.push(player);
+      this.waitingPlayers.push(player);
     },
   },
 });
