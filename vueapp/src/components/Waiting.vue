@@ -1,22 +1,66 @@
 <template>
-  <v-container fluid fill-height class="d-flex flex-column">
-    Waiting List
-    <draggable
-      :list=store.waitingPlayers
-      :pull=false
-      :push=false
-    >
-      <template #item="{ element }">
-        <v-list-item :title="element.name">
-        </v-list-item>
-      </template>
-    </draggable>
-  </v-container>
+  <div style="height: 100%">
+    <v-sheet v-if="currentScreen == Screen.WAITING" class="pa-4 mx-auto" elevation="12" max-width="600" rounded="lg"
+      width="100%" height="100%">
+      <v-container fluid fill-height class="d-flex flex-column" style="height: 90%">
+        Waiting List
+        <draggable :list="store.waitingPlayers" :pull="false" :push="false" :scroll-sensitivity="200">
+          <template #item="{ element }">
+            <v-list-item @click="playerSelected(element)">
+              <template v-slot:prepend>
+                <v-icon :icon="element.isGuest ? 'mdi-account-box-outline' : 'mdi-account-circle'"></v-icon>
+              </template>
+              {{ element.name }}
+            </v-list-item>
+          </template>
+        </draggable>
+      </v-container>
+      <v-divider class="mb-4"></v-divider>
+      <div class="text-end" style="height: 10%">
+        <v-btn height="72" min-width="140" prepend-icon="mdi-account-circle" :stacked="true">
+          Add Member
+        </v-btn>
+        <v-btn height="72" min-width="140" prepend-icon="mdi-account-box-outline" :stacked="true"
+          @click="addGuestPlayer">
+          Add Guest
+        </v-btn>
+      </div>
+    </v-sheet>
+    <v-sheet v-else-if="currentScreen == Screen.GUEST">
+      <GuestUpsert :player="currentPlayer" @close="returnToWaitingScreen"></GuestUpsert>
+    </v-sheet>
+  </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
 import { usePlayerStore } from "@/stores/playerStore";
 import draggable from "vuedraggable";
 
+enum Screen {
+  WAITING,
+  MEMBER,
+  GUEST,
+}
+
 const store = usePlayerStore();
+const currentScreen = ref(Screen.WAITING);
+const currentPlayer = ref(null);
+
+function addGuestPlayer() {
+  currentScreen.value = Screen.GUEST;
+  currentPlayer.value = null;
+}
+
+function returnToWaitingScreen() {
+  currentScreen.value = Screen.WAITING;
+  currentPlayer.value = null;
+}
+
+function playerSelected(player) {
+  currentPlayer.value = player;
+  if (player.isGuest) currentScreen.value = Screen.GUEST;
+  // else
+  //   currentScreen = Screen.MEMBER
+}
 </script>

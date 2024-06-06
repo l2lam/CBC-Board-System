@@ -1,21 +1,29 @@
+import { Level } from "../models/level";
+
+// A Player is someone that is present at the club session and can play
 export class Player {
   name: string;
-  avatar_url: string;
+  avatarURL: string;
+  isGuest: boolean;
+  level: Level;
 
-  constructor(name, avatar_url = "") {
+  constructor(name, level, is_guest = true, avatar_url = "") {
     this.name = name;
-    this.avatar_url = avatar_url;
+    this.avatarURL = avatar_url;
+    this.isGuest = is_guest;
+    this.level = level;
   }
 }
 
+// A Member is a registered club member
 export class Member extends Player {
   id: number;
 
   // The id of the challenge this member is currently participating in
   challenge_id: number;
 
-  constructor(id, name, avatar_url = "") {
-    super(name, avatar_url);
+  constructor(id, name, level, avatar_url = "") {
+    super(name, level, false, avatar_url);
     this.id = id;
   }
 }

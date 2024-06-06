@@ -6,28 +6,42 @@ const PLAYERS_STORE_ID = "players";
 let mock = true;
 
 export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
-  state: () => ({ allPlayers: [] }),
+  state: () => ({ allPlayers: [], allMembers: [] }),
   getters: {
-    waitingPlayers: (state) => state.allPlayers,
+    waitingPlayers: (state) => state.allPlayers, // TODO filter only players that are not already in a game
   },
   actions: {
     async loadPlayers() {
       console.log("loading players");
       if (mock) {
+        // Mock data for quick testing
+        this.allMembers = [
+          new Member(1, "Joe"),
+          new Member(2, "Karl"),
+          new Member(3, "Mark"),
+          new Member(4, "Peter"),
+        ];
         this.allPlayers = [
           new Player("Tim"),
           new Player("Tom"),
           new Player("Jane"),
           new Player("Sarah"),
+          new Member(5, "Sue"),
+          new Member(6, "Shane"),
+          new Player("Paul"),
+          new Player("Pam"),
+          new Player("Pony"),
+          new Player("Ron"),
+          new Player("Russel"),
+          new Player("Ricky"),
+          new Player("Roger"),
+          new Player("Zebra"),
         ];
       } else {
         // Get players from the remote database
-        // TODO: queries will not work until RSL (row-level-security) prolicies have been defined in supabase
-        // console.log("supabase url", await supabase.auth.getUser());
         const { data, error, status } = await supabase
           .from("members")
           .select("id, name, avatar_url");
-        // .select(`name, avatar_url`);
 
         if (error && status !== 406) {
           console.error(error);
@@ -43,8 +57,9 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
         }
       }
     },
-    // increment() {
-    //   this.count++;
-    // },
+    addPlayer(player) {
+      // console.log("adding new player to the queue:", player);
+      this.allPlayers.push(player);
+    },
   },
 });
