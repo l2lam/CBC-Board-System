@@ -7,13 +7,6 @@
       width="90%"
     >
       <div>
-        <v-text-field
-          label="Name"
-          placeholder="Please enter a unique name for the Member"
-          v-model="guest.name"
-          clearable
-          :rules="[required]"
-        ></v-text-field>
         <v-select
           label="Skill level"
           :items="levelStore.allLevels"
@@ -23,7 +16,9 @@
         </v-select>
       </div>
       <v-card-actions>
-        <v-btn v-if="isNewPlayer" text="CANCEL" @click="done"></v-btn>
+        <v-btn text="Remove"></v-btn>
+        <v-spacer></v-spacer>
+        <v-btn text="Initiate challenge"></v-btn>
         <v-spacer></v-spacer>
         <v-btn
           :text="isNewPlayer ? 'ADD' : 'DONE'"
