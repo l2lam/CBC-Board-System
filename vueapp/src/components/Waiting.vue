@@ -2,20 +2,13 @@
   <v-sheet
     v-if="currentScreen == Screen.WAITING"
     class="pa-4 mx-auto"
-    elevation="12"
     max-width="600"
-    rounded="lg"
     width="100%"
     height="100%"
   >
-    <v-container
-      fluid
-      fill-height
-      class="d-flex flex-column"
-      style="height: 90%"
-    >
+    <v-container fluid fill-height class="d-flex flex-column" style="height: 90%">
       <div class="d-flex justify-space-between">
-        <div class="text-h6">Waiting List</div>
+        <p class="text-h6">Waiting List</p>
         <div class="text-end">
           <v-btn
             v-if="enablePlayerRemoval"
@@ -37,11 +30,7 @@
         >
           <template v-slot:prepend>
             <v-icon
-              :icon="
-                player.isGuest
-                  ? 'mdi-account-box-outline'
-                  : 'mdi-account-circle'
-              "
+              :icon="player.isGuest ? 'mdi-account-box-outline' : 'mdi-account-circle'"
             ></v-icon>
           </template>
           <v-list-item-title>
@@ -65,20 +54,14 @@
       <v-btn
         class="bottom-action"
         :prepend-icon="
-          enablePlayerRemoval
-            ? 'mdi-checkbox-outline'
-            : 'mdi-checkbox-blank-outline'
+          enablePlayerRemoval ? 'mdi-checkbox-outline' : 'mdi-checkbox-blank-outline'
         "
         :stacked="true"
         @click="enablePlayerRemoval = !enablePlayerRemoval"
       >
         Remove
       </v-btn>
-      <v-btn
-        class="bottom-action"
-        prepend-icon="mdi-account-circle"
-        :stacked="true"
-      >
+      <v-btn class="bottom-action" prepend-icon="mdi-account-circle" :stacked="true">
         + Member
       </v-btn>
       <v-btn
@@ -92,17 +75,14 @@
     </div>
   </v-sheet>
   <v-sheet v-else-if="currentScreen == Screen.GUEST">
-    <GuestUpsert
-      :player="currentPlayer"
-      @close="returnToWaitingScreen"
-    ></GuestUpsert>
+    <GuestUpsert :player="currentPlayer" @close="returnToWaitingScreen"></GuestUpsert>
   </v-sheet>
 </template>
 
 <style>
 .bottom-action {
   height: 72;
-  min-width: 140;
+  min-width: 100;
   margin-left: 5px;
   margin-right: 5px;
 }

@@ -6,7 +6,7 @@ const GAMES_ON_DECK_STORE_ID = "gamesOnDeck";
 let mock = true;
 
 export const useGameStore = defineStore(GAMES_ON_DECK_STORE_ID, {
-  state: () => ({ gamesOnDeck: [] }),
+  state: () => ({ gamesOnDeck: [] as Game[]}),
   getters: {},
   actions: {
     async loadGames() {
@@ -27,7 +27,7 @@ export const useGameStore = defineStore(GAMES_ON_DECK_STORE_ID, {
         this.gamesOnDeck = localStorage.get(GAMES_ON_DECK_STORE_ID) || [];
       }
     },
-    removeGameAt(index) {
+    removeGameAt(index:number) {
       if (index > -1) this.gamesOnDeck.splice(index, 1);
       console.log("remove at " + index, this.gamesOnDeck);
     },
