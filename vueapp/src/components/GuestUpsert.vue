@@ -37,8 +37,8 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { Player } from "../models/player";
-import { useLevelStore } from "@/stores/levelStore";
-import { usePlayerStore } from "@/stores/playerStore";
+import { useLevelStore } from "../stores/levelStore";
+import { usePlayerStore } from "../stores/playerStore";
 
 const emit = defineEmits(["close"]);
 const props = defineProps(["player"]);

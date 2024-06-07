@@ -10,6 +10,7 @@ declare module 'vue' {
     Account: typeof import('./src/components/Account.vue')['default']
     Auth: typeof import('./src/components/Auth.vue')['default']
     Courts: typeof import('./src/components/Courts.vue')['default']
+    Game: typeof import('./src/components/Game.vue')['default']
     GuestUpsert: typeof import('./src/components/GuestUpsert.vue')['default']
     OnDeck: typeof import('./src/components/OnDeck.vue')['default']
     Playing: typeof import('./src/components/Playing.vue')['default']
