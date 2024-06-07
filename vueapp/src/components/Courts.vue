@@ -3,7 +3,7 @@
     <v-container fluid fill-height class="d-flex flex-column">
       <p class="text-h6 text-center">Playing</p>
       <v-container fill-height>
-        <v-row v-for="row in nRows" :key="row" no-gutters height="300px">
+        <v-row v-for="row in nRows" :key="row" height="300px">
           <v-col
             v-for="court in courts(row - 1)"
             :key="court?.id"
