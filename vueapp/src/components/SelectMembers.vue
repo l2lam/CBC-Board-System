@@ -3,18 +3,13 @@
       Select members to add
       <v-list>
         <v-list-item v-for="player in store.allMembers">
-          <v-checkbox
-            v-model="selected"
-            :value="player">  
-              <template v-slot:prepend>
-                <v-icon
-                  icon="mdi-account-circle"
-                ></v-icon>
-                {{ player.name }}
-              </template>
+            <v-checkbox
+              v-model="selected"
+              :value="player" 
+              :label="player.name">
             </v-checkbox>
           </v-list-item>
-        </v-list>
+      </v-list>
       <v-btn
         height="72"
         min-width="140"
@@ -23,23 +18,26 @@
         @click="addSelectedMembers"
       >
       Done
-    </v-btn>
+      </v-btn>
   </v-container>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { Ref, ref } from "vue";
 import { usePlayerStore } from "@/stores/playerStore";
+import { Player } from "../models/player";
 
 const emit = defineEmits(["close"]);
 const store = usePlayerStore();
 const selected = ref([])
 
 function addSelectedMembers() {
-  //store.addPlayer(selected[0])
+  selected.value.forEach(element => {
+    store.addPlayer(element)
+  });
   done();
 }
-  
+
 function done() {
     emit("close");
 }
