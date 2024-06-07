@@ -16,12 +16,7 @@
 </template>
 
 <style>
-.queue {
-  width: 20%;
-}
-.courts {
-  width: 60%;
-}
+@import "@/assets/styles/custom.css";
 </style>
 
 <script setup lang="ts">
