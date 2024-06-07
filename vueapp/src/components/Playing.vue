@@ -25,15 +25,17 @@
 </style>
 
 <script setup lang="ts">
-//
 import { usePlayerStore } from "../stores/playerStore";
 import { useLevelStore } from "../stores/levelStore";
 import { useGameStore } from "../stores/gameStore";
+import { useCourtStore } from "../stores/courtStore";
 
 const playerStore = usePlayerStore();
 await playerStore.loadPlayers();
 const levelStore = useLevelStore();
 await levelStore.loadLevels();
 const gameStore = useGameStore();
-gameStore.loadGames();
+await gameStore.loadGames();
+const courtStore = useCourtStore();
+await courtStore.loadCourts();
 </script>

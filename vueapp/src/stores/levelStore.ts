@@ -6,7 +6,7 @@ const LEVELS_STORE_ID = "levels";
 let mock = true;
 
 export const useLevelStore = defineStore(LEVELS_STORE_ID, {
-  state: () => ({ allLevels: [] }),
+  state: () => ({ allLevels: [] as Level[] }),
   getters: {},
   actions: {
     async loadLevels() {

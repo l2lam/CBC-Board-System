@@ -3,6 +3,13 @@ import { Game } from "./game";
 export class Court {
   id: number;
   name: string;
-  sequence: number; // The order to draw the court on the screen
-  game: Game; // The current game on the court
+  game?: Game; // The current game on the court
+  isReserved: boolean;
+
+  constructor(id:number, name:string, isReserved:boolean = false, game:Game|undefined = undefined) {
+    this.id = id
+    this.name = name
+    this.isReserved = isReserved
+    this.game = game
+  }
 }
