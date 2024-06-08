@@ -94,14 +94,6 @@
   margin-right: 5px;
 }
 
-.flip-list-move {
-  transition: transform 0.5s;
-}
-
-.no-move {
-  transition: transform 0s;
-}
-
 .ghost {
   opacity: 0.5;
   background: #c8ebfb;
@@ -124,8 +116,7 @@ const currentScreen = ref(Screen.WAITING);
 const currentPlayer = ref(null);
 const enablePlayerRemoval = ref(false);
 const dragOptions = {
-  animation: 0,
-  disabled: false,
+  animation: 100,
   ghostClass: "ghost",
 };
 
