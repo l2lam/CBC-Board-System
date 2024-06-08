@@ -2,7 +2,7 @@
   <v-container fluid fill-height class="d-flex flex-column" style="height: 90%">
       Select members to add
       <v-list>
-        <v-list-item v-for="player in store.allMembers">
+        <v-list-item v-for="player in store.selectableMembersForWaitingList">
             <v-checkbox
               v-model="selected"
               :value="player" 

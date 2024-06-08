@@ -9,7 +9,7 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
   state: () => ({ allPlayers: [] as Player[], allMembers: [] as Member[]}),
   getters: {
     waitingPlayers: (state) => state.allPlayers, // TODO filter only players that are not already in a game
-    //selectableMembersForWaitingList: (state) => state.allMembers.filter
+    selectableMembersForWaitingList: (state) => state.allMembers.filter(member => !state.allPlayers.some(player => player.name === member.name))
   },
   actions: {
     async loadPlayers() {
