@@ -22,7 +22,7 @@
       </div>
       <v-list>
         <draggable
-          :list="playerStore.allPlayers"
+          :list="playerStore.waitingPlayers"
           itemKey="name"
           v-bind="dragOptions"
           @start="isDragging = true"

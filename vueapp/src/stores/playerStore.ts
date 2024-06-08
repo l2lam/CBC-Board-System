@@ -49,24 +49,23 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
           // Fall back to data from local storage
           this.allMembers = localStorage.get(PLAYERS_STORE_ID) || [];
         } else {
-          console.log(data);
           this.allMembers = data?.map(
             (player) => new Member(player.id, player.name, player.avatar_url)
           );
           // cache this data in local storage
-          localStorage.setItem(PLAYERS_STORE_ID, this.allPlayers);
+          localStorage.setItem(PLAYERS_STORE_ID, this.waitingPlayers);
         }
       }
     },
     addPlayer(player:Player) {
-      this.allPlayers.push(player);
+      this.waitingPlayers.push(player);
     },
     removePlayer(player:Player) {
-      var index = this.allPlayers.indexOf(player);
-      if (index > -1) this.allPlayers.splice(index, 1);
+      var index = this.waitingPlayers.indexOf(player);
+      if (index > -1) this.waitingPlayers.splice(index, 1);
     },
     removeAllPlayers() {
-      this.allPlayers = [];
+      this.waitingPlayers = [];
     },
   },
 });
