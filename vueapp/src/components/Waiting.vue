@@ -21,32 +21,38 @@
         </div>
       </div>
       <v-list>
-        <v-list-item
-          v-for="player in playerStore.waitingPlayers"
-          @click="playerSelected(player)"
-          v-touch="{
-            left: () => playerStore.removePlayer(player),
-          }"
+        <draggable
+          :list="playerStore.allPlayers"
+          itemKey="name"
+          v-bind="dragOptions"
+          @start="isDragging = true"
+          @end="isDragging = false"
         >
-          <template v-slot:prepend>
-            <v-icon
-              :icon="player.isGuest ? 'mdi-account-box-outline' : 'mdi-account-circle'"
-            ></v-icon>
+          <template #item="{ element }">
+            <v-list-item @click="playerSelected(element)">
+              <template v-slot:prepend>
+                <v-icon
+                  :icon="
+                    element.isGuest ? 'mdi-account-box-outline' : 'mdi-account-circle'
+                  "
+                ></v-icon>
+              </template>
+              <v-list-item-title>
+                {{ element.name }}
+              </v-list-item-title>
+              <template v-slot:append>
+                <v-btn
+                  v-if="enablePlayerRemoval"
+                  color="secondary"
+                  icon="mdi-close-circle-outline"
+                  variant="text"
+                  density="compact"
+                  @click.stop="playerStore.removePlayer(element)"
+                ></v-btn>
+              </template>
+            </v-list-item>
           </template>
-          <v-list-item-title>
-            {{ player.name }}
-          </v-list-item-title>
-          <template v-slot:append>
-            <v-btn
-              v-if="enablePlayerRemoval"
-              color="secondary"
-              icon="mdi-close-circle-outline"
-              variant="text"
-              density="compact"
-              @click.stop="playerStore.removePlayer(player)"
-            ></v-btn>
-          </template>
-        </v-list-item>
+        </draggable>
       </v-list>
     </v-container>
     <v-divider class="mb-4"></v-divider>
@@ -86,6 +92,19 @@
   margin-left: 5px;
   margin-right: 5px;
 }
+
+.flip-list-move {
+  transition: transform 0.5s;
+}
+
+.no-move {
+  transition: transform 0s;
+}
+
+.ghost {
+  opacity: 0.5;
+  background: #c8ebfb;
+}
 </style>
 
 <script setup lang="ts">
@@ -103,6 +122,11 @@ const playerStore = usePlayerStore();
 const currentScreen = ref(Screen.WAITING);
 const currentPlayer = ref(null);
 const enablePlayerRemoval = ref(false);
+const dragOptions = {
+  animation: 0,
+  disabled: false,
+  ghostClass: "ghost",
+};
 
 function addGuestPlayer() {
   currentScreen.value = Screen.GUEST;
