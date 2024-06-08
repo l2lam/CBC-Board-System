@@ -1,8 +1,8 @@
 <template>
     <v-card
-      prepend-icon="mdi-account-box-outline"
+      prepend-icon="mdi-account-circle"
       text="Blah blah blah"
-      title="Edit Member"
+      :title=member.name
       class="mx-auto"
       width="90%"
     >
@@ -20,18 +20,12 @@
     </v-card>
   </template>
   
-  <script setup lang="ts">
-  import { ref, computed } from "vue";
-  import { Player } from "../models/player";
-  import { useLevelStore } from "@/stores/levelStore";
-  import { usePlayerStore } from "@/stores/playerStore";
-  
-  const emit = defineEmits(["close"]);
+  <script setup lang="ts">  
+  import { ref } from "vue";
+
   const props = defineProps(["player"]);
-  const isNewPlayer = computed(() => props.player == null);
-  const guest = isNewPlayer.value ? ref(new Player("")) : ref(props.player);
-  const levelStore = useLevelStore();
-  const playerStore = usePlayerStore();
+  const member =  ref(props.player);
+  const emit = defineEmits(["close"]);
 
   function initiateChallenge() {
     // will initiate a challenge

@@ -2,7 +2,7 @@
   <v-container fluid fill-height class="d-flex flex-column" style="height: 90%">
     Select members to add
     <v-list>
-      <v-list-item v-for="player in store.selectableMembersForWaitingList">
+      <v-list-item v-for="player in playerStore.selectableMembersForWaitingList">
         <v-container fluid class="d-flex align-center">
           <v-icon class="mr-2">mdi-account-circle</v-icon>
           {{ player.name }}
@@ -24,17 +24,16 @@
 </template>
 
 <script setup lang="ts">
-import { Ref, ref } from "vue";
+import { ref } from "vue";
 import { usePlayerStore } from "@/stores/playerStore";
-import { Player } from "../models/player";
 
 const emit = defineEmits(["close"]);
-const store = usePlayerStore();
+const playerStore = usePlayerStore();
 const selected = ref([])
 
 function addSelectedMembers() {
   selected.value.forEach(element => {
-    store.addPlayer(element)
+    playerStore.addPlayer(element)
   });
   done();
 }
@@ -42,5 +41,4 @@ function addSelectedMembers() {
 function done() {
     emit("close");
 }
-
 </script>
