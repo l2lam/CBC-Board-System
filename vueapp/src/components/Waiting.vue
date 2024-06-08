@@ -27,6 +27,7 @@
           v-bind="dragOptions"
           @start="isDragging = true"
           @end="isDragging = false"
+          :force-fallback="true"
         >
           <template #item="{ element }">
             <v-list-item @click="playerSelected(element)">
