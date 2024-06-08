@@ -12,6 +12,10 @@
   </v-sheet>
 </template>
 
+<style>
+@import "@/assets/styles/custom.css";
+</style>
+
 <script setup lang="ts">
 import { ref } from "vue";
 import { useGameStore } from "../stores/gameStore";
