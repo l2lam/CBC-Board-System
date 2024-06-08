@@ -6,7 +6,7 @@ const PLAYERS_STORE_ID = "players";
 let mock = true;
 
 export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
-  state: () => ({ allPlayers: [], allMembers: [] }),
+  state: () => ({ allPlayers: [] as Player[], allMembers: [] as Member[]}),
   getters: {
     waitingPlayers: (state) => state.allPlayers, // TODO filter only players that are not already in a game
   },
@@ -49,17 +49,23 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
           this.allPlayers = localStorage.get(PLAYERS_STORE_ID) || [];
         } else {
           console.log(data);
-          this.allPlayers = data?.map(
+          this.allMembers = data?.map(
             (player) => new Member(player.id, player.name, player.avatar_url)
           );
-          // cache this data in local storate
+          // cache this data in local storage
           localStorage.setItem(PLAYERS_STORE_ID, this.allPlayers);
         }
       }
     },
-    addPlayer(player) {
-      // console.log("adding new player to the queue:", player);
+    addPlayer(player:Player) {
       this.allPlayers.push(player);
+    },
+    removePlayer(player:Player) {
+      var index = this.allPlayers.indexOf(player);
+      if (index > -1) this.allPlayers.splice(index, 1);
+    },
+    removeAllPlayers() {
+      this.allPlayers = [];
     },
   },
 });

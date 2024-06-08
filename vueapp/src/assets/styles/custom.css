@@ -1,0 +1,18 @@
+.court-card .queue .courts {
+  min-width: 200px;
+}
+
+.court-card {
+  min-height: 250px;
+}
+
+.queue-card {
+  min-height: 200px;
+}
+
+.queue {
+  width: 20%;
+}
+.courts {
+  width: 60%;
+}
