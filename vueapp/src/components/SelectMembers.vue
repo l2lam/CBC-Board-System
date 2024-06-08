@@ -1,24 +1,25 @@
 <template>
   <v-container fluid fill-height class="d-flex flex-column" style="height: 90%">
-      Select members to add
-      <v-list>
-        <v-list-item v-for="player in store.selectableMembersForWaitingList">
-            <v-checkbox
-              v-model="selected"
-              :value="player" 
-              :label="player.name">
-            </v-checkbox>
-          </v-list-item>
-      </v-list>
-      <v-btn
-        height="72"
-        min-width="140"
-        prepend-icon="mdi-account-circle"
-        :stacked="true"
-        @click="addSelectedMembers"
+    Select members to add
+    <v-list>
+      <v-list-item v-for="player in store.selectableMembersForWaitingList">
+        <v-container fluid class="d-flex align-center">
+          <v-icon class="mr-2">mdi-account-circle</v-icon>
+          {{ player.name }}
+          <v-spacer></v-spacer>
+          <v-checkbox v-model="selected" :value="player"></v-checkbox>
+        </v-container>
+      </v-list-item>
+    </v-list>
+    <v-btn
+      height="72"
+      min-width="140"
+      prepend-icon="mdi-account-circle"
+      :stacked="true"
+      @click="addSelectedMembers"
       >
       Done
-      </v-btn>
+    </v-btn>
   </v-container>
 </template>
 
