@@ -61,6 +61,7 @@ function done() {
 }
 
 function required(val) {
+  // TODO: ensure the player's name is unique
   return !!val || "Field is required";
 }
 </script>
