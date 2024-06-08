@@ -6,15 +6,6 @@
       class="mx-auto"
       width="90%"
     >
-      <div>
-        <v-select
-          label="Skill level"
-          :items="levelStore.allLevels"
-          item-title="name"
-          v-model="guest.level"
-        >
-        </v-select>
-      </div>
       <v-card-actions>
         <v-btn 
         text="Initiate challenge"
@@ -23,8 +14,7 @@
         <v-spacer></v-spacer>
         <v-btn
           text="DONE"
-          @click="save"
-          :disabled="disableSave()"
+          @click="done"
         ></v-btn>
       </v-card-actions>
     </v-card>
@@ -47,21 +37,8 @@
     // will initiate a challenge
   }
   
-  function disableSave() {
-    return !guest.value.name;
-  }
-  
-  function save() {
-    if (isNewPlayer.value) playerStore.addPlayer(guest.value);
-    done();
-  }
-  
   function done() {
     emit("close");
-  }
-  
-  function required(val) {
-    return !!val || "Field is required";
   }
   </script>
   
