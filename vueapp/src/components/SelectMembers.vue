@@ -29,7 +29,7 @@ import { usePlayerStore } from "@/stores/playerStore";
 import { Player } from "../models/player";
 
 const emit = defineEmits(["close"]);
-const store = usePlayerStore();
+const playerStore = usePlayerStore();
 const selected = ref([])
 
 function addSelectedMembers() {
