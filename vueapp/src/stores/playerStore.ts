@@ -6,38 +6,20 @@ const PLAYERS_STORE_ID = "players";
 let mock = true;
 
 export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
-  state: () => ({ waitingPlayers: [], allMembers: [] }),
+  state: () => ({ waitingPlayers: [] as Player[], allMembers: [] as Member[]}),
+  getters: {
+    selectableMembersForWaitingList: (state) => state.allMembers.filter(member => !state.waitingPlayers.find(player => player.name === member.name)) // TODO: match on id instead of name... move `id` property from `Member` to `Player` class and devise a way to assign a unique id to guests.  Members should already have unique ids
+  },
   actions: {
     async loadPlayers() {
       console.log("loading players");
       if (mock) {
         // Mock data for quick testing
-        this.allMembers = [
-          new Member(1, "Joe"),
-          new Member(2, "Karl"),
-          new Member(3, "Mark"),
-          new Member(4, "Peter"),
-        ];
-        this.waitingPlayers = [
-          new Player("Tim"),
-          new Player("Tom"),
-          new Player("Jane"),
-          new Player("Sarah"),
-          new Member(5, "Sue"),
-          new Member(6, "Shane"),
-          new Player("Paul"),
-          new Player("Pam"),
-          new Player("Pony"),
-          new Player("Ron"),
-          new Player("Russel"),
-          new Player("Ricky"),
-          new Player("Roger"),
-          new Player("Zebra"),
-          new Player("Russel1"),
-          new Player("Ricky1"),
-          new Player("Roger1"),
-          new Player("Zebra1"),
-        ];
+        var i = 1
+        this.allMembers = Member.generateMockMembers(15)
+        var n = this.allMembers.length
+        this.waitingPlayers = this.allMembers.slice(4, 8)
+          .concat(Player.generateMockPlayers(5, "Guest", n))
       } else {
         // Get players from the remote database
         const { data, error, status } = await supabase

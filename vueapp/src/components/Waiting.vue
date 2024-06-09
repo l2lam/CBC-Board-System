@@ -68,7 +68,12 @@
       >
         Remove
       </v-btn>
-      <v-btn class="bottom-action" prepend-icon="mdi-account-circle" :stacked="true">
+      <v-btn
+        class="bottom-action"
+        prepend-icon="mdi-account-circle"
+        :stacked="true"
+        @click="addMemberPlayers"
+      >
         + Member
       </v-btn>
       <v-btn
@@ -84,6 +89,14 @@
   <v-sheet v-else-if="currentScreen == Screen.GUEST">
     <GuestUpsert :player="currentPlayer" @close="returnToWaitingScreen"></GuestUpsert>
   </v-sheet>
+  <v-sheet v-else-if="currentScreen == Screen.MEMBER">
+    <MemberUpsert :player="currentPlayer" @close="returnToWaitingScreen"></MemberUpsert>
+  </v-sheet>
+  <SelectMembers
+    v-else-if="currentScreen == Screen.SELECTMEMBERS"
+    :player="currentPlayer"
+    @close="returnToWaitingScreen"
+  ></SelectMembers>
 </template>
 
 <style>
@@ -109,6 +122,7 @@ enum Screen {
   WAITING,
   MEMBER,
   GUEST,
+  SELECTMEMBERS,
 }
 
 const playerStore = usePlayerStore();
@@ -125,6 +139,11 @@ function addGuestPlayer() {
   currentPlayer.value = null;
 }
 
+function addMemberPlayers() {
+  currentScreen.value = Screen.SELECTMEMBERS;
+  currentPlayer.value = null;
+}
+
 function returnToWaitingScreen() {
   currentScreen.value = Screen.WAITING;
   currentPlayer.value = null;
@@ -133,7 +152,6 @@ function returnToWaitingScreen() {
 function playerSelected(player) {
   currentPlayer.value = player;
   if (player.isGuest) currentScreen.value = Screen.GUEST;
-  // else
-  //   currentScreen = Screen.MEMBER
+  else currentScreen.value = Screen.MEMBER;
 }
 </script>
