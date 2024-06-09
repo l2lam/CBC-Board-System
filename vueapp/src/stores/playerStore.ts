@@ -6,10 +6,9 @@ const PLAYERS_STORE_ID = "players";
 let mock = true;
 
 export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
-  state: () => ({ allPlayers: [] as Player[], allMembers: [] as Member[]}),
+  state: () => ({ waitingPlayers: [] as Player[], allMembers: [] as Member[]}),
   getters: {
-    waitingPlayers: (state) => state.allPlayers, // TODO filter only players that are not already in a game
-    selectableMembersForWaitingList: (state) => state.allMembers.filter(member => !state.allPlayers.find(player => player.name === member.name))
+    selectableMembersForWaitingList: (state) => state.allMembers.filter(member => !state.waitingPlayers.find(player => player.name === member.name))
   },
   actions: {
     async loadPlayers() {
@@ -22,7 +21,7 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
           new Member(3, "Mark"),
           new Member(4, "Peter"),
         ];
-        this.allPlayers = [
+        this.waitingPlayers = [
           new Player("Tim"),
           new Player("Tom"),
           new Player("Jane"),
@@ -37,6 +36,10 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
           new Player("Ricky"),
           new Player("Roger"),
           new Player("Zebra"),
+          new Player("Russel1"),
+          new Player("Ricky1"),
+          new Player("Roger1"),
+          new Player("Zebra1"),
         ];
       } else {
         // Get players from the remote database
@@ -47,26 +50,25 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
         if (error && status !== 406) {
           console.error(error);
           // Fall back to data from local storage
-          this.allPlayers = localStorage.get(PLAYERS_STORE_ID) || [];
+          this.allMembers = localStorage.get(PLAYERS_STORE_ID) || [];
         } else {
-          console.log(data);
           this.allMembers = data?.map(
             (player) => new Member(player.id, player.name, player.avatar_url)
           );
           // cache this data in local storage
-          localStorage.setItem(PLAYERS_STORE_ID, this.allPlayers);
+          localStorage.setItem(PLAYERS_STORE_ID, this.waitingPlayers);
         }
       }
     },
     addPlayer(player:Player) {
-      this.allPlayers.push(player);
+      this.waitingPlayers.push(player);
     },
     removePlayer(player:Player) {
-      var index = this.allPlayers.indexOf(player);
-      if (index > -1) this.allPlayers.splice(index, 1);
+      var index = this.waitingPlayers.indexOf(player);
+      if (index > -1) this.waitingPlayers.splice(index, 1);
     },
     removeAllPlayers() {
-      this.allPlayers = [];
+      this.waitingPlayers = [];
     },
   },
 });
