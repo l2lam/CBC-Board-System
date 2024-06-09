@@ -39,5 +39,8 @@ export const useGameStore = defineStore(GAMES_ON_DECK_STORE_ID, {
         });
       }
     },
+    addGameToOnDeckQueue(game: Game) {
+      this.gamesOnDeck.push(game);
+    },
   },
 });
