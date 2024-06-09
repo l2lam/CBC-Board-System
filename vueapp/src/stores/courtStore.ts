@@ -62,5 +62,9 @@ export const useCourtStore = defineStore(COURTS_STORE_ID, {
         this.allCourts = localStorage.get(COURTS_STORE_ID) || [];
       }
     },
+    removeGameFromCourt(court: Court) {
+        court.isReserved = false;
+        court.game = undefined;
+    },
   },
 });

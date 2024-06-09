@@ -33,7 +33,7 @@
       <v-card-actions>
         <v-btn
           text="REMOVE"
-          @click="gameStore.removeGameAt(props.gameIndex)"
+          @click="addGameFromCourtToQueue(court)"
         ></v-btn>
       </v-card-actions>
     </div>
@@ -66,6 +66,7 @@
 import { ref } from "vue";
 import { useGameStore } from "../stores/gameStore";
 import { useCourtStore } from "../stores/courtStore";
+import { Court } from "../models/court";
 
 const props = defineProps(["game", "gameIndex", "court"]);
 const game = ref(props.game);
@@ -73,4 +74,9 @@ const court = ref(props.court);
 const gameStore = useGameStore();
 const courtStore = useCourtStore();
 const flipped = ref(false);
+
+function addGameFromCourtToQueue(court: Court) {
+  gameStore.addGameToOnDeckQueue(court.game)
+  courtStore.removeGameFromCourt(court)
+}
 </script>
