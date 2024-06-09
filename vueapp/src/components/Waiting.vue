@@ -68,11 +68,12 @@
       >
         Remove
       </v-btn>
-      <v-btn 
-        class="bottom-action" 
-        prepend-icon="mdi-account-circle" 
+      <v-btn
+        class="bottom-action"
+        prepend-icon="mdi-account-circle"
         :stacked="true"
-        @click="addMemberPlayers">
+        @click="addMemberPlayers"
+      >
         + Member
       </v-btn>
       <v-btn
@@ -91,9 +92,11 @@
   <v-sheet v-else-if="currentScreen == Screen.MEMBER">
     <MemberUpsert :player="currentPlayer" @close="returnToWaitingScreen"></MemberUpsert>
   </v-sheet>
-  <v-sheet v-else-if="currentScreen == Screen.SELECTMEMBERS">
-    <SelectMembers :player="currentPlayer" @close="returnToWaitingScreen"></SelectMembers>
-  </v-sheet>
+  <SelectMembers
+    v-else-if="currentScreen == Screen.SELECTMEMBERS"
+    :player="currentPlayer"
+    @close="returnToWaitingScreen"
+  ></SelectMembers>
 </template>
 
 <style>
@@ -149,7 +152,6 @@ function returnToWaitingScreen() {
 function playerSelected(player) {
   currentPlayer.value = player;
   if (player.isGuest) currentScreen.value = Screen.GUEST;
-  else
-     currentScreen.value = Screen.MEMBER
+  else currentScreen.value = Screen.MEMBER;
 }
 </script>
