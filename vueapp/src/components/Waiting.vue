@@ -25,8 +25,6 @@
           :list="playerStore.waitingPlayers"
           itemKey="name"
           v-bind="dragOptions"
-          @start="isDragging = true"
-          @end="isDragging = false"
           :force-fallback="true"
         >
           <template #item="{ element }">
