@@ -8,7 +8,7 @@ let mock = true;
 export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
   state: () => ({ waitingPlayers: [] as Player[], allMembers: [] as Member[]}),
   getters: {
-    selectableMembersForWaitingList: (state) => state.allMembers.filter(member => !state.waitingPlayers.find(player => player.name === member.name))
+    selectableMembersForWaitingList: (state) => state.allMembers.filter(member => !state.waitingPlayers.find(player => player.name === member.name)) // TODO: match on id instead of name... move `id` property from `Member` to `Player` class and devise a way to assign a unique id to guests.  Members should already have unique ids
   },
   actions: {
     async loadPlayers() {

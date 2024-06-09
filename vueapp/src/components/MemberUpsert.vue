@@ -1,20 +1,11 @@
 <template>
     <v-card
-      prepend-icon="mdi-account-box-outline"
+      prepend-icon="mdi-account-circle"
       text="Blah blah blah"
-      title="Edit Member"
+      :title=member.name
       class="mx-auto"
       width="90%"
     >
-      <div>
-        <v-select
-          label="Skill level"
-          :items="levelStore.allLevels"
-          item-title="name"
-          v-model="guest.level"
-        >
-        </v-select>
-      </div>
       <v-card-actions>
         <v-btn 
         text="Initiate challenge"
@@ -23,45 +14,25 @@
         <v-spacer></v-spacer>
         <v-btn
           text="DONE"
-          @click="save"
-          :disabled="disableSave()"
+          @click="done"
         ></v-btn>
       </v-card-actions>
     </v-card>
   </template>
   
-  <script setup lang="ts">
-  import { ref, computed } from "vue";
-  import { Player } from "../models/player";
-  import { useLevelStore } from "@/stores/levelStore";
-  import { usePlayerStore } from "@/stores/playerStore";
-  
-  const emit = defineEmits(["close"]);
+  <script setup lang="ts">  
+  import { ref } from "vue";
+
   const props = defineProps(["player"]);
-  const isNewPlayer = computed(() => props.player == null);
-  const guest = isNewPlayer.value ? ref(new Player("")) : ref(props.player);
-  const levelStore = useLevelStore();
-  const playerStore = usePlayerStore();
+  const member =  ref(props.player);
+  const emit = defineEmits(["close"]);
 
   function initiateChallenge() {
     // will initiate a challenge
   }
   
-  function disableSave() {
-    return !guest.value.name;
-  }
-  
-  function save() {
-    if (isNewPlayer.value) playerStore.addPlayer(guest.value);
-    done();
-  }
-  
   function done() {
     emit("close");
-  }
-  
-  function required(val) {
-    return !!val || "Field is required";
   }
   </script>
   
