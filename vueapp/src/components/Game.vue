@@ -33,7 +33,7 @@
       <v-card-actions>
         <v-btn
           text="REMOVE"
-          @click="gameStore.removeGameAt(props.gameIndex)"
+          @click="courtStore.removeGameFromCourt(court)"
         ></v-btn>
       </v-card-actions>
     </div>
