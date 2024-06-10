@@ -12,8 +12,10 @@ declare module 'vue' {
     Courts: typeof import('./src/components/Courts.vue')['default']
     Game: typeof import('./src/components/Game.vue')['default']
     GuestUpsert: typeof import('./src/components/GuestUpsert.vue')['default']
+    MemberUpsert: typeof import('./src/components/MemberUpsert.vue')['default']
     OnDeck: typeof import('./src/components/OnDeck.vue')['default']
     Playing: typeof import('./src/components/Playing.vue')['default']
+    SelectMembers: typeof import('./src/components/SelectMembers.vue')['default']
     Waiting: typeof import('./src/components/Waiting.vue')['default']
   }
 }
