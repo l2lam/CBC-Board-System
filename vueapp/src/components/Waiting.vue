@@ -8,7 +8,7 @@
   >
     <v-container fluid fill-height class="d-flex flex-column" style="height: 90%">
       <div class="d-flex justify-space-between">
-        <p class="text-h6">Waiting List</p>
+        <p class="text-h6 mb-3">Waiting List</p>
         <div class="text-end">
           <v-btn
             v-if="enablePlayerRemoval"
