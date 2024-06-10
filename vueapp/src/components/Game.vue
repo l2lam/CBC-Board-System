@@ -35,6 +35,10 @@
           text="REMOVE"
           @click="addGameFromCourtToQueue(court)"
         ></v-btn>
+        <v-btn
+          text="COMPLETE"
+          @click="completeGame(court, gameStore.gamesOnDeck.length)"
+        ></v-btn>
       </v-card-actions>
     </div>
     <!-- The game options when in the game is in the on-deck queue -->
@@ -78,5 +82,11 @@ const flipped = ref(false);
 function addGameFromCourtToQueue(court: Court) {
   gameStore.addGameToOnDeckQueue(court.game)
   courtStore.removeGameFromCourt(court)
+}
+
+function completeGame(court: Court, index: number) {
+  gameStore.addGameToOnDeckQueue(court.game)
+  courtStore.removeGameFromCourt(court)
+  gameStore.removeGameAt(index)
 }
 </script>
