@@ -28,7 +28,7 @@
       <v-card-text> TODO </v-card-text>
       <v-card-actions>
         <v-btn text="REMOVE" @click="addGameFromCourtToQueue()"></v-btn>
-        <v-btn text="COMPLETE GAME" @click="completeGame(court)"></v-btn>
+        <v-btn text="COMPLETE GAME" @click="completeGame"></v-btn>
       </v-card-actions>
     </div>
     <!-- The game options when in the game is in the on-deck queue -->
