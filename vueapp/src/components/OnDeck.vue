@@ -10,12 +10,9 @@
           @start="isDragging = true"
           @end="isDragging = false"
         >
-          <template #item="{ element, index }">
+          <template #item="{ element }">
             <div class="d-flex mb-3">
-              <Game
-                :game="element"
-                :gameIndex="index"
-              ></Game>
+              <Game :game="element"></Game>
             </div>
           </template>
         </draggable>
@@ -36,5 +33,5 @@ import draggable from "vuedraggable";
 const gameStore = useGameStore();
 const dragOptions = {
   animation: 100,
-}
+};
 </script>
