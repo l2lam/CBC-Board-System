@@ -87,7 +87,7 @@ function moveGameToCourt() {
   gameStore.removeFromOnDeck(game.value);
 }
 
-function completeGame(court) {
+function completeGame() {
   court.game.players.forEach(element => {
     playerStore.addPlayer(element);
   });
