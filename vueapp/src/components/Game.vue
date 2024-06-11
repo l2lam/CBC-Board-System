@@ -5,20 +5,16 @@
     variant="elevated"
     elevation="10"
     :color="flipped ? 'primary' : ''"
-    @click="flipped = !flipped"
+    v-on:click.self="flip"
   >
     <!-- The main view of the card, displaying the players in the game -->
-    <v-card-text v-if="!flipped" class="bg-surface-light">
+    <v-card-text v-if="!flipped" class="bg-surface-light" @click="flip">
       <v-card-title v-if="court">{{ court.name }}</v-card-title>
       <v-list class="bg-surface-light" density="compact">
         <v-list-item v-for="player in game.players">
           <template v-slot:prepend>
             <v-icon
-              :icon="
-                player.isGuest
-                  ? 'mdi-account-box-outline'
-                  : 'mdi-account-circle'
-              "
+              :icon="player.isGuest ? 'mdi-account-box-outline' : 'mdi-account-circle'"
             ></v-icon>
           </template>
           <v-list-item-title>
@@ -31,28 +27,23 @@
     <div v-else-if="court">
       <v-card-text> TODO </v-card-text>
       <v-card-actions>
-        <v-btn
-          text="REMOVE"
-          @click="addGameFromCourtToQueue(court)"
-        ></v-btn>
+        <v-btn text="REMOVE" @click="addGameFromCourtToQueue()"></v-btn>
       </v-card-actions>
     </div>
     <!-- The game options when in the game is in the on-deck queue -->
     <div v-else>
-      <v-card-text>
+      <v-card-text v-on:click.self="flip">
         <v-select
           label="Play"
           :items="courtStore.freeCourts"
           item-title="name"
           return-object
-          @click.stop=""
+          v-model="selectedCourt"
+          v-on:update:modelValue="moveGameToCourt()"
         ></v-select>
       </v-card-text>
       <v-card-actions>
-        <v-btn
-          text="REMOVE"
-          @click="gameStore.removeGameAt(props.gameIndex)"
-        ></v-btn>
+        <v-btn text="REMOVE" @click="removeGameFromQueue"></v-btn>
       </v-card-actions>
     </div>
   </v-card>
@@ -66,17 +57,30 @@
 import { ref } from "vue";
 import { useGameStore } from "../stores/gameStore";
 import { useCourtStore } from "../stores/courtStore";
-import { Court } from "../models/court";
 
-const props = defineProps(["game", "gameIndex", "court"]);
+const props = defineProps(["game", "court"]);
 const game = ref(props.game);
 const court = ref(props.court);
+const selectedCourt = ref();
 const gameStore = useGameStore();
 const courtStore = useCourtStore();
 const flipped = ref(false);
 
-function addGameFromCourtToQueue(court: Court) {
-  gameStore.addGameToOnDeckQueue(court.game)
-  courtStore.removeGameFromCourt(court)
+function flip() {
+  flipped.value = !flipped.value;
+}
+
+function addGameFromCourtToQueue() {
+  gameStore.addGameToOnDeckQueue(court.value.game);
+  courtStore.removeGameFromCourt(court.value);
+}
+
+function removeGameFromQueue() {
+  gameStore.removeFromOnDeck(game.value);
+}
+
+function moveGameToCourt() {
+  selectedCourt.value.game = game.value;
+  gameStore.removeFromOnDeck(game.value);
 }
 </script>

@@ -29,14 +29,14 @@ export const useGameStore = defineStore(GAMES_ON_DECK_STORE_ID, {
       }
     },
     // Remove the game at the given index and return all players in the game to the waiting queue
-    removeGameAt(index: number) {
+    removeFromOnDeck(game: Game) {
+      var index = this.gamesOnDeck.indexOf(game)
       if (index > -1) {
-        var game = this.gamesOnDeck[index]
-        this.gamesOnDeck.splice(index, 1);
         var playerStore = usePlayerStore();
         game.players.forEach(player => {
           playerStore.addPlayer(player)
         });
+        this.gamesOnDeck.splice(index, 1);
       }
     },
     addGameToOnDeckQueue(game: Game) {
