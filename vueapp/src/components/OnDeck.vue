@@ -17,10 +17,18 @@
           </template>
         </draggable>
       </v-list>
+      <v-btn
+        class="bottom-action"
+        prepend-icon="mdi-account-circle"
+        :stacked="true"
+        @click="goToCreateGameUpsert()"
+      >
+        + Game
+      </v-btn>
     </v-container>
   </v-sheet>
-  <v-sheet v-if="currentScreen == Screen.CREATEGAME"> 
-    <CreateGame></CreateGame>
+  <v-sheet v-else-if="currentScreen == Screen.CREATEGAME"> 
+    <CreateGame @close="returntoOnDeckQueue()"></CreateGame>
   </v-sheet>
 </template>
 
@@ -39,6 +47,10 @@ const gameStore = useGameStore();
 
 function returntoOnDeckQueue() {
   currentScreen.value = Screen.ONDECKQUEUE;
+}
+
+function goToCreateGameUpsert() {
+  currentScreen.value = Screen.CREATEGAME;
 }
 
 const dragOptions = {

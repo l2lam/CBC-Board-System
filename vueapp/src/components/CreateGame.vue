@@ -37,6 +37,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { usePlayerStore } from "../stores/playerStore";
+import { useGameStore } from "../stores/gameStore";
 
 const emit = defineEmits(["close"]);
 const playerStore = usePlayerStore();
