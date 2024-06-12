@@ -29,13 +29,15 @@ export const useGameStore = defineStore(GAMES_ON_DECK_STORE_ID, {
       }
     },
     // Remove the game at the given index and return all players in the game to the waiting queue
-    removeFromOnDeck(game: Game) {
-      var index = this.gamesOnDeck.indexOf(game)
+    removeFromOnDeck(game: Game, sendPlayerBackToWaitingQueue: boolean = true) {
+      var index = this.gamesOnDeck.indexOf(game);
       if (index > -1) {
-        var playerStore = usePlayerStore();
-        game.players.forEach(player => {
-          playerStore.addPlayer(player)
-        });
+        if (sendPlayerBackToWaitingQueue) {
+          var playerStore = usePlayerStore();
+          game.players.forEach((player) => {
+            playerStore.addPlayer(player);
+          });
+        }
         this.gamesOnDeck.splice(index, 1);
       }
     },

@@ -84,13 +84,13 @@ function removeGameFromQueue() {
 
 function moveGameToCourt() {
   selectedCourt.value.game = game.value;
-  gameStore.removeFromOnDeck(game.value);
+  gameStore.removeFromOnDeck(game.value, false);
 }
 
 function completeGame() {
-  court.value.game.players.forEach(player => {
+  court.value.game.players.forEach((player) => {
     playerStore.addPlayer(player);
   });
-  courtStore.removeGameFromCourt(court.value)
+  courtStore.removeGameFromCourt(court.value);
 }
 </script>
