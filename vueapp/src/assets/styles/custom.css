@@ -16,3 +16,19 @@
 .courts {
   width: 60%;
 }
+
+.queue-top {
+  height: 88%;
+}
+
+.queue-bottom {
+  height: 15%;
+  overflow: auto;
+  text-align: center;
+  justify-content: space-evenly;
+}
+
+.ghost {
+  opacity: 0.5;
+  background: #c8ebfb;
+}
