@@ -14,7 +14,7 @@
               {{ player.name }}
             </v-list-item-title>
             <template v-slot:append>
-              <v-checkbox-btn v-model="selected" :value="player"></v-checkbox-btn>
+              <v-checkbox-btn v-model="selectedPlayers" :value="player"></v-checkbox-btn>
             </template>
           </v-list-item>
         </v-list>
@@ -26,7 +26,7 @@
           min-width="140"
           prepend-icon="mdi-account-circle"
           :stacked="true"
-          @click="addSelectedPlayers"
+          @click="createGame"
         >
           Done
         </v-btn>
@@ -38,14 +38,18 @@
 import { ref } from "vue";
 import { usePlayerStore } from "../stores/playerStore";
 import { useGameStore } from "../stores/gameStore";
+import { Game } from "../models/game";
+
 
 const emit = defineEmits(["close"]);
 const playerStore = usePlayerStore();
-const selected = ref([]);
+const gameStore = useGameStore();
+const selectedPlayers = ref([]);
 
-function addSelectedPlayers() {
-  selected.value.forEach((element) => {
-    //playerStore.addPlayer(element);
+function createGame() {
+  gameStore.addGameToOnDeckQueue(new Game(selectedPlayers.value))
+  selectedPlayers.value.forEach(player => {
+    playerStore.removePlayer(player)
   });
   done();
 }

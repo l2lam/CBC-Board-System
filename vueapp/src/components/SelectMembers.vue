@@ -14,7 +14,7 @@
             {{ member.name }}
           </v-list-item-title>
           <template v-slot:append>
-            <v-checkbox-btn v-model="selected" :value="member"></v-checkbox-btn>
+            <v-checkbox-btn v-model="selectedMembers" :value="member"></v-checkbox-btn>
           </template>
         </v-list-item>
       </v-list>
@@ -40,10 +40,10 @@ import { usePlayerStore } from "../stores/playerStore";
 
 const emit = defineEmits(["close"]);
 const playerStore = usePlayerStore();
-const selected = ref([]);
+const selectedMembers = ref([]);
 
 function addSelectedMembers() {
-  selected.value.forEach((element) => {
+  selectedMembers.value.forEach((element) => {
     playerStore.addPlayer(element);
   });
   done();

@@ -17,15 +17,15 @@
           </template>
         </draggable>
       </v-list>
-      <v-btn
+    </v-container>
+    <v-btn
         class="bottom-action"
         prepend-icon="mdi-account-circle"
         :stacked="true"
         @click="goToCreateGameUpsert()"
       >
         + Game
-      </v-btn>
-    </v-container>
+    </v-btn>
   </v-sheet>
   <v-sheet v-else-if="currentScreen == Screen.CREATEGAME"> 
     <CreateGame @close="returntoOnDeckQueue()"></CreateGame>
