@@ -28,6 +28,7 @@
       <v-card-text> TODO </v-card-text>
       <v-card-actions>
         <v-btn text="REMOVE" @click="addGameFromCourtToQueue()"></v-btn>
+        <v-btn text="COMPLETE GAME" @click="completeGame"></v-btn>
       </v-card-actions>
     </div>
     <!-- The game options when in the game is in the on-deck queue -->
@@ -57,6 +58,7 @@
 import { ref } from "vue";
 import { useGameStore } from "../stores/gameStore";
 import { useCourtStore } from "../stores/courtStore";
+import { usePlayerStore } from "../stores/playerStore";
 
 const props = defineProps(["game", "court"]);
 const game = ref(props.game);
@@ -64,6 +66,7 @@ const court = ref(props.court);
 const selectedCourt = ref();
 const gameStore = useGameStore();
 const courtStore = useCourtStore();
+const playerStore = usePlayerStore();
 const flipped = ref(false);
 
 function flip() {
@@ -81,6 +84,13 @@ function removeGameFromQueue() {
 
 function moveGameToCourt() {
   selectedCourt.value.game = game.value;
-  gameStore.removeFromOnDeck(game.value);
+  gameStore.removeFromOnDeck(game.value, false);
+}
+
+function completeGame() {
+  court.value.game.players.forEach((player) => {
+    playerStore.addPlayer(player);
+  });
+  courtStore.removeGameFromCourt(court.value);
 }
 </script>

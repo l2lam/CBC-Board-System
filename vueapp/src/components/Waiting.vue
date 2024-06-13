@@ -6,7 +6,7 @@
     width="100%"
     height="100%"
   >
-    <v-container fluid fill-height class="d-flex flex-column" style="height: 90%">
+    <v-container fluid fill-height class="queue-top d-flex flex-column">
       <div class="d-flex justify-space-between">
         <p class="text-h6 mb-3">Waiting List</p>
         <div class="text-end">
@@ -16,7 +16,15 @@
             icon="mdi-close-circle-multiple-outline"
             variant="text"
             density="compact"
+            v-tooltip="'Remove all players'"
             @click="playerStore.removeAllPlayers()"
+          ></v-btn>
+          <v-btn
+            :icon="enablePlayerRemoval ? 'mdi-delete-off' : 'mdi-delete'"
+            variant="text"
+            density="compact"
+            v-tooltip="'Enable removal of players'"
+            @click="enablePlayerRemoval = !enablePlayerRemoval"
           ></v-btn>
         </div>
       </div>
@@ -55,34 +63,28 @@
       </v-list>
     </v-container>
     <v-divider class="mb-4"></v-divider>
-    <div class="text-center justify-space-evenly" style="height: 10%">
-      <v-btn
-        class="bottom-action"
-        :prepend-icon="
-          enablePlayerRemoval ? 'mdi-checkbox-outline' : 'mdi-checkbox-blank-outline'
-        "
-        :stacked="true"
-        @click="enablePlayerRemoval = !enablePlayerRemoval"
-      >
-        Remove
-      </v-btn>
-      <v-btn
-        class="bottom-action"
-        prepend-icon="mdi-account-circle"
-        :stacked="true"
-        @click="addMemberPlayers"
-      >
-        + Member
-      </v-btn>
-      <v-btn
-        class="bottom-action"
-        prepend-icon="mdi-account-box-outline"
-        :stacked="true"
-        @click="addGuestPlayer"
-      >
-        + Guest
-      </v-btn>
-    </div>
+    <v-container class="queue-bottom">
+      <v-row height="100%">
+        <v-col>
+          <v-btn
+            prepend-icon="mdi-account-circle"
+            :stacked="true"
+            @click="addMemberPlayers"
+          >
+            + Member
+          </v-btn>
+        </v-col>
+        <v-col>
+          <v-btn
+            prepend-icon="mdi-account-box-outline"
+            :stacked="true"
+            @click="addGuestPlayer"
+          >
+            + Guest
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-container>
   </v-sheet>
   <v-sheet v-else-if="currentScreen == Screen.GUEST">
     <GuestUpsert :player="currentPlayer" @close="returnToWaitingScreen"></GuestUpsert>
@@ -98,17 +100,7 @@
 </template>
 
 <style>
-.bottom-action {
-  height: 72;
-  min-width: 100;
-  margin-left: 5px;
-  margin-right: 5px;
-}
-
-.ghost {
-  opacity: 0.5;
-  background: #c8ebfb;
-}
+@import "@/assets/styles/custom.css";
 </style>
 
 <script setup lang="ts">
