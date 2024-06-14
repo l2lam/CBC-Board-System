@@ -3,20 +3,11 @@
     <v-container fluid fill-height class="d-flex flex-column" style="height: 90%">
       <p class="text-h6">Select members to add</p>
       <v-list>
-        <v-list-item
-          v-for="member in playerStore.selectableMembersForWaitingList"
-          :key="member.id"
-        >
-          <template v-slot:prepend>
-            <v-icon icon="mdi-account-circle"></v-icon>
-          </template>
-          <v-list-item-title>
-            {{ member.name }}
-          </v-list-item-title>
-          <template v-slot:append>
+        <Player :player="member" v-for="member in playerStore.selectableMembersForWaitingList">
+          <template v-slot:button>
             <v-checkbox-btn v-model="selectedMembers" :value="member"></v-checkbox-btn>
           </template>
-        </v-list-item>
+        </Player>
       </v-list>
     </v-container>
     <v-divider class="mb-4"></v-divider>
@@ -37,6 +28,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { usePlayerStore } from "../stores/playerStore";
+import Player from "./Player.vue";
 
 const emit = defineEmits(["close"]);
 const playerStore = usePlayerStore();
