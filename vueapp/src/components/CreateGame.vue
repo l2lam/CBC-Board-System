@@ -47,10 +47,11 @@ const gameStore = useGameStore();
 const selectedPlayers = ref([]);
 
 function createGame() {
-  gameStore.addGameToOnDeckQueue(new Game(selectedPlayers.value))
-  selectedPlayers.value.forEach(player => {
-    playerStore.removePlayer(player)
-  });
+  if (selectedPlayers.value.length > 0)
+    gameStore.addGameToOnDeckQueue(new Game(selectedPlayers.value))
+    selectedPlayers.value.forEach(player => {
+      playerStore.removePlayer(player)
+    });
   done();
 }
 
