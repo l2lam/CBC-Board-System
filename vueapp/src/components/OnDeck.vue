@@ -43,8 +43,14 @@
       </v-row>
     </v-container>
   </v-sheet>
-  <v-sheet v-else-if="currentScreen == Screen.CREATEGAME">
-    <CreateGame @close="returntoOnDeckQueue()"></CreateGame>
+  <v-sheet
+    v-else-if="currentScreen == Screen.CREATEGAME"
+    class="pa-4 mx-auto"
+    max-width="600"
+    width="100%"
+    height="100%"
+  >
+    <CreateGame @close="returnToOnDeckQueue"></CreateGame>
   </v-sheet>
 </template>
 
@@ -61,7 +67,7 @@ enum Screen {
 const currentScreen = ref(Screen.ONDECKQUEUE);
 const gameStore = useGameStore();
 
-function returntoOnDeckQueue() {
+function returnToOnDeckQueue() {
   currentScreen.value = Screen.ONDECKQUEUE;
 }
 
