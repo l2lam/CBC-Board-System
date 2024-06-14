@@ -13,7 +13,13 @@
           :key="player.id"
         >
           <template v-slot:prepend>
-            <v-icon icon="mdi-account-circle"></v-icon>
+            <v-icon
+              :icon="
+                player.isGuest
+                  ? 'mdi-account-box-outline'
+                  : 'mdi-account-circle'
+              "
+            ></v-icon>
           </template>
           <v-list-item-title>
             {{ player.name }}
