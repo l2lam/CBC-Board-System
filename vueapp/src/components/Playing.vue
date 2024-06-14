@@ -10,7 +10,7 @@
     </v-main>
     <v-divider vertical></v-divider>
     <v-main class="courts h-screen">
-      <Courts />
+      <Venue />
     </v-main>
   </v-layout>
 </template>
