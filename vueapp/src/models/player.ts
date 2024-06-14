@@ -14,8 +14,8 @@ export class Player {
     this.level = level;
   }
 
-  static generateMockPlayers(n:number, label:string="Mock Player", start:number=1 ):Player[ ] {
-    return Array.from({length:n}, (v , i) =>i).map(i => new Player(`${label} ${i+start}`))
+  static generateMockPlayers(n: number, label: string = "Mock Player", start: number = 1): Player[] {
+    return Array.from({ length: n }, (v, i) => i).map(i => new Player(`${label} ${i + start}`))
   }
 }
 
@@ -31,7 +31,7 @@ export class Member extends Player {
     this.id = id;
   }
 
-  static generateMockMembers(n:number, label:string="Mock Member", start:number=1 ):Member[ ] {
-    return Array.from({length:n}, (v , i) =>i).map(i => new Member(i + start, `${label} ${i+start}`))
+  static generateMockMembers(n: number, label: string = "Mock Member", start: number = 1): Member[] {
+    return Array.from({ length: n }, (v, i) => i).map(i => new Member(i + start, `${label} ${i + start}`))
   }
 }
