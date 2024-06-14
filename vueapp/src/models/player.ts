@@ -7,7 +7,7 @@ export class Player {
   isGuest: boolean;
   level?: Level;
 
-  constructor(name, level = undefined, is_guest = true, avatar_url = "") {
+  constructor(name, level?: Level, is_guest = true, avatar_url = "") {
     this.name = name;
     this.avatarURL = avatar_url;
     this.isGuest = is_guest;
@@ -26,7 +26,7 @@ export class Member extends Player {
   // The id of the challenge this member is currently participating in
   challenge_id?: number;
 
-  constructor(id, name, level = undefined, avatar_url = "") {
+  constructor(id, name, level?: Level, avatar_url = "") {
     super(name, level, false, avatar_url);
     this.id = id;
   }
