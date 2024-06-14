@@ -36,18 +36,11 @@
           :force-fallback="true"
         >
           <template #item="{ element }">
-            <v-list-item @click="playerSelected(element)">
-              <template v-slot:prepend>
-                <v-icon
-                  :icon="
-                    element.isGuest ? 'mdi-account-box-outline' : 'mdi-account-circle'
-                  "
-                ></v-icon>
-              </template>
-              <v-list-item-title>
-                {{ element.name }}
-              </v-list-item-title>
-              <template v-slot:append>
+            <Player
+              :player="element"
+              @click="playerSelected(element)"
+            >
+              <template v-slot:button>
                 <v-btn
                   v-if="enablePlayerRemoval"
                   color="secondary"
@@ -57,7 +50,7 @@
                   @click.stop="playerStore.removePlayer(element)"
                 ></v-btn>
               </template>
-            </v-list-item>
+            </Player>
           </template>
         </draggable>
       </v-list>
@@ -107,6 +100,7 @@
 import { ref } from "vue";
 import { usePlayerStore } from "../stores/playerStore";
 import draggable from "vuedraggable";
+import Player from "./Player.vue";
 
 enum Screen {
   WAITING,
