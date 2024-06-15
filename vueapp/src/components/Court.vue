@@ -3,8 +3,6 @@
     v-model="courts"
     item-key="id"
     v-bind="dragOptions"
-    @dragover.prevent
-    @dragenter.prevent
     @drop="drop"
     @dragstart="drag"
   >
@@ -57,16 +55,26 @@ function drag(evt) {
 }
 
 function drop(evt) {
-  var sourceCourtId = evt.dataTransfer.getData("courtId");
-  var sourceCourt = sourceCourtId
-    ? courtStore.allCourts.find((c) => c.id == sourceCourtId)
-    : undefined;
   var sourceGameId = evt.dataTransfer.getData("gameId");
   var sourceGame = gameStore.findGameById(sourceGameId);
+
   // If the game is found and the destination court doesn't contain a game and set the game
   if (sourceGame && !court.value.game) {
+    // Assign the game to the destination court
     court.value.game = sourceGame;
-    if (sourceCourt) sourceCourt.game = undefined;
+
+    // If the game came from the on-deck queue then remove it from the queue
+    var fromOnDeck = evt.dataTransfer.getData("fromOnDeck");
+    if (fromOnDeck) {
+      gameStore.removeFromOnDeck(sourceGame, false);
+    } else {
+      // If the game came from another court then find the court and remove the game from it
+      var sourceCourtId = evt.dataTransfer.getData("courtId");
+      var sourceCourt = sourceCourtId
+        ? courtStore.allCourts.find((c) => c.id == sourceCourtId)
+        : undefined;
+      if (sourceCourt) sourceCourt.game = undefined;
+    }
   }
 }
 </script>

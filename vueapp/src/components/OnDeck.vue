@@ -6,20 +6,14 @@
     width="100%"
     height="100%"
   >
-    <v-container
-      fluid
-      fill-height
-      class="d-flex flex-column"
-      style="height: 90%"
-    >
+    <v-container fluid fill-height class="d-flex flex-column" style="height: 90%">
       <p class="text-h6 text-left mb-4">On Deck</p>
       <v-list>
         <draggable
           :list="gameStore.gamesOnDeck"
           item-key="id"
           v-bind="dragOptions"
-          @start="isDragging = true"
-          @end="isDragging = false"
+          @dragstart="drag"
         >
           <template #item="{ element }">
             <div class="d-flex mb-3">
@@ -78,4 +72,11 @@ function goToCreateGameUpsert() {
 const dragOptions = {
   animation: 100,
 };
+
+function drag(evt) {
+  // This is a horrible way of getting the dragged item
+  var game = evt.srcElement.__draggable_context.element;
+  evt.dataTransfer.setData("gameId", game.id);
+  evt.dataTransfer.setData("fromOnDeck", true);
+}
 </script>
