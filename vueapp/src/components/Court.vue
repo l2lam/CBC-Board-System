@@ -47,13 +47,13 @@ const dragOptions = {
   animation: 100,
 };
 
+// Handle court/game dragging event.  Communicate the data via the event's dataTransfer configuration
 function drag(evt) {
-  evt.dataTransfer.dropEffect = "move";
-  evt.dataTransfer.effectAllowed = "move";
   evt.dataTransfer.setData("courtId", court.value.id);
   evt.dataTransfer.setData("gameId", court.value.game?.id);
 }
 
+// Handle the drop event when something gets dropped onto a court.
 function drop(evt) {
   var sourceGameId = evt.dataTransfer.getData("gameId");
   var sourceGame = gameStore.findGameById(sourceGameId);

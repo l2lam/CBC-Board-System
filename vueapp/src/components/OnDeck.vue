@@ -73,6 +73,7 @@ const dragOptions = {
   animation: 100,
 };
 
+// Handle game dragging event (to a court).  Communicate the data via the event's dataTransfer configuration
 function drag(evt) {
   // This is a horrible way of getting the dragged item
   var game = evt.srcElement.__draggable_context.element;
