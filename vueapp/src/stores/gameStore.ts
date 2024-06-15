@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { Game } from "../models/game";
 import { Player } from "../models/player";
 import { usePlayerStore } from "../stores/playerStore";
+import { useCourtStore } from "./courtStore";
 
 const GAMES_ON_DECK_STORE_ID = "gamesOnDeck";
 let mock = true;
@@ -43,6 +44,17 @@ export const useGameStore = defineStore(GAMES_ON_DECK_STORE_ID, {
     },
     addGameToOnDeckQueue(game: Game) {
       this.gamesOnDeck.push(game);
+    },
+    findGameById(id) {
+      var game = this.gamesOnDeck.find((game) => game.id == id);
+      if (!game) {
+        // Search the courts for the game
+        var courtStore = useCourtStore();
+        game = courtStore.allCourts.find(
+          (court) => court.game?.id === id
+        )?.game;
+      }
+      return game;
     },
   },
 });
