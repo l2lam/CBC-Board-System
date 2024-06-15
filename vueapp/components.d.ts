@@ -18,6 +18,7 @@ declare module 'vue' {
     OnDeck: typeof import('./src/components/OnDeck.vue')['default']
     Playing: typeof import('./src/components/Playing.vue')['default']
     SelectMembers: typeof import('./src/components/SelectMembers.vue')['default']
+    Venue: typeof import('./src/components/Venue.vue')['default']
     Waiting: typeof import('./src/components/Waiting.vue')['default']
   }
 }
