@@ -34,6 +34,7 @@ function courts(row) {
   var startIndex = row * nCols;
   var result = courtStore.allCourts.slice(startIndex, startIndex + nCols);
   var nBlanks = nCols - result.length;
+
   for (var i = 0; i < nBlanks; i++) result.push(undefined);
   return result;
 }
