@@ -3,6 +3,7 @@ import { Game } from "../models/game";
 import { Player } from "../models/player";
 import { usePlayerStore } from "../stores/playerStore";
 import { useCourtStore } from "./courtStore";
+import { Court } from "../models/court";
 
 const GAMES_ON_DECK_STORE_ID = "gamesOnDeck";
 let mock = true;
@@ -45,7 +46,8 @@ export const useGameStore = defineStore(GAMES_ON_DECK_STORE_ID, {
     addGameToOnDeckQueue(game: Game) {
       this.gamesOnDeck.push(game);
     },
-    findGameById(id) {
+    // Search for the game with the given id and return it if found, otherwise return undefined.
+    findGameById(id: string): Court | undefined {
       var game = this.gamesOnDeck.find((game) => game.id == id);
       if (!game) {
         // Search the courts for the game

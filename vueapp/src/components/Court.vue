@@ -27,7 +27,7 @@
   </draggable>
 </template>
 
-<style scoped>
+<style>
 @import "@/assets/styles/custom.css";
 </style>
 
