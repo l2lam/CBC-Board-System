@@ -3,7 +3,7 @@
     <v-container fluid fill-height class="d-flex flex-column" style="height: 90%">
       <p class="text-h6">Select members to add</p>
       <v-list>
-        <Player :player="member" v-for="member in playerStore.selectableMembersForWaitingList">
+        <Player :player="member" v-for="member in playerStore.selectableMembersForWaitingList" :key="member.id">
           <template v-slot:button>
             <v-checkbox-btn v-model="selectedMembers" :value="member"></v-checkbox-btn>
           </template>

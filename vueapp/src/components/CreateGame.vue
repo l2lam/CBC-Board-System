@@ -8,7 +8,7 @@
     >
       <p class="text-h6">Select Players for Game</p>
       <v-list>
-        <Player :player="player" v-for="player in playerStore.waitingPlayers">
+        <Player :player="player" v-for="player in playerStore.waitingPlayers" :key="player.id">
           <template v-slot:button>
             <v-checkbox-btn
               v-model="selectedPlayers"
