@@ -13,11 +13,11 @@ export const useLevelStore = defineStore(LEVELS_STORE_ID, {
       console.log("loading levels");
       if (mock) {
         this.allLevels = [
-          new Level(0, "New"),
-          new Level(1, "Black"),
-          new Level(2, "Green"),
-          new Level(3, "Blue"),
-          new Level(4, "Red"),
+          new Level(0, "New", "white"),
+          new Level(1, "Black", "black"),
+          new Level(2, "Green", "green"),
+          new Level(3, "Blue", "blue"),
+          new Level(4, "Red", "red"),
         ];
       } else {
         // Get data from the remote database
