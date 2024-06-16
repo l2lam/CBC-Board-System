@@ -40,7 +40,7 @@
               :player="element"
               @click="playerSelected(element)"
             >
-              <template v-slot:button>
+              <template v-slot:append>
                 <v-btn
                   v-if="enablePlayerRemoval"
                   color="secondary"

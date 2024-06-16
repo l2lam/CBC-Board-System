@@ -4,7 +4,7 @@
       <p class="text-h6">Select members to add</p>
       <v-list>
         <Player :player="member" v-for="member in playerStore.selectableMembersForWaitingList" :key="member.id">
-          <template v-slot:button>
+          <template v-slot:append>
             <v-checkbox-btn v-model="selectedMembers" :value="member"></v-checkbox-btn>
           </template>
         </Player>

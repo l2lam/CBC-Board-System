@@ -9,7 +9,7 @@
     {{ player.name }}
   </v-list-item-title>
   <template v-slot:append>
-    <slot name="button"></slot>
+    <slot name="append"></slot>
   </template>
 </v-list-item>
 </template>
