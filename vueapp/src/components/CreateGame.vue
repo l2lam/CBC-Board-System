@@ -8,29 +8,14 @@
     >
       <p class="text-h6">Select Players for Game</p>
       <v-list>
-        <v-list-item
-          v-for="player in playerStore.waitingPlayers"
-          :key="player.id"
-        >
-          <template v-slot:prepend>
-            <v-icon
-              :icon="
-                player.isGuest
-                  ? 'mdi-account-box-outline'
-                  : 'mdi-account-circle'
-              "
-            ></v-icon>
-          </template>
-          <v-list-item-title>
-            {{ player.name }}
-          </v-list-item-title>
+        <Player :player="player" v-for="player in playerStore.waitingPlayers" :key="player.name">
           <template v-slot:append>
             <v-checkbox-btn
               v-model="selectedPlayers"
               :value="player"
             ></v-checkbox-btn>
           </template>
-        </v-list-item>
+        </Player>
       </v-list>
     </v-container>
     <v-divider class="mb-4"></v-divider>
@@ -53,6 +38,7 @@ import { ref } from "vue";
 import { usePlayerStore } from "../stores/playerStore";
 import { useGameStore } from "../stores/gameStore";
 import { Game } from "../models/game";
+import Player from "./Player.vue";
 
 const emit = defineEmits(["close"]);
 const playerStore = usePlayerStore();
