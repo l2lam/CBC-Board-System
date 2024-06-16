@@ -7,7 +7,11 @@ let mock = true;
 
 export const useLevelStore = defineStore(LEVELS_STORE_ID, {
   state: () => ({ allLevels: [] as Level[] }),
-  getters: {},
+  getters: {
+    randomLevel() {
+      return this.allLevels[Math.floor(Math.random() * this.allLevels.length)];
+    }
+  },
   actions: {
     async loadLevels() {
       console.log("loading levels");
