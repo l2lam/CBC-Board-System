@@ -9,7 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     Account: typeof import('./src/components/Account.vue')['default']
     Auth: typeof import('./src/components/Auth.vue')['default']
-    Court: typeof import("./src/components/Court.vue")["default"]
+    Court: typeof import('./src/components/Court.vue')['default']
     CreateGame: typeof import('./src/components/CreateGame.vue')['default']
     Game: typeof import('./src/components/Game.vue')['default']
     GuestUpsert: typeof import('./src/components/GuestUpsert.vue')['default']
