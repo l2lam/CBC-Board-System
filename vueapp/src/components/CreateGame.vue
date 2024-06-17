@@ -1,52 +1,28 @@
 <template>
-  <v-sheet class="pa-4 mx-auto" max-width="600" width="100%" height="100%">
-    <v-container
-      fluid
-      fill-height
-      class="d-flex flex-column"
-      style="height: 90%"
-    >
+  <QueueColumn>
+    <template v-slot:main>
       <p class="text-h6">Select Players for Game</p>
       <v-list>
-        <v-list-item
+        <Player
+          :player="player"
           v-for="player in playerStore.waitingPlayers"
-          :key="player.id"
+          :key="player.name"
         >
-          <template v-slot:prepend>
-            <v-icon
-              :icon="
-                player.isGuest
-                  ? 'mdi-account-box-outline'
-                  : 'mdi-account-circle'
-              "
-            ></v-icon>
-          </template>
-          <v-list-item-title>
-            {{ player.name }}
-          </v-list-item-title>
           <template v-slot:append>
-            <v-checkbox-btn
-              v-model="selectedPlayers"
-              :value="player"
-            ></v-checkbox-btn>
+            <v-checkbox-btn v-model="selectedPlayers" :value="player"></v-checkbox-btn>
           </template>
-        </v-list-item>
+        </Player>
       </v-list>
-    </v-container>
-    <v-divider class="mb-4"></v-divider>
-    <div class="text-center justify-space-evenly" style="height: 10%">
-      <v-btn
-        height="72"
-        min-width="140"
-        prepend-icon="mdi-account-circle"
-        :stacked="true"
-        @click="createGame"
-      >
-        Done
-      </v-btn>
-    </div>
-  </v-sheet>
+    </template>
+    <template v-slot:actions>
+      <v-btn prepend-icon="mdi-check" :stacked="true" @click="createGame"> Done </v-btn>
+    </template>
+  </QueueColumn>
 </template>
+
+<style>
+@import "@/assets/styles/custom.css";
+</style>
 
 <script setup lang="ts">
 import { ref } from "vue";

@@ -11,16 +11,7 @@
     <v-card-text v-if="!flipped" class="bg-surface-light" @click="flip">
       <v-card-title v-if="court">{{ court.name }}</v-card-title>
       <v-list class="bg-surface-light" density="compact">
-        <v-list-item v-for="player in game.players">
-          <template v-slot:prepend>
-            <v-icon
-              :icon="player.isGuest ? 'mdi-account-box-outline' : 'mdi-account-circle'"
-            ></v-icon>
-          </template>
-          <v-list-item-title>
-            {{ player.name }}
-          </v-list-item-title>
-        </v-list-item>
+        <Player :player="player" v-for="player in game.players" :key="player.name"></Player>
       </v-list>
     </v-card-text>
     <!-- The game options when the game is on a court -->
@@ -59,6 +50,7 @@ import { ref } from "vue";
 import { useGameStore } from "../stores/gameStore";
 import { useCourtStore } from "../stores/courtStore";
 import { usePlayerStore } from "../stores/playerStore";
+import Player from "./Player.vue";
 
 const props = defineProps(["game", "court"]);
 const game = ref(props.game);

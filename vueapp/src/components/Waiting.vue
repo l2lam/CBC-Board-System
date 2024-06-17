@@ -1,14 +1,10 @@
 <template>
-  <v-sheet
-    v-if="currentScreen == Screen.WAITING"
-    class="pa-4 mx-auto"
-    max-width="600"
-    width="100%"
-    height="100%"
-  >
-    <v-container fluid fill-height class="queue-top d-flex flex-column">
+  <QueueColumn v-if="currentScreen == Screen.WAITING">
+    <template v-slot:main>
       <div class="d-flex justify-space-between">
-        <p class="text-h6 mb-3">Waiting List</p>
+        <v-icon icon="mdi-timer-sand"></v-icon>
+        <p class="text-h6 pl-2">Waiting List</p>
+        <v-spacer></v-spacer>
         <div class="text-end">
           <v-btn
             v-if="enablePlayerRemoval"
@@ -36,17 +32,7 @@
           :force-fallback="true"
         >
           <template #item="{ element }">
-            <v-list-item @click="playerSelected(element)">
-              <template v-slot:prepend>
-                <v-icon
-                  :icon="
-                    element.isGuest ? 'mdi-account-box-outline' : 'mdi-account-circle'
-                  "
-                ></v-icon>
-              </template>
-              <v-list-item-title>
-                {{ element.name }}
-              </v-list-item-title>
+            <Player :player="element" @click="playerSelected(element)">
               <template v-slot:append>
                 <v-btn
                   v-if="enablePlayerRemoval"
@@ -57,13 +43,12 @@
                   @click.stop="playerStore.removePlayer(element)"
                 ></v-btn>
               </template>
-            </v-list-item>
+            </Player>
           </template>
         </draggable>
       </v-list>
-    </v-container>
-    <v-divider class="mb-4"></v-divider>
-    <v-container class="queue-bottom">
+    </template>
+    <template v-slot:actions>
       <v-row height="100%">
         <v-col>
           <v-btn
@@ -84,8 +69,8 @@
           </v-btn>
         </v-col>
       </v-row>
-    </v-container>
-  </v-sheet>
+    </template>
+  </QueueColumn>
   <v-sheet v-else-if="currentScreen == Screen.GUEST">
     <GuestUpsert :player="currentPlayer" @close="returnToWaitingScreen"></GuestUpsert>
   </v-sheet>
@@ -107,6 +92,7 @@
 import { ref } from "vue";
 import { usePlayerStore } from "../stores/playerStore";
 import draggable from "vuedraggable";
+import Player from "./Player.vue";
 
 enum Screen {
   WAITING,
