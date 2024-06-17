@@ -26,7 +26,7 @@
         label="Target level"
         :items="levelStore.allLevels"
         item-title="name"
-        v-model="member.level"
+        v-model="targetLevel"
       >
       </v-select>
     </div>
@@ -65,6 +65,8 @@ const props = defineProps(["player"]);
 const member = ref(props.player);
 const levelStore = useLevelStore();
 const emit = defineEmits(["close"]);
+const targetLevel = ref(member.value.level)
+
 
 function goToChallengeSetUp() {
   currentScreen.value = Screen.SETUPSCREEN;
