@@ -1,6 +1,6 @@
 <template>
-  <v-sheet class="pa-4 mx-auto" max-width="600" width="100%" height="100%">
-    <v-container fluid fill-height class="queue-top d-flex flex-column">
+  <QueueColumn>
+    <template v-slot:main>
       <p class="text-h6">Select Players for Game</p>
       <v-list>
         <Player
@@ -13,12 +13,11 @@
           </template>
         </Player>
       </v-list>
-    </v-container>
-    <v-divider class="mb-4"></v-divider>
-    <div class="queue-bottom">
+    </template>
+    <template v-slot:actions>
       <v-btn prepend-icon="mdi-check" :stacked="true" @click="createGame"> Done </v-btn>
-    </div>
-  </v-sheet>
+    </template>
+  </QueueColumn>
 </template>
 
 <style>

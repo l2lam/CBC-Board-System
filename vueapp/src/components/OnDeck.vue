@@ -1,16 +1,11 @@
 <template>
-  <v-sheet
-    v-if="currentScreen == Screen.ONDECKQUEUE"
-    class="pa-4 mx-auto"
-    max-width="600"
-    width="100%"
-    height="100%"
-  >
-    <v-container fluid fill-height class="queue-top d-flex flex-column">
+  <QueueColumn v-if="currentScreen == Screen.ONDECKQUEUE">
+    <template v-slot:main>
       <div class="d-flex">
         <v-icon icon="mdi-pause-circle"></v-icon>
         <p class="text-h6 pl-2">On Deck</p>
       </div>
+      <v-divider class="mb-4"></v-divider>
       <v-list>
         <draggable
           :list="gameStore.gamesOnDeck"
@@ -25,9 +20,8 @@
           </template>
         </draggable>
       </v-list>
-    </v-container>
-    <v-divider class="mb-4"></v-divider>
-    <v-container class="queue-bottom">
+    </template>
+    <template v-slot:actions>
       <v-row height="100%">
         <v-col>
           <v-btn prepend-icon="mdi-gamepad" :stacked="true" @click="goToCreateGameUpsert">
@@ -35,8 +29,8 @@
           </v-btn>
         </v-col>
       </v-row>
-    </v-container>
-  </v-sheet>
+    </template>
+  </QueueColumn>
   <CreateGame
     v-else-if="currentScreen == Screen.CREATEGAME"
     @close="returnToOnDeckQueue"
