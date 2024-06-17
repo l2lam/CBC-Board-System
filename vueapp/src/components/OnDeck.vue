@@ -30,26 +30,17 @@
     <v-container class="queue-bottom">
       <v-row height="100%">
         <v-col>
-          <v-btn
-            prepend-icon="mdi-account-circle"
-            :stacked="true"
-            @click="goToCreateGameUpsert"
-          >
+          <v-btn prepend-icon="mdi-gamepad" :stacked="true" @click="goToCreateGameUpsert">
             + Game
           </v-btn>
         </v-col>
       </v-row>
     </v-container>
   </v-sheet>
-  <v-sheet
+  <CreateGame
     v-else-if="currentScreen == Screen.CREATEGAME"
-    class="pa-4 mx-auto"
-    max-width="600"
-    width="100%"
-    height="100%"
-  >
-    <CreateGame @close="returnToOnDeckQueue"></CreateGame>
-  </v-sheet>
+    @close="returnToOnDeckQueue"
+  ></CreateGame>
 </template>
 
 <style>
