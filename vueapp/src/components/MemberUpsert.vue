@@ -1,11 +1,13 @@
 <template>
     <v-card
-      prepend-icon="mdi-account-circle"
       text="Blah blah blah"
       :title=member.name
       class="mx-auto"
       width="90%"
     >
+      <template v-slot:prepend>
+        <PlayerAvatar :player />
+      </template>
       <v-card-actions>
         <v-btn 
         text="Initiate challenge"
@@ -22,6 +24,7 @@
   
   <script setup lang="ts">  
   import { ref } from "vue";
+  import PlayerAvatar from "./PlayerAvatar.vue";
 
   const props = defineProps(["player"]);
   const member =  ref(props.player);

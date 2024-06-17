@@ -1,11 +1,7 @@
 <template>
 <v-list-item>
   <template v-slot:prepend>
-    <v-icon
-      :icon="player.isGuest ? 'mdi-account-box-outline' : 'mdi-account-circle'"
-      :color="player?.level?.color"
-      v-tooltip="(player.isGuest ? 'Guest (' : 'Member (') + (player?.level?.name || 'No Level') + ')'"
-    ></v-icon>
+    <PlayerAvatar :player />
   </template>
   <v-list-item-title>
     {{ player.name }}
@@ -18,6 +14,7 @@
 
 <script setup lang="ts">
 import { Player } from '../models/player';
+import PlayerAvatar from './PlayerAvatar.vue';
 
 defineProps<{
   player: Player
