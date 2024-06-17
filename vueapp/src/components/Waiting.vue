@@ -8,7 +8,9 @@
   >
     <v-container fluid fill-height class="queue-top d-flex flex-column">
       <div class="d-flex justify-space-between">
-        <p class="text-h6 mb-3">Waiting List</p>
+        <v-icon icon="mdi-timer-sand"></v-icon>
+        <p class="text-h6 pl-2">Waiting List</p>
+        <v-spacer></v-spacer>
         <div class="text-end">
           <v-btn
             v-if="enablePlayerRemoval"
@@ -36,10 +38,7 @@
           :force-fallback="true"
         >
           <template #item="{ element }">
-            <Player
-              :player="element"
-              @click="playerSelected(element)"
-            >
+            <Player :player="element" @click="playerSelected(element)">
               <template v-slot:append>
                 <v-btn
                   v-if="enablePlayerRemoval"
