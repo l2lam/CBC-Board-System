@@ -16,6 +16,7 @@ declare module 'vue' {
     MemberUpsert: typeof import('./src/components/MemberUpsert.vue')['default']
     OnDeck: typeof import('./src/components/OnDeck.vue')['default']
     Player: typeof import('./src/components/Player.vue')['default']
+    PlayerAvatar: typeof import('./src/components/PlayerAvatar.vue')['default']
     Playing: typeof import('./src/components/Playing.vue')['default']
     SelectMembers: typeof import('./src/components/SelectMembers.vue')['default']
     Venue: typeof import('./src/components/Venue.vue')['default']
