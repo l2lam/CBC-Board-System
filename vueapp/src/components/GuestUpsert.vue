@@ -20,6 +20,7 @@
         label="Skill level"
         :items="levelStore.allLevels"
         item-title="name"
+        return-object
         v-model="guest.level"
       >
       </v-select>
