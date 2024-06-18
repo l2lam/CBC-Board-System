@@ -5,6 +5,7 @@
         <v-icon icon="mdi-play-circle"></v-icon>
         <p class="text-h6 pl-2">Playing</p>
       </div>
+      <v-divider class="mb-4"></v-divider>
       <v-container fill-height>
         <v-row v-for="row in nRows" :key="row" height="300px">
           <v-col

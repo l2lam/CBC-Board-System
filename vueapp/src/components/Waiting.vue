@@ -24,6 +24,7 @@
           ></v-btn>
         </div>
       </div>
+      <v-divider class="mb-4"></v-divider>
       <v-list>
         <draggable
           :list="playerStore.waitingPlayers"
@@ -72,10 +73,16 @@
     </template>
   </QueueColumn>
   <v-sheet v-else-if="currentScreen == Screen.GUEST">
-    <GuestUpsert :player="currentPlayer" @close="returnToWaitingScreen"></GuestUpsert>
+    <GuestUpsert
+      :player="currentPlayer"
+      @close="returnToWaitingScreen"
+    ></GuestUpsert>
   </v-sheet>
   <v-sheet v-else-if="currentScreen == Screen.MEMBER">
-    <MemberUpsert :player="currentPlayer" @close="returnToWaitingScreen"></MemberUpsert>
+    <MemberUpsert
+      :player="currentPlayer"
+      @close="returnToWaitingScreen"
+    ></MemberUpsert>
   </v-sheet>
   <SelectMembers
     v-else-if="currentScreen == Screen.SELECTMEMBERS"
