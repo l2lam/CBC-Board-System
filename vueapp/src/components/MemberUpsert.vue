@@ -45,7 +45,30 @@
     width="100%"
     height="100%"
   >
-    <SelectChallenger @close="returnToOnDeckQueue"></SelectChallenger>
+    <QueueColumn>
+      <template v-slot:main>
+        <p class="text-h6">Select Players for Game</p>
+        <v-list>
+          <Player
+            :player="member"
+            v-for="member in challengers"
+            :key="member.name"
+          >
+            <template v-slot:append>
+              <v-checkbox-btn
+                v-model="selectedChallengers"
+                :value="member"
+              ></v-checkbox-btn>
+            </template>
+          </Player>
+        </v-list>
+      </template>
+      <template v-slot:actions>
+        <v-btn prepend-icon="mdi-check" :stacked="true" @click="createChallenge">
+          Done
+        </v-btn>
+      </template>
+    </QueueColumn>
   </v-sheet>
 </template>
 
@@ -53,6 +76,7 @@
 import { ref } from "vue";
 import { useLevelStore } from "../stores/levelStore";
 import SelectChallenger from "./SelectChallenger.vue";
+import { usePlayerStore } from "../stores/playerStore";
 
 enum Screen {
   INITIALSCREEN,
@@ -64,16 +88,28 @@ const currentScreen = ref(Screen.INITIALSCREEN);
 const props = defineProps(["player"]);
 const member = ref(props.player);
 const levelStore = useLevelStore();
+const playerStore = usePlayerStore();
 const emit = defineEmits(["close"]);
-const targetLevel = ref(member.value.level)
-
+const targetLevel = ref(member.value.level);
+const challengers = ref([]);
+const selectedChallengers = ref([]);
 
 function goToChallengeSetUp() {
   currentScreen.value = Screen.SETUPSCREEN;
 }
 
 function goToChallengerSelect() {
+  playerStore.allMembers.forEach((member) => {
+    if (targetLevel.value == member.level) {
+      challengers.value.push(member);
+    }
+  });
   currentScreen.value = Screen.SELECTCHALLENGERS;
+}
+
+function createChallenge() {
+
+  done();
 }
 
 function done() {
