@@ -55,6 +55,7 @@ export const useCourtStore = defineStore(COURTS_STORE_ID, {
           ),
           new Court(7, "Court 7"),
           new Court(8, "Court 8"),
+          new Court(9, "Court 9"),
         ];
       } else {
         // TODO load courts from supabase and sort it in desired order
@@ -63,8 +64,8 @@ export const useCourtStore = defineStore(COURTS_STORE_ID, {
       }
     },
     removeGameFromCourt(court: Court) {
-        court.isReserved = false;
-        court.game = undefined;
+      court.isReserved = false;
+      court.game = undefined;
     },
   },
 });

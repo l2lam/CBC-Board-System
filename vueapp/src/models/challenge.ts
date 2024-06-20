@@ -11,6 +11,9 @@ export class ChallengeScore {
   score: string;
   winners: Member[];
   losers: Member[];
+  constructor(obj: Partial<ChallengeScore>) {
+    Object.assign(this, obj);
+  }
 }
 
 export class Challenge {
@@ -19,10 +22,14 @@ export class Challenge {
   challenger: Member;
   targetLevel;
   incumbents: Member[]; // The members being challenged
-  scores: ChallengeScore[];
+  scores: ChallengeScore[] = [];
   notes?: string;
-  numberOfWinsToBeSuccessful = 2;
-  maxGames = 3;
+  numberOfWinsToBeSuccessful: number = 2;
+  maxGames: number = 3;
+
+  constructor(obj: Partial<Challenge>) {
+    Object.assign(this, obj);
+  }
 
   registerScore(score: ChallengeScore) {
     this.scores.push(score);

@@ -3,6 +3,7 @@ import { supabase } from "../supabase";
 import { Challenge, ChallengeScore } from "../models/challenge";
 import { Member } from "../models/player";
 import { Level } from "../models/level";
+import { mockChallenge1 } from "./mockData";
 
 const CHALLENGES_STORE_ID = "challenges";
 let mock = true;
@@ -15,7 +16,7 @@ export const useChallengeStore = defineStore(CHALLENGES_STORE_ID, {
       console.log("loading challenges");
       if (mock) {
         // Mock data for quick testing
-        this.allChallenges = [];
+        this.allChallenges = [mockChallenge1];
       } else {
         // Get active challenges from the local storage
         this.activeChallenges = localStorage.getItem(CHALLENGES_STORE_ID) ?? [];
@@ -31,14 +32,14 @@ export const useChallengeStore = defineStore(CHALLENGES_STORE_ID, {
     ): Promise<Challenge> {
       // TODO: persist to supabase
       //const {data, error} = await supabase.rpc('register_challenge', ...)
-      var challenge: Challenge = {
+      var challenge = new Challenge({
         id: challenger.id + this.activeChallenges.length,
         date: new Date(),
         challenger,
         targetLevel,
         incumbents,
         scores: [],
-      };
+      });
 
       this.activeChallenges.push(challenge);
       this.updateLocalStorage();
@@ -50,12 +51,12 @@ export const useChallengeStore = defineStore(CHALLENGES_STORE_ID, {
       losers: Member[],
       score: string
     ) {
-      var newScore: ChallengeScore = {
+      var newScore = new ChallengeScore({
         date: new Date(),
         score,
         winners,
         losers,
-      };
+      });
       challenge.registerScore(newScore);
       this.updateLocalStorage();
     },

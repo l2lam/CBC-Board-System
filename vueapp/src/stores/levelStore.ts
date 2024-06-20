@@ -1,6 +1,13 @@
 import { defineStore } from "pinia";
 import { supabase } from "../supabase";
 import { Level } from "../models/level";
+import {
+  mockLevel1,
+  mockLevel2,
+  mockLevel3,
+  mockLevel4,
+  mockLevel5,
+} from "./mockData";
 
 const LEVELS_STORE_ID = "levels";
 let mock = true;
@@ -13,11 +20,11 @@ export const useLevelStore = defineStore(LEVELS_STORE_ID, {
       console.log("loading levels");
       if (mock) {
         this.allLevels = [
-          new Level(0, "New"),
-          new Level(1, "Black"),
-          new Level(2, "Green"),
-          new Level(3, "Blue"),
-          new Level(4, "Red"),
+          mockLevel1,
+          mockLevel2,
+          mockLevel3,
+          mockLevel4,
+          mockLevel5,
         ];
       } else {
         // Get data from the remote database
