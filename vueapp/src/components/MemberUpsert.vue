@@ -116,14 +116,14 @@ function goToChallengerSelect() {
   currentScreen.value = Screen.SELECTCHALLENGERS;
 }
 
-function createChallenge() {
-  challengeStore.registerNewChallenge(
+async function createChallenge() {
+  const challenge = challengeStore.registerNewChallenge(
     challenger.value,
     targetLevel.value,
     selectedIncumbents.value
   );
   selectedIncumbents.value.push(challenger);
-  gameStore.addGameToOnDeckQueue(new Game(selectedIncumbents.value));
+  gameStore.addGameToOnDeckQueue(new Game(selectedIncumbents.value, await challenge));
   done();
 }
 
