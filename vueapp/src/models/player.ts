@@ -1,4 +1,5 @@
-import { Level } from "../models/level";
+import { Level } from "./level";
+import { useLevelStore } from "../stores/levelStore"
 
 // A Player is someone that is present at the club session and can play
 export class Player {
@@ -15,7 +16,9 @@ export class Player {
   }
 
   static generateMockPlayers(n: number, label: string = "Mock Player", start: number = 1): Player[] {
-    return Array.from({ length: n }, (v, i) => i).map(i => new Player(`${label} ${i + start}`))
+    var levelStore = useLevelStore();
+    levelStore.loadLevels();
+    return Array.from({ length: n }, (v, i) => i).map(i => new Player(`${label} ${i + start}`, levelStore.allLevels[i % levelStore.allLevels.length]));
   }
 }
 
@@ -32,6 +35,8 @@ export class Member extends Player {
   }
 
   static generateMockMembers(n: number, label: string = "Mock Member", start: number = 1): Member[] {
-    return Array.from({ length: n }, (v, i) => i).map(i => new Member(i + start, `${label} ${i + start}`))
+    var levelStore = useLevelStore();
+    levelStore.loadLevels();
+    return Array.from({ length: n }, (v, i) => i).map(i => new Member(i + start, `${label} ${i + start}`, levelStore.allLevels[i % levelStore.allLevels.length]));
   }
 }

@@ -1,11 +1,13 @@
 <template>
   <v-card
-    prepend-icon="mdi-account-box-outline"
     text="Blah blah blah"
     :title="isNewPlayer ? 'New Guest' : 'Edit Guest'"
     class="mx-auto"
     width="90%"
   >
+    <template v-slot:prepend>
+      <PlayerAvatar :player />
+    </template>
     <div>
       <v-text-field
         label="Name"
@@ -18,6 +20,7 @@
         label="Skill level"
         :items="levelStore.allLevels"
         item-title="name"
+        return-object
         v-model="guest.level"
       >
       </v-select>
@@ -39,6 +42,7 @@ import { ref, computed } from "vue";
 import { Player } from "../models/player";
 import { useLevelStore } from "../stores/levelStore";
 import { usePlayerStore } from "../stores/playerStore";
+import PlayerAvatar from "./PlayerAvatar.vue";
 
 const emit = defineEmits(["close"]);
 const props = defineProps(["player"]);

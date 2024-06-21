@@ -3,11 +3,11 @@ import { Game } from "../models/game";
 import { Level } from "../models/level";
 import { Member } from "../models/player";
 
-export let mockLevel1 = new Level(0, "New");
-export let mockLevel2 = new Level(1, "Black");
-export let mockLevel3 = new Level(2, "Green");
-export let mockLevel4 = new Level(3, "Blue");
-export let mockLevel5 = new Level(4, "Red");
+export let mockLevel1 = new Level(0, "New", "white");
+export let mockLevel2 = new Level(1, "Black", "black");
+export let mockLevel3 = new Level(2, "Green", "green");
+export let mockLevel4 = new Level(3, "Blue", "blue");
+export let mockLevel5 = new Level(4, "Red", "red");
 
 export let mockMember1 = new Member(900, "Mock Member900", mockLevel3);
 export let mockMember2 = new Member(901, "Mock Member901", mockLevel4);
