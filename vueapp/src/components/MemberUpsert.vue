@@ -3,7 +3,7 @@
     v-if="currentScreen == Screen.INITIALSCREEN"
     prepend-icon="mdi-account-circle"
     text="Blah blah blah"
-    :title="member.name"
+    :title="challenger.name"
     class="mx-auto"
     width="90%"
   >
@@ -17,7 +17,7 @@
     v-if="currentScreen == Screen.SETUPSCREEN"
     prepend-icon="mdi-account-circle"
     text="Blah blah blah"
-    :title="member.name"
+    :title="challenger.name"
     class="mx-auto"
     width="90%"
   >
@@ -56,7 +56,7 @@
           >
             <template v-slot:append>
               <v-checkbox-btn
-                v-model="selectedChallengers"
+                v-model="selectedIncumbents"
                 :value="member"
               ></v-checkbox-btn>
             </template>
@@ -64,7 +64,11 @@
         </v-list>
       </template>
       <template v-slot:actions>
-        <v-btn prepend-icon="mdi-check" :stacked="true" @click="createChallenge">
+        <v-btn
+          prepend-icon="mdi-check"
+          :stacked="true"
+          @click="createChallenge"
+        >
           Done
         </v-btn>
       </template>
@@ -75,8 +79,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useLevelStore } from "../stores/levelStore";
-import SelectChallenger from "./SelectChallenger.vue";
 import { usePlayerStore } from "../stores/playerStore";
+import { useChallengeStore } from "../stores/challengeStore";
+import { useGameStore } from "../stores/gameStore";
+import { Game } from "../models/game";
 
 enum Screen {
   INITIALSCREEN,
@@ -86,19 +92,22 @@ enum Screen {
 
 const currentScreen = ref(Screen.INITIALSCREEN);
 const props = defineProps(["player"]);
-const member = ref(props.player);
+const challenger = ref(props.player);
 const levelStore = useLevelStore();
 const playerStore = usePlayerStore();
+const challengeStore = useChallengeStore();
+const gameStore = useGameStore();
 const emit = defineEmits(["close"]);
-const targetLevel = ref(member.value.level);
+const targetLevel = ref(challenger.value.level);
 const challengers = ref([]);
-const selectedChallengers = ref([]);
+const selectedIncumbents = ref([]);
 
 function goToChallengeSetUp() {
   currentScreen.value = Screen.SETUPSCREEN;
 }
 
 function goToChallengerSelect() {
+  // Creates array of members with target level
   playerStore.allMembers.forEach((member) => {
     if (targetLevel.value == member.level) {
       challengers.value.push(member);
@@ -108,7 +117,13 @@ function goToChallengerSelect() {
 }
 
 function createChallenge() {
-
+  challengeStore.registerNewChallenge(
+    challenger.value,
+    targetLevel.value,
+    selectedIncumbents.value
+  );
+  selectedIncumbents.value.push(challenger);
+  gameStore.addGameToOnDeckQueue(new Game(selectedIncumbents.value));
   done();
 }
 
