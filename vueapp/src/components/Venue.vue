@@ -1,7 +1,11 @@
 <template>
   <v-sheet class="pa-4 mx-auto" width="100%" height="100%">
     <v-container fluid fill-height class="d-flex flex-column">
-      <p class="text-h6 text-center">Playing</p>
+      <div class="d-flex justify-center">
+        <v-icon icon="mdi-play-circle"></v-icon>
+        <p class="text-h6 pl-2">Playing</p>
+      </div>
+      <v-divider class="mb-4"></v-divider>
       <v-container fill-height>
         <v-row v-for="row in nRows" :key="row" height="300px">
           <v-col

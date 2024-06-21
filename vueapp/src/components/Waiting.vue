@@ -1,14 +1,10 @@
 <template>
-  <v-sheet
-    v-if="currentScreen == Screen.WAITING"
-    class="pa-4 mx-auto"
-    max-width="600"
-    width="100%"
-    height="100%"
-  >
-    <v-container fluid fill-height class="queue-top d-flex flex-column">
+  <QueueColumn v-if="currentScreen == Screen.WAITING">
+    <template v-slot:main>
       <div class="d-flex justify-space-between">
-        <p class="text-h6 mb-3">Waiting List</p>
+        <v-icon icon="mdi-timer-sand"></v-icon>
+        <p class="text-h6 pl-2">Waiting List</p>
+        <v-spacer></v-spacer>
         <div class="text-end">
           <v-btn
             v-if="enablePlayerRemoval"
@@ -28,6 +24,7 @@
           ></v-btn>
         </div>
       </div>
+      <v-divider class="mb-4"></v-divider>
       <v-list>
         <draggable
           :list="playerStore.waitingPlayers"
@@ -36,10 +33,7 @@
           :force-fallback="true"
         >
           <template #item="{ element }">
-            <Player
-              :player="element"
-              @click="playerSelected(element)"
-            >
+            <Player :player="element" @click="playerSelected(element)">
               <template v-slot:append>
                 <v-btn
                   v-if="enablePlayerRemoval"
@@ -54,9 +48,8 @@
           </template>
         </draggable>
       </v-list>
-    </v-container>
-    <v-divider class="mb-4"></v-divider>
-    <v-container class="queue-bottom">
+    </template>
+    <template v-slot:actions>
       <v-row height="100%">
         <v-col>
           <v-btn
@@ -77,13 +70,19 @@
           </v-btn>
         </v-col>
       </v-row>
-    </v-container>
-  </v-sheet>
+    </template>
+  </QueueColumn>
   <v-sheet v-else-if="currentScreen == Screen.GUEST">
-    <GuestUpsert :player="currentPlayer" @close="returnToWaitingScreen"></GuestUpsert>
+    <GuestUpsert
+      :player="currentPlayer"
+      @close="returnToWaitingScreen"
+    ></GuestUpsert>
   </v-sheet>
   <v-sheet v-else-if="currentScreen == Screen.MEMBER">
-    <MemberUpsert :player="currentPlayer" @close="returnToWaitingScreen"></MemberUpsert>
+    <MemberUpsert
+      :player="currentPlayer"
+      @close="returnToWaitingScreen"
+    ></MemberUpsert>
   </v-sheet>
   <SelectMembers
     v-else-if="currentScreen == Screen.SELECTMEMBERS"

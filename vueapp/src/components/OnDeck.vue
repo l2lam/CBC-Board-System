@@ -1,13 +1,11 @@
 <template>
-  <v-sheet
-    v-if="currentScreen == Screen.ONDECKQUEUE"
-    class="pa-4 mx-auto"
-    max-width="600"
-    width="100%"
-    height="100%"
-  >
-    <v-container fluid fill-height class="d-flex flex-column" style="height: 90%">
-      <p class="text-h6 text-left mb-4">On Deck</p>
+  <QueueColumn v-if="currentScreen == Screen.ONDECKQUEUE">
+    <template v-slot:main>
+      <div class="d-flex">
+        <v-icon icon="mdi-pause-circle"></v-icon>
+        <p class="text-h6 pl-2">On Deck</p>
+      </div>
+      <v-divider class="mb-4"></v-divider>
       <v-list>
         <draggable
           :list="gameStore.gamesOnDeck"
@@ -22,31 +20,26 @@
           </template>
         </draggable>
       </v-list>
-    </v-container>
-    <v-container class="queue-bottom">
+    </template>
+    <template v-slot:actions>
       <v-row height="100%">
         <v-col>
-          <v-btn
-            prepend-icon="mdi-account-circle"
-            :stacked="true"
-            @click="goToCreateGameUpsert"
-          >
+          <v-btn prepend-icon="mdi-gamepad" :stacked="true" @click="goToCreateGameUpsert">
             + Game
           </v-btn>
         </v-col>
       </v-row>
-    </v-container>
-  </v-sheet>
-  <v-sheet
+    </template>
+  </QueueColumn>
+  <CreateGame
     v-else-if="currentScreen == Screen.CREATEGAME"
-    class="pa-4 mx-auto"
-    max-width="600"
-    width="100%"
-    height="100%"
-  >
-    <CreateGame @close="returnToOnDeckQueue"></CreateGame>
-  </v-sheet>
+    @close="returnToOnDeckQueue"
+  ></CreateGame>
 </template>
+
+<style>
+@import "@/assets/styles/custom.css";
+</style>
 
 <script setup lang="ts">
 import { useGameStore } from "../stores/gameStore";
