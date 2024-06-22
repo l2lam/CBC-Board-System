@@ -117,7 +117,7 @@ function goToChallengerSelect() {
 }
 
 async function createChallenge() {
-  const challenge = challengeStore.registerNewChallenge(
+  const challenge = await challengeStore.registerNewChallenge(
     challenger.value,
     targetLevel.value,
     selectedIncumbents.value
