@@ -123,7 +123,7 @@ async function createChallenge() {
     selectedIncumbents.value
   );
   selectedIncumbents.value.push(challenger);
-  gameStore.addGameToOnDeckQueue(new Game(selectedIncumbents.value, await challenge));
+  gameStore.addGameToOnDeckQueue(new Game([challenger, ...selectedIncumbents.value], challenge));
   done();
 }
 
