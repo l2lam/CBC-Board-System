@@ -18,6 +18,7 @@ declare module 'vue' {
     Player: typeof import('./src/components/Player.vue')['default']
     PlayerAvatar: typeof import('./src/components/PlayerAvatar.vue')['default']
     Playing: typeof import('./src/components/Playing.vue')['default']
+    QueueColumn: typeof import('./src/components/QueueColumn.vue')['default']
     SelectMembers: typeof import('./src/components/SelectMembers.vue')['default']
     Venue: typeof import('./src/components/Venue.vue')['default']
     Waiting: typeof import('./src/components/Waiting.vue')['default']
