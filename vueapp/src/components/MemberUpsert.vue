@@ -17,7 +17,7 @@
           >
           </v-select>
           <div v-if="targetLevel">
-            <p class="text-h6">Select Players for the challenge</p>
+            <v-card-text>Select players for the challenge</v-card-text>
             <v-list>
               <Player
                 :player="incumbent"
