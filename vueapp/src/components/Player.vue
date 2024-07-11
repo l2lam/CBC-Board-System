@@ -1,7 +1,7 @@
 <template>
   <v-list-item>
     <template v-slot:prepend>
-      <PlayerAvatar :player />
+      <PlayerAvatar :player="player" />
     </template>
     <v-list-item-title>
       {{ player.name }}
@@ -13,10 +13,9 @@
 </template>
 
 <script setup lang="ts">
-import { Player } from '../models/player';
-import PlayerAvatar from './PlayerAvatar.vue';
+import { Player } from "../models/player";
 
-defineProps<{
-  player: Player
+const props = defineProps<{
+  player: Player;
 }>();
 </script>

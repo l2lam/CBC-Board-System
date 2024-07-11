@@ -7,14 +7,14 @@
 </template>
 
 <script setup lang="ts">
-import { Player } from '../models/player';
+import { Player } from "../models/player";
 
 const props = defineProps<{
-  player: Player
+  player: Player;
 }>();
 
 function getTooltip() {
-  var levelName = props.player.level?.name || 'No Level';
+  var levelName = props.player.level?.name || "No Level";
   return props.player.isGuest ? `Guest (${levelName})` : `Member (${levelName})`;
 }
 </script>

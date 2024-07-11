@@ -30,6 +30,7 @@ import { useGameStore } from "../stores/gameStore";
 import { useCourtStore } from "../stores/courtStore";
 import { useTheme } from "vuetify";
 import { ref } from "vue";
+import { useChallengeStore } from "../stores/challengeStore";
 
 const playerStore = usePlayerStore();
 await playerStore.loadPlayers();
@@ -39,6 +40,8 @@ const gameStore = useGameStore();
 await gameStore.loadGames();
 const courtStore = useCourtStore();
 await courtStore.loadCourts();
+const challengeStore = useChallengeStore();
+await challengeStore.loadChallenges();
 
 let isDarkTheme = true;
 const theme = useTheme();
