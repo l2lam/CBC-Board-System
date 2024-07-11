@@ -10,7 +10,7 @@
           <v-card-text>Initiate a Challenge</v-card-text>
           <v-select
             label="Target level"
-            :items="levelStore.allLevels"
+            :items="levelStore.allLevels.filter((level) => level != member?.level)"
             item-title="name"
             v-model="targetLevel"
             return-object
@@ -74,7 +74,8 @@ import { usePlayerStore } from "../stores/playerStore";
 import { useChallengeStore } from "../stores/challengeStore";
 import { useGameStore } from "../stores/gameStore";
 import { Game } from "../models/game";
-import { Member } from "../models/player";
+import { Member, Player as PlayerModel } from "../models/player";
+import { useCourtStore } from "../stores/courtStore";
 
 enum Screen {
   MAIN,
@@ -87,11 +88,25 @@ const levelStore = useLevelStore();
 const playerStore = usePlayerStore();
 const challengeStore = useChallengeStore();
 const gameStore = useGameStore();
+const courtStore = useCourtStore();
 const emit = defineEmits(["close"]);
 const targetLevel = ref();
 const incumbents = computed(() => {
   selectedIncumbents.value = []; // Reset incumbents as a side-effect of changing target levels
-  return playerStore.allMembers.filter((m) => m.level == targetLevel.value);
+  return playerStore.waitingPlayers
+    .concat(
+      gameStore.gamesOnDeck.reduce((accumulator, game) => {
+        return accumulator.concat(game.players);
+      }, [] as PlayerModel[])
+    )
+    .concat(
+      courtStore.allCourts
+        .filter((court) => court.game)
+        .reduce((accumulator, court) => {
+          return accumulator.concat(court.game.players);
+        }, [] as PlayerModel[])
+    )
+    .filter((player) => !player.isGuest && player.level == targetLevel.value);
 });
 const selectedIncumbents = ref([]);
 
