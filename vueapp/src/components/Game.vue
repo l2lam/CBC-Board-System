@@ -1,6 +1,6 @@
 <template>
   <v-card
-    class="mx-auto w-100 ma-auto bg-surface-light"
+    class="mx-auto ma-auto bg-surface-light"
     :class="court ? 'court-card' : 'queue-card'"
     variant="elevated"
     elevation="10"
@@ -8,10 +8,18 @@
     v-on:click.self="flip"
   >
     <!-- The main view of the card, displaying the players in the game -->
+    <v-card-title v-if="game.challenge && court">{{
+      `${court.name} - Challenge`
+    }}</v-card-title>
+    <v-card-title v-else-if="game.challenge">Challenge</v-card-title>
+    <v-card-title v-else-if="court">{{ court.name }}</v-card-title>
     <v-card-text v-if="!flipped" class="bg-surface-light" @click="flip">
-      <v-card-title v-if="court">{{ court.name }}</v-card-title>
       <v-list class="bg-surface-light" density="compact">
-        <Player :player="player" v-for="player in game.players" :key="player.name"></Player>
+        <Player
+          :player="player"
+          v-for="player in game.players"
+          :key="player.name"
+        ></Player>
       </v-list>
     </v-card-text>
     <!-- The game options when the game is on a court -->
@@ -50,7 +58,6 @@ import { ref } from "vue";
 import { useGameStore } from "../stores/gameStore";
 import { useCourtStore } from "../stores/courtStore";
 import { usePlayerStore } from "../stores/playerStore";
-import Player from "./Player.vue";
 
 const props = defineProps(["game", "court"]);
 const game = ref(props.game);

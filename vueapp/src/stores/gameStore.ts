@@ -4,6 +4,7 @@ import { Player } from "../models/player";
 import { usePlayerStore } from "../stores/playerStore";
 import { useCourtStore } from "./courtStore";
 import { Court } from "../models/court";
+import { mockChallengeGame1, mockLevel2, mockLevel3 } from "./mockData";
 
 const GAMES_ON_DECK_STORE_ID = "gamesOnDeck";
 let mock = true;
@@ -16,14 +17,17 @@ export const useGameStore = defineStore(GAMES_ON_DECK_STORE_ID, {
       console.log("loading games");
       if (mock) {
         this.gamesOnDeck = [
-          new Game([new Player("Mike"), new Player("Moe")]),
           new Game([
-            new Player("Nick"),
-            new Player("Nancy"),
-            new Player("Nelly"),
-            new Player("Nathan"),
+            new Player("Mike", mockLevel2),
+            new Player("Moe", mockLevel2),
           ]),
-          new Game([new Player("Larry"), new Player("Lisa")]),
+          new Game([
+            new Player("Nick", mockLevel3),
+            new Player("Nancy", mockLevel3),
+            new Player("Nelly", mockLevel3),
+            new Player("Nathan", mockLevel3),
+          ]),
+          mockChallengeGame1,
         ];
       } else {
         // Load games from local storage

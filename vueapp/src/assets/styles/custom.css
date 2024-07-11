@@ -3,11 +3,12 @@
 }
 
 .court-card {
-  min-height: 250px;
+  min-height: 200px;
 }
 
 .queue-card {
   min-height: 200px;
+  width: 95%;
 }
 
 .queue {

@@ -1,12 +1,14 @@
 <template>
   <v-card
     v-if="currentScreen == Screen.INITIALSCREEN"
-    prepend-icon="mdi-account-circle"
     text="Blah blah blah"
     :title="challenger.name"
     class="mx-auto"
     width="90%"
   >
+    <template v-slot:prepend>
+      <PlayerAvatar :player />
+    </template>
     <v-card-actions>
       <v-btn text="Initiate challenge" @click="goToChallengeSetUp"></v-btn>
       <v-spacer></v-spacer>
@@ -49,11 +51,7 @@
       <template v-slot:main>
         <p class="text-h6">Select Players for Game</p>
         <v-list>
-          <Player
-            :player="member"
-            v-for="member in challengers"
-            :key="member.name"
-          >
+          <Player :player="member" v-for="member in challengers" :key="member.name">
             <template v-slot:append>
               <v-checkbox-btn
                 v-model="selectedIncumbents"
@@ -64,11 +62,7 @@
         </v-list>
       </template>
       <template v-slot:actions>
-        <v-btn
-          prepend-icon="mdi-check"
-          :stacked="true"
-          @click="createChallenge"
-        >
+        <v-btn prepend-icon="mdi-check" :stacked="true" @click="createChallenge">
           Done
         </v-btn>
       </template>
@@ -123,7 +117,9 @@ async function createChallenge() {
     selectedIncumbents.value
   );
   selectedIncumbents.value.push(challenger);
-  gameStore.addGameToOnDeckQueue(new Game([challenger, ...selectedIncumbents.value], challenge));
+  gameStore.addGameToOnDeckQueue(
+    new Game([challenger, ...selectedIncumbents.value], challenge)
+  );
   done();
 }
 
