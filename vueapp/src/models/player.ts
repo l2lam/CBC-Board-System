@@ -1,4 +1,4 @@
-import { Level } from "../models/level";
+import { Level } from "./level";
 
 // A Player is someone that is present at the club session and can play
 export class Player {
@@ -13,10 +13,6 @@ export class Player {
     this.isGuest = is_guest;
     this.level = level;
   }
-
-  static generateMockPlayers(n: number, label: string = "Mock Player", start: number = 1): Player[] {
-    return Array.from({ length: n }, (v, i) => i).map(i => new Player(`${label} ${i + start}`))
-  }
 }
 
 // A Member is a registered club member
@@ -29,9 +25,5 @@ export class Member extends Player {
   constructor(id, name, level?: Level, avatar_url = "") {
     super(name, level, false, avatar_url);
     this.id = id;
-  }
-
-  static generateMockMembers(n: number, label: string = "Mock Member", start: number = 1): Member[] {
-    return Array.from({ length: n }, (v, i) => i).map(i => new Member(i + start, `${label} ${i + start}`))
   }
 }

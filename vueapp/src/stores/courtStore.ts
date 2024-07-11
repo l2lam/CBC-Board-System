@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { Court } from "../models/court";
 import { Player } from "../models/player";
 import { Game } from "../models/game";
+import { mockLevel3, mockLevel4, mockLevel5 } from "./mockData";
 
 const COURTS_STORE_ID = "courtsOnDeck";
 let mock = true;
@@ -22,10 +23,10 @@ export const useCourtStore = defineStore(COURTS_STORE_ID, {
             "Court 1",
             false,
             new Game([
-              new Player("Wendy"),
-              new Player("Winnie"),
-              new Player("Wess"),
-              new Player("Winston"),
+              new Player("Wendy", mockLevel3),
+              new Player("Winnie", mockLevel3),
+              new Player("Wess", mockLevel3),
+              new Player("Winston", mockLevel3),
             ])
           ),
           new Court(2, "Court 2"),
@@ -36,10 +37,10 @@ export const useCourtStore = defineStore(COURTS_STORE_ID, {
             "Court 5",
             false,
             new Game([
-              new Player("Dave"),
-              new Player("Don"),
-              new Player("Dan"),
-              new Player("Dick"),
+              new Player("Dave", mockLevel4),
+              new Player("Don", mockLevel4),
+              new Player("Dan", mockLevel4),
+              new Player("Dick", mockLevel4),
             ])
           ),
           new Court(
@@ -47,10 +48,10 @@ export const useCourtStore = defineStore(COURTS_STORE_ID, {
             "Court 6",
             false,
             new Game([
-              new Player("Vivian"),
-              new Player("Viola"),
-              new Player("Violet"),
-              new Player("Victor"),
+              new Player("Vivian", mockLevel5),
+              new Player("Viola", mockLevel5),
+              new Player("Violet", mockLevel5),
+              new Player("Victor", mockLevel5),
             ])
           ),
           new Court(7, "Court 7"),

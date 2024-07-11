@@ -13,7 +13,7 @@
           v-if="court && court.game"
           :game="court.game"
           :court="court"
-          class="courtcard"
+          class="pa-2, ma-2 court-card"
         ></Game>
         <!-- A court with no game playing on it -->
         <v-card v-else-if="court" class="pa-2 ma-2 court-card">
