@@ -8,7 +8,7 @@
     v-on:click.self="flip"
   >
     <!-- The main view of the card, displaying the players in the game -->
-    <v-card-title v-if="title">{{ title }}</v-card-title>
+    <v-card-title v-if="title" @click="flip">{{ title }}</v-card-title>
     <v-card-text v-if="!flipped" class="bg-surface-light" @click="flip">
       <v-list class="bg-surface-light" density="compact">
         <Player
