@@ -1,40 +1,44 @@
 <template>
-  <v-card
-    text="Blah blah blah"
-    :title="isNewPlayer ? 'New Guest' : 'Edit Guest'"
-    class="mx-auto"
-    width="90%"
-  >
-    <template v-slot:prepend>
-      <PlayerAvatar :player />
-    </template>
-    <div>
-      <v-text-field
-        label="Name"
-        placeholder="Please enter a unique name for the Guest"
-        v-model="guest.name"
-        clearable
-        :rules="[required]"
-      ></v-text-field>
-      <v-select
-        label="Skill level"
-        :items="levelStore.allLevels"
-        item-title="name"
-        return-object
-        v-model="guest.level"
+  <QueueColumn>
+    <template v-slot:main>
+      <v-card
+        :title="isNewPlayer ? 'New Guest' : 'Edit Guest'"
+        class="mx-auto"
+        width="90%"
       >
-      </v-select>
-    </div>
-    <v-card-actions>
+        <template v-slot:prepend>
+          <PlayerAvatar :player="guest" />
+        </template>
+        <div>
+          <v-text-field
+            label="Name"
+            placeholder="Please enter a unique name for the Guest"
+            v-model="guest.name"
+            clearable
+            :rules="[required]"
+          ></v-text-field>
+          <v-select
+            label="Skill level"
+            :items="levelStore.allLevels"
+            item-title="name"
+            return-object
+            v-model="guest.level"
+          >
+          </v-select>
+        </div>
+      </v-card>
+    </template>
+    <template v-slot:actions>
       <v-btn v-if="isNewPlayer" text="CANCEL" @click="done"></v-btn>
-      <v-spacer></v-spacer>
       <v-btn
-        :text="isNewPlayer ? 'ADD' : 'DONE'"
+        :prepend-icon="isNewPlayer ? 'mdi-plus' : 'mdi-check'"
+        stacked
+        :text="isNewPlayer ? 'Add' : 'Done'"
         @click="save"
         :disabled="disableSave()"
       ></v-btn>
-    </v-card-actions>
-  </v-card>
+    </template>
+  </QueueColumn>
 </template>
 
 <script setup lang="ts">
@@ -42,7 +46,6 @@ import { ref, computed } from "vue";
 import { Player } from "../models/player";
 import { useLevelStore } from "../stores/levelStore";
 import { usePlayerStore } from "../stores/playerStore";
-import PlayerAvatar from "./PlayerAvatar.vue";
 
 const emit = defineEmits(["close"]);
 const props = defineProps(["player"]);

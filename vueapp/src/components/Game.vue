@@ -8,11 +8,7 @@
     v-on:click.self="flip"
   >
     <!-- The main view of the card, displaying the players in the game -->
-    <v-card-title v-if="game.challenge && court">{{
-      `${court.name} - Challenge`
-    }}</v-card-title>
-    <v-card-title v-else-if="game.challenge">Challenge</v-card-title>
-    <v-card-title v-else-if="court">{{ court.name }}</v-card-title>
+    <v-card-title v-if="title">{{ title }}</v-card-title>
     <v-card-text v-if="!flipped" class="bg-surface-light" @click="flip">
       <v-list class="bg-surface-light" density="compact">
         <Player
@@ -54,7 +50,7 @@
 </style>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useGameStore } from "../stores/gameStore";
 import { useCourtStore } from "../stores/courtStore";
 import { usePlayerStore } from "../stores/playerStore";
@@ -67,6 +63,12 @@ const gameStore = useGameStore();
 const courtStore = useCourtStore();
 const playerStore = usePlayerStore();
 const flipped = ref(false);
+const title = computed(() => {
+  if (game.value.challenge && court.value) return `${court.value.name} - Challenge`;
+  if (game.value.challenge) return "Challenge";
+  if (court.value) return court.value.name;
+  return undefined;
+});
 
 function flip() {
   flipped.value = !flipped.value;

@@ -72,9 +72,11 @@
       </v-row>
     </template>
   </QueueColumn>
-  <v-sheet v-else-if="currentScreen == Screen.GUEST">
-    <GuestUpsert :player="currentPlayer" @close="returnToWaitingScreen"></GuestUpsert>
-  </v-sheet>
+  <GuestUpsert
+    v-else-if="currentScreen == Screen.GUEST"
+    :player="currentPlayer"
+    @close="returnToWaitingScreen"
+  ></GuestUpsert>
   <MemberUpsert
     v-else-if="currentScreen == Screen.MEMBER"
     :member="currentPlayer"
@@ -97,6 +99,7 @@ import { usePlayerStore } from "../stores/playerStore";
 import draggable from "vuedraggable";
 import Player from "./Player.vue";
 import MemberUpsert from "./MemberUpsert.vue";
+import GuestUpsert from "./GuestUpsert.vue";
 
 enum Screen {
   WAITING,
