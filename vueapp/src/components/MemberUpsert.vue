@@ -93,15 +93,18 @@ const emit = defineEmits(["close"]);
 const targetLevel = ref();
 const incumbents = computed(() => {
   selectedIncumbents.value = []; // Reset incumbents as a side-effect of changing target levels
+  // Incumbents can be selected from members that are in the waiting queue or in a non-challenge games
   return playerStore.waitingPlayers
     .concat(
-      gameStore.gamesOnDeck.reduce((accumulator, game) => {
-        return accumulator.concat(game.players);
-      }, [] as PlayerModel[])
+      gameStore.gamesOnDeck
+        .filter((game) => !game.challenge)
+        .reduce((accumulator, game) => {
+          return accumulator.concat(game.players);
+        }, [] as PlayerModel[])
     )
     .concat(
       courtStore.allCourts
-        .filter((court) => court.game)
+        .filter((court) => court.game && !court.game.challenge)
         .reduce((accumulator, court) => {
           return accumulator.concat(court.game.players);
         }, [] as PlayerModel[])
@@ -123,6 +126,7 @@ async function createChallenge() {
   gameStore.addGameToOnDeckQueue(
     new Game([props.member, ...selectedIncumbents.value], challenge)
   );
+  // TODO: remove players from their games/queues
   done();
 }
 

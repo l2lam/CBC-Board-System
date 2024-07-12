@@ -38,9 +38,6 @@ const selectedPlayers = ref([]);
 function createGame() {
   if (selectedPlayers.value.length > 0)
     gameStore.addGameToOnDeckQueue(new Game(selectedPlayers.value));
-  selectedPlayers.value.forEach((player) => {
-    playerStore.removePlayer(player);
-  });
   done();
 }
 
