@@ -53,20 +53,20 @@
       <v-row height="100%">
         <v-col>
           <v-btn
-            prepend-icon="mdi-account-circle"
+            prepend-icon="mdi-account-plus"
             :stacked="true"
             @click="addMemberPlayers"
           >
-            + Member
+            Member
           </v-btn>
         </v-col>
         <v-col>
           <v-btn
-            prepend-icon="mdi-account-box-outline"
+            prepend-icon="mdi-account-plus-outline"
             :stacked="true"
             @click="addGuestPlayer"
           >
-            + Guest
+            Guest
           </v-btn>
         </v-col>
       </v-row>

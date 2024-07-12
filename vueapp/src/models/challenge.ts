@@ -33,6 +33,8 @@ export class Challenge {
 
   registerScore(score: ChallengeScore) {
     this.scores.push(score);
+
+    // TODO check challenge status and adjust member levels as necessary
   }
 
   // Determine state of the challenge

@@ -20,10 +20,24 @@
     </v-card-text>
     <!-- The game options when the game is on a court -->
     <div v-else-if="court">
-      <v-card-text> TODO </v-card-text>
+      <div v-if="game.challenge">
+        <!-- Challenge games require winners to be selected before completion -->
+        <v-card-text> Select winners </v-card-text>
+        <v-list>
+          <Player v-for="player in game.players" :key="player.name" :player="player">
+            <template v-slot:append>
+              <v-checkbox-btn v-model="selectedWinners" :value="player"></v-checkbox-btn>
+            </template>
+          </Player>
+        </v-list>
+      </div>
       <v-card-actions>
         <v-btn text="REMOVE" @click="addGameFromCourtToQueue()"></v-btn>
-        <v-btn text="COMPLETE GAME" @click="completeGame"></v-btn>
+        <v-btn
+          :disabled="game.challenge && selectedWinners.length == 0"
+          text="COMPLETE GAME"
+          @click="completeGame"
+        ></v-btn>
       </v-card-actions>
     </div>
     <!-- The game options when in the game is in the on-deck queue -->
@@ -39,7 +53,7 @@
         ></v-select>
       </v-card-text>
       <v-card-actions>
-        <v-btn text="REMOVE" @click="removeGameFromQueue"></v-btn>
+        <v-btn text="CANCEL" @click="removeGameFromQueue"></v-btn>
       </v-card-actions>
     </div>
   </v-card>
@@ -54,6 +68,8 @@ import { computed, ref } from "vue";
 import { useGameStore } from "../stores/gameStore";
 import { useCourtStore } from "../stores/courtStore";
 import { usePlayerStore } from "../stores/playerStore";
+import { useChallengeStore } from "../stores/challengeStore";
+import { ChallengeState } from "../models/challenge";
 
 const props = defineProps(["game", "court"]);
 const game = ref(props.game);
@@ -62,6 +78,7 @@ const selectedCourt = ref();
 const gameStore = useGameStore();
 const courtStore = useCourtStore();
 const playerStore = usePlayerStore();
+const challengeStore = useChallengeStore();
 const flipped = ref(false);
 const title = computed(() => {
   if (game.value.challenge && court.value) return `${court.value.name} - Challenge`;
@@ -69,6 +86,7 @@ const title = computed(() => {
   if (court.value) return court.value.name;
   return undefined;
 });
+const selectedWinners = ref([]);
 
 function flip() {
   flipped.value = !flipped.value;
@@ -88,7 +106,27 @@ function moveGameToCourt() {
   gameStore.removeFromOnDeck(game.value, false);
 }
 
-function completeGame() {
+async function completeGame() {
+  let challenge = game.value.challenge;
+  if (challenge) {
+    // Record the score for the challenge
+    let losers = game.value.players.filter((x) => !selectedWinners.value.includes(x));
+    await challengeStore.registerScore(challenge, selectedWinners.value, losers, "");
+
+    // If the challenge is complete then return players to the waiting queue
+    if (challenge.state() != ChallengeState.INCOMPLETE) {
+      returnPlayersToWaitingQueue();
+    }
+    // Otherwise send the challenge game back to the on-deck queue
+    else {
+      addGameFromCourtToQueue();
+    }
+  } else {
+    returnPlayersToWaitingQueue();
+  }
+}
+
+function returnPlayersToWaitingQueue() {
   court.value.game.players.forEach((player) => {
     playerStore.addPlayer(player);
   });

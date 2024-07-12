@@ -29,7 +29,13 @@
       </v-card>
     </template>
     <template v-slot:actions>
-      <v-btn v-if="isNewPlayer" text="CANCEL" @click="done"></v-btn>
+      <v-btn
+        v-if="isNewPlayer"
+        prepend-icon="mdi-cancel"
+        :stacked="true"
+        text="CANCEL"
+        @click="done"
+      ></v-btn>
       <v-btn
         :prepend-icon="isNewPlayer ? 'mdi-plus' : 'mdi-check'"
         stacked
