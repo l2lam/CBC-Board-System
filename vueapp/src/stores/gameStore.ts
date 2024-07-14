@@ -49,6 +49,7 @@ export const useGameStore = defineStore(GAMES_ON_DECK_STORE_ID, {
     },
     addGameToOnDeckQueue(game: Game) {
       this.gamesOnDeck.push(game);
+      game.players.forEach((player) => usePlayerStore().removePlayer(player));
     },
     // Search for the game with the given id and return it if found, otherwise return undefined.
     findGameById(id: string): Court | undefined {

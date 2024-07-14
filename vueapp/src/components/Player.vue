@@ -3,7 +3,7 @@
     <template v-slot:prepend>
       <PlayerAvatar :player="player" />
     </template>
-    <v-list-item-title>
+    <v-list-item-title v-tooltip="player.name">
       {{ player.name }}
     </v-list-item-title>
     <template v-slot:append>
