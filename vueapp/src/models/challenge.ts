@@ -14,6 +14,14 @@ export class ChallengeScore {
   constructor(obj: Partial<ChallengeScore>) {
     Object.assign(this, obj);
   }
+
+  toString() {
+    let result = `${this.winners
+      .map((x) => x.name)
+      .join(" & ")} def ${this.losers.map((x) => x.name).join(" & ")}`;
+    if (this.score) return `${result} by a score of ${this.score}`;
+    return result;
+  }
 }
 
 export class Challenge {
