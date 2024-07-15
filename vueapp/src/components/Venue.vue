@@ -23,12 +23,17 @@
       </div>
     </div>
     <v-divider class="mb-4"></v-divider>
-    <v-row v-for="row in nRows" :key="row">
+    <v-row v-if="currentScreen == Screen.VENUES" v-for="row in nRows" :key="row">
       <v-col v-for="court in courts(row - 1)" :key="court?.id" align-self="center">
         <Court :court="court"></Court>
       </v-col>
     </v-row>
-    <!-- </v-container> -->
+    <Challenge
+      v-else-if="currentScreen == Screen.CHALLENGES"
+      v-for="challenge in challenges"
+      :challenge="challenge"
+      :key="challenge.id"
+    ></Challenge>
   </v-sheet>
 </template>
 
@@ -39,6 +44,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { useCourtStore } from "../stores/courtStore";
+import { useChallengeStore } from "../stores/challengeStore";
 
 enum Screen {
   VENUES,
@@ -64,6 +70,9 @@ const headingText = computed(() => {
       return "Challenges";
   }
   return "";
+});
+const challenges = computed(() => {
+  return useChallengeStore().activeChallenges;
 });
 
 const courtStore = useCourtStore();

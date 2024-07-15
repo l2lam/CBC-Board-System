@@ -61,4 +61,15 @@ export class Challenge {
 
     return ChallengeState.INCOMPLETE;
   }
+
+  // Get the incumbent that should be knocked down (because they lost every game)
+  incumbentThatIsKnockedDown(): Member | undefined {
+    if (this.state() == ChallengeState.SUCCESSFUL) {
+      this.incumbents.forEach((incumbent) => {
+        if (this.scores.every((score) => score.losers.includes(incumbent)))
+          return incumbent;
+      });
+    }
+    return undefined;
+  }
 }
