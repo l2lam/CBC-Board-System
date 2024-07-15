@@ -9,6 +9,8 @@ declare module 'vue' {
   export interface GlobalComponents {
     Account: typeof import('./src/components/Account.vue')['default']
     Auth: typeof import('./src/components/Auth.vue')['default']
+    Challenge: typeof import('./src/components/Challenge.vue')['default']
+    copy: typeof import('./src/components/Player copy.vue')['default']
     Court: typeof import('./src/components/Court.vue')['default']
     CreateGame: typeof import('./src/components/CreateGame.vue')['default']
     Game: typeof import('./src/components/Game.vue')['default']
