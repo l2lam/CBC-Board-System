@@ -1,12 +1,13 @@
 import { defineStore } from "pinia";
-import { supabase } from "../supabase";
-import { Challenge, ChallengeScore } from "../models/challenge";
+import { supabase, useMockData } from "../supabase";
+import { Challenge, ChallengeScore, ChallengeState } from "../models/challenge";
 import { Member } from "../models/player";
 import { Level } from "../models/level";
 import { mockChallenge1 } from "./mockData";
+import { usePlayerStore } from "./playerStore";
+import { useLevelStore } from "./levelStore";
 
 const CHALLENGES_STORE_ID = "challenges";
-let mock = true;
 
 export const useChallengeStore = defineStore(CHALLENGES_STORE_ID, {
   state: () => ({ activeChallenges: [] as Challenge[] }),
@@ -14,7 +15,7 @@ export const useChallengeStore = defineStore(CHALLENGES_STORE_ID, {
   actions: {
     async loadChallenges() {
       console.log("loading challenges");
-      if (mock) {
+      if (useMockData) {
         // Mock data for quick testing
         this.allChallenges = [mockChallenge1];
       } else {
@@ -59,6 +60,38 @@ export const useChallengeStore = defineStore(CHALLENGES_STORE_ID, {
       });
       challenge.registerScore(newScore);
       this.updateLocalStorage();
+
+      // Check if challenge is successful and adjust player levels if appropriate
+      if (challenge.state() == ChallengeState.SUCCESSFUL) {
+        let playerStore = usePlayerStore();
+
+        // Upgrade the challenger's level
+        await playerStore.changeMemberLevel(
+          challenge.challenger,
+          challenge.targetLevel
+        );
+
+        // Check if any incumbent needs to be downgraded
+        let failedIncumbent = challenge.incumbentThatIsKnockedDown();
+        if (failedIncumbent && failedIncumbent.level) {
+          let levelStore = useLevelStore();
+          // Get the first level below the incumbent's current level
+          let levelsBelow = levelStore.allLevels
+            .filter((x) => x.value < failedIncumbent.level.value)
+            .sort((a, b) => {
+              return a.value < b.value ? 1 : b.value < a.value ? -1 : 0;
+            });
+          console.log(
+            `levels below ${failedIncumbent.level.value}: ${levelsBelow} `
+          );
+          if (levelsBelow.length > 0) {
+            let newLevel = levelsBelow[0];
+            await playerStore.changeMemberLevel(failedIncumbent, newLevel);
+          } else {
+            console.log("Incumbent has no lower level to be demoted to");
+          }
+        }
+      }
     },
   },
 });

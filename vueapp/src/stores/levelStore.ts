@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { supabase } from "../supabase";
+import { supabase, useMockData } from "../supabase";
 import { Level } from "../models/level";
 import {
   mockLevel1,
@@ -10,7 +10,6 @@ import {
 } from "./mockData";
 
 const LEVELS_STORE_ID = "levels";
-let mock = true;
 
 export const useLevelStore = defineStore(LEVELS_STORE_ID, {
   state: () => ({ allLevels: [] as Level[] }),
@@ -18,7 +17,7 @@ export const useLevelStore = defineStore(LEVELS_STORE_ID, {
   actions: {
     async loadLevels() {
       console.log("loading levels");
-      if (mock) {
+      if (useMockData) {
         this.allLevels = [
           mockLevel1,
           mockLevel2,
@@ -30,18 +29,19 @@ export const useLevelStore = defineStore(LEVELS_STORE_ID, {
         // Get data from the remote database
         const { data, error, status } = await supabase
           .from("levels")
-          .select("id, name");
+          .select("id, name, value, rgb_color");
 
         if (error && status !== 406) {
           console.error(error);
           // Fall back to data from local storage
-          this.allLevels = localStorage.get(LEVELS_STORE_ID) || [];
+          this.allLevels = localStorage.getItem(LEVELS_STORE_ID) || [];
         } else {
           console.log(data);
           this.allLevels = data?.map(
-            (level) => new Level(level.id, level.name)
+            (level) =>
+              new Level(level.id, level.name, level.value, level.rgb_color)
           );
-          // cache this data in local storate
+          // cache this data in local storage
           localStorage.setItem(LEVELS_STORE_ID, this.allLevels);
         }
       }

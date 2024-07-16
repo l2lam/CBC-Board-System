@@ -41,8 +41,6 @@ export class Challenge {
 
   registerScore(score: ChallengeScore) {
     this.scores.push(score);
-
-    // TODO check challenge status and adjust member levels as necessary
   }
 
   // Determine state of the challenge
@@ -51,24 +49,26 @@ export class Challenge {
     var wins = this.scores.filter((score) =>
       score.winners.includes(this.challenger)
     ).length;
-    if (wins > this.numberOfWinsToBeSuccessful)
-      return ChallengeState.SUCCESSFUL;
 
     // The challenger is mathematically unsuccessful if there are not enough games left to acquire the number of wins necessary
     var gamesRemaining = this.maxGames - this.scores.length;
     var winsNeeded = this.numberOfWinsToBeSuccessful - wins;
+    console.log(`Wins: ${wins}, GR: ${gamesRemaining}, WN: ${winsNeeded}`);
     if (gamesRemaining < winsNeeded) return ChallengeState.UNSUCCESSFUL;
-
+    if (gamesRemaining <= 0 && wins >= this.numberOfWinsToBeSuccessful)
+      return ChallengeState.SUCCESSFUL;
     return ChallengeState.INCOMPLETE;
   }
 
   // Get the incumbent that should be knocked down (because they lost every game)
   incumbentThatIsKnockedDown(): Member | undefined {
-    if (this.state() == ChallengeState.SUCCESSFUL) {
-      this.incumbents.forEach((incumbent) => {
-        if (this.scores.every((score) => score.losers.includes(incumbent)))
+    if (this.scores.length >= this.maxGames) {
+      for (const incumbent of this.incumbents) {
+        if (this.scores.every((score) => score.losers.includes(incumbent))) {
+          console.log(`Member to be knocked down is ${incumbent.name}`);
           return incumbent;
-      });
+        }
+      }
     }
     return undefined;
   }

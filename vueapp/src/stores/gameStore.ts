@@ -5,9 +5,9 @@ import { usePlayerStore } from "../stores/playerStore";
 import { useCourtStore } from "./courtStore";
 import { Court } from "../models/court";
 import { mockChallengeGame1, mockLevel2, mockLevel3 } from "./mockData";
+import { useMockData } from "../supabase";
 
 const GAMES_ON_DECK_STORE_ID = "gamesOnDeck";
-let mock = true;
 
 export const useGameStore = defineStore(GAMES_ON_DECK_STORE_ID, {
   state: () => ({ gamesOnDeck: [] as Game[] }),
@@ -15,7 +15,7 @@ export const useGameStore = defineStore(GAMES_ON_DECK_STORE_ID, {
   actions: {
     async loadGames() {
       console.log("loading games");
-      if (mock) {
+      if (useMockData) {
         this.gamesOnDeck = [
           new Game([
             new Player("Mike", mockLevel2),
@@ -31,7 +31,7 @@ export const useGameStore = defineStore(GAMES_ON_DECK_STORE_ID, {
         ];
       } else {
         // Load games from local storage
-        this.gamesOnDeck = localStorage.get(GAMES_ON_DECK_STORE_ID) || [];
+        this.gamesOnDeck = localStorage.getItem(GAMES_ON_DECK_STORE_ID) || [];
       }
     },
     // Remove the game at the given index and return all players in the game to the waiting queue

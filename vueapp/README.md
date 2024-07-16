@@ -1,15 +1,16 @@
 # Environment setup
 
-1. Setup environment variables with secrets to access your supabase project by creating a file called `.env.local` in this folder and put the following configuratin in it ([here are instructions to find your API URL and keys](https://supabase.com/docs/guides/getting-started/tutorials/with-vue-3#get-the-api-keys)):
+1. Setup environment variables with secrets to access your supabase project by creating a file called `.env.local` in this folder and put the following configuration in it ([here are instructions to find your API URL and keys](https://supabase.com/docs/guides/getting-started/tutorials/with-vue-3#get-the-api-keys)):
 
 ```sh
-# Remote server
+# Comment this out to use real data
+VITE_USE_MOCK_DATA=1
 
+# Remote server
 VITE_SUPABASE_URL=<API URL to your remote supabase project>
 VITE_SUPABASE_ANON_KEY=<anon key for your remote supabase project>
 
-# Local server (conveniece for switch between remote and local supabase instances)
-
+# Local server (convenience for switch between remote and local supabase instances)
 #VITE_SUPABASE_URL=<url to your local supabase project>
 #VITE_SUPABASE_ANON_KEY=<anon key for your local supabase project>
 ```

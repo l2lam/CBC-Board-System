@@ -3,9 +3,9 @@ import { Court } from "../models/court";
 import { Player } from "../models/player";
 import { Game } from "../models/game";
 import { mockLevel3, mockLevel4, mockLevel5 } from "./mockData";
+import { useMockData } from "../supabase";
 
 const COURTS_STORE_ID = "courtsOnDeck";
-let mock = true;
 
 export const useCourtStore = defineStore(COURTS_STORE_ID, {
   state: () => ({ allCourts: [] as Court[] }),
@@ -16,7 +16,7 @@ export const useCourtStore = defineStore(COURTS_STORE_ID, {
   actions: {
     async loadCourts() {
       console.log("loading courts");
-      if (mock) {
+      if (useMockData) {
         this.allCourts = [
           new Court(
             1,
@@ -61,7 +61,7 @@ export const useCourtStore = defineStore(COURTS_STORE_ID, {
       } else {
         // TODO load courts from supabase and sort it in desired order
         // Load courts from local storage
-        this.allCourts = localStorage.get(COURTS_STORE_ID) || [];
+        this.allCourts = localStorage.getItem(COURTS_STORE_ID) || [];
       }
     },
     removeGameFromCourt(court: Court) {

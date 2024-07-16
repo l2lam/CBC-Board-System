@@ -1,10 +1,10 @@
 import { defineStore } from "pinia";
-import { supabase } from "../supabase";
+import { supabase, useMockData } from "../supabase";
 import { Player, Member } from "../models/player";
 import { generateMockMembers, generateMockPlayers } from "./mockData";
+import { Level } from "../models/level";
 
 const PLAYERS_STORE_ID = "players";
-let mock = true;
 
 export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
   state: () => ({ waitingPlayers: [] as Player[], allMembers: [] as Member[] }),
@@ -18,7 +18,7 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
   actions: {
     async loadPlayers() {
       console.log("loading players");
-      if (mock) {
+      if (useMockData) {
         // Mock data for quick testing
         var i = 1;
         this.allMembers = generateMockMembers(15);
@@ -35,7 +35,7 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
         if (error && status !== 406) {
           console.error(error);
           // Fall back to data from local storage
-          this.allMembers = localStorage.get(PLAYERS_STORE_ID) || [];
+          this.allMembers = localStorage.getItem(PLAYERS_STORE_ID) || [];
         } else {
           this.allMembers = data?.map(
             (player) => new Member(player.id, player.name, player.avatar_url)
@@ -45,15 +45,31 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
         }
       }
     },
+    // Add a player to the waiting queue
     addPlayer(player: Player) {
       this.waitingPlayers.push(player);
     },
+    // Remove a player from the waiting queue
     removePlayer(player: Player) {
       var index = this.waitingPlayers.indexOf(player);
       if (index > -1) this.waitingPlayers.splice(index, 1);
     },
+    // Remove all players from the waiting queue
     removeAllPlayers() {
       this.waitingPlayers = [];
+    },
+    async changeMemberLevel(member: Member, newLevel: Level) {
+      member.level = newLevel;
+      if (!useMockData) {
+        const { data, error, status } = await supabase
+          .from("members")
+          .update({ level_id: newLevel.id })
+          .eq("id", member.id);
+        if (error) {
+          console.log(`Failed to change member (${member.name}'s) level`);
+          console.error(error);
+        }
+      }
     },
   },
 });

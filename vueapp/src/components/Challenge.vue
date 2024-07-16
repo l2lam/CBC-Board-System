@@ -46,8 +46,9 @@ const state = computed(() => {
       break;
     case ChallengeState.SUCCESSFUL:
       result.push("The challenge was SUCCESSFUL.");
-      let poorIncumbent = props.challenge.incumbentThatIsKnockedDown();
-      if (poorIncumbent) result.push(`${poorIncumbent.name} is knocked down a level.`);
+      let failedIncumbent = props.challenge.incumbentThatIsKnockedDown();
+      if (failedIncumbent)
+        result.push(`${failedIncumbent.name} is knocked down a level.`);
       break;
     case ChallengeState.UNSUCCESSFUL:
       result.push("The challenge was UNSUCCESSFUL");
