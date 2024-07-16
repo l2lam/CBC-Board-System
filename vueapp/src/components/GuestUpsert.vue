@@ -4,12 +4,12 @@
       <v-card
         :title="isNewPlayer ? 'New Guest' : 'Edit Guest'"
         class="mx-auto"
-        width="90%"
+        width="100%"
       >
         <template v-slot:prepend>
           <PlayerAvatar :player="guest" />
         </template>
-        <div>
+        <v-card-text>
           <v-text-field
             label="Name"
             placeholder="Please enter a unique name for the Guest"
@@ -25,24 +25,26 @@
             v-model="guest.level"
           >
           </v-select>
-        </div>
+        </v-card-text>
       </v-card>
     </template>
     <template v-slot:actions>
-      <v-btn
-        v-if="isNewPlayer"
-        prepend-icon="mdi-cancel"
-        :stacked="true"
-        text="CANCEL"
-        @click="done"
-      ></v-btn>
-      <v-btn
-        :prepend-icon="isNewPlayer ? 'mdi-plus' : 'mdi-check'"
-        stacked
-        :text="isNewPlayer ? 'Add' : 'Done'"
-        @click="save"
-        :disabled="disableSave()"
-      ></v-btn>
+      <div class="d-flex justify-space-evenly">
+        <v-btn
+          v-if="isNewPlayer"
+          prepend-icon="mdi-cancel"
+          :stacked="true"
+          text="CANCEL"
+          @click="done"
+        ></v-btn>
+        <v-btn
+          :prepend-icon="isNewPlayer ? 'mdi-plus' : 'mdi-check'"
+          stacked
+          :text="isNewPlayer ? 'Add' : 'Done'"
+          @click="save"
+          :disabled="disableSave()"
+        ></v-btn>
+      </div>
     </template>
   </QueueColumn>
 </template>

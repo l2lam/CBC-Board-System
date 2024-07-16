@@ -50,26 +50,18 @@
       </v-list>
     </template>
     <template v-slot:actions>
-      <v-row height="100%">
-        <v-col>
-          <v-btn
-            prepend-icon="mdi-account-plus"
-            :stacked="true"
-            @click="addMemberPlayers"
-          >
-            Member
-          </v-btn>
-        </v-col>
-        <v-col>
-          <v-btn
-            prepend-icon="mdi-account-plus-outline"
-            :stacked="true"
-            @click="addGuestPlayer"
-          >
-            Guest
-          </v-btn>
-        </v-col>
-      </v-row>
+      <div class="d-flex justify-space-evenly">
+        <v-btn prepend-icon="mdi-account-plus" :stacked="true" @click="addMemberPlayers">
+          Member
+        </v-btn>
+        <v-btn
+          prepend-icon="mdi-account-plus-outline"
+          :stacked="true"
+          @click="addGuestPlayer"
+        >
+          Guest
+        </v-btn>
+      </div>
     </template>
   </QueueColumn>
   <GuestUpsert

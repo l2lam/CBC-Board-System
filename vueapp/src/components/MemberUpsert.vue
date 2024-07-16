@@ -1,43 +1,44 @@
 <template>
   <QueueColumn>
     <template v-slot:main>
-      <v-card :title="member.name" class="mx-auto" width="90%">
+      <v-card :title="member.name" class="mx-auto" width="100%">
         <template v-slot:prepend>
           <PlayerAvatar :player="member" />
         </template>
         <div v-if="currentScreen == Screen.CHALLENGE">
-          <!-- <v-card-subtitle>Initiate a Challenge</v-card-subtitle> -->
-          <v-card-text>Initiate a Challenge</v-card-text>
-          <v-select
-            label="Target level"
-            :items="levelStore.allLevels.filter((level) => level != member?.level)"
-            item-title="name"
-            v-model="targetLevel"
-            return-object
-          >
-          </v-select>
-          <div v-if="targetLevel">
-            <v-card-text>Select players for the challenge</v-card-text>
-            <v-list>
-              <Player
-                :player="incumbent"
-                v-for="incumbent in incumbents"
-                :key="incumbent.name"
-              >
-                <template v-slot:append>
-                  <v-checkbox-btn
-                    v-model="selectedIncumbents"
-                    :value="incumbent"
-                  ></v-checkbox-btn>
-                </template>
-              </Player>
-            </v-list>
-          </div>
+          <v-card-subtitle>Initiate a Challenge</v-card-subtitle>
+          <v-card-text>
+            <v-select
+              label="Target level"
+              :items="levelStore.allLevels.filter((level) => level != member?.level)"
+              item-title="name"
+              v-model="targetLevel"
+              return-object
+            >
+            </v-select>
+            <div v-if="targetLevel">
+              <v-card-text>Select players for the challenge</v-card-text>
+              <v-list>
+                <Player
+                  :player="incumbent"
+                  v-for="incumbent in incumbents"
+                  :key="incumbent.name"
+                >
+                  <template v-slot:append>
+                    <v-checkbox-btn
+                      v-model="selectedIncumbents"
+                      :value="incumbent"
+                    ></v-checkbox-btn>
+                  </template>
+                </Player>
+              </v-list>
+            </div>
+          </v-card-text>
         </div>
       </v-card>
     </template>
     <template v-slot:actions>
-      <div v-if="currentScreen == Screen.CHALLENGE">
+      <div v-if="currentScreen == Screen.CHALLENGE" class="d-flex justify-space-evenly">
         <v-btn
           prepend-icon="mdi-cancel"
           :stacked="true"
@@ -54,7 +55,7 @@
           Go
         </v-btn>
       </div>
-      <div v-else-if="currentScreen == Screen.MAIN">
+      <div v-else-if="currentScreen == Screen.MAIN" class="d-flex justify-space-evenly">
         <v-btn
           prepend-icon="mdi-one-up"
           text="Initiate challenge"
