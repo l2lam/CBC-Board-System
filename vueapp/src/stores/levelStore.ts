@@ -8,6 +8,7 @@ import {
   mockLevel4,
   mockLevel5,
 } from "./mockData";
+import { useClubStore } from "./clubStore";
 
 const LEVELS_STORE_ID = "levels";
 
@@ -26,10 +27,12 @@ export const useLevelStore = defineStore(LEVELS_STORE_ID, {
           mockLevel5,
         ];
       } else {
+        const clubStore = useClubStore();
         // Get data from the remote database
         const { data, error, status } = await supabase
           .from("levels")
-          .select("id, name, value, rgb_color");
+          .select("id, name, value, rgb_color")
+          .eq("club_id", clubStore.currentClub?.id);
 
         if (error && status !== 406) {
           console.error(error);

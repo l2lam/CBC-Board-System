@@ -3,9 +3,10 @@ import { Court } from "../models/court";
 import { Player } from "../models/player";
 import { Game } from "../models/game";
 import { mockLevel3, mockLevel4, mockLevel5 } from "./mockData";
-import { useMockData } from "../supabase";
+import { supabase, useMockData } from "../supabase";
+import { useClubStore } from "./clubStore";
 
-const COURTS_STORE_ID = "courtsOnDeck";
+const COURTS_STORE_ID = "courts";
 
 export const useCourtStore = defineStore(COURTS_STORE_ID, {
   state: () => ({ allCourts: [] as Court[] }),
@@ -56,12 +57,29 @@ export const useCourtStore = defineStore(COURTS_STORE_ID, {
           ),
           new Court(7, "Court 7"),
           new Court(8, "Court 8"),
-          new Court(9, "Court 9"),
+          // new Court(9, "Court 9"),
         ];
       } else {
-        // TODO load courts from supabase and sort it in desired order
-        // Load courts from local storage
-        this.allCourts = localStorage.getItem(COURTS_STORE_ID) || [];
+        const clubStore = useClubStore();
+        // Get courts from the remote database
+        const { data, error, status } = await supabase
+          .from("courts")
+          .select("id, name")
+          .eq("club_id", clubStore.currentClub?.id);
+
+        if (error && status !== 406) {
+          console.error(error);
+          // Fall back to data from local storage
+          this.allCourts = localStorage.getItem(COURTS_STORE_ID) || [];
+        } else {
+          this.allCourts = data
+            ?.sort((a, b) => {
+              return a.name < b.name ? -1 : b.name < a.name ? 1 : 0;
+            })
+            .map((court) => new Court(court.id, court.name));
+          // cache this data in local storage
+          localStorage.setItem(COURTS_STORE_ID, this.allCourts);
+        }
       }
     },
     removeGameFromCourt(court: Court) {

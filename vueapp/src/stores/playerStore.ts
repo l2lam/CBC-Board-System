@@ -3,6 +3,7 @@ import { supabase, useMockData } from "../supabase";
 import { Player, Member } from "../models/player";
 import { generateMockMembers, generateMockPlayers } from "./mockData";
 import { Level } from "../models/level";
+import { useClubStore } from "./clubStore";
 
 const PLAYERS_STORE_ID = "players";
 
@@ -27,10 +28,12 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
           .slice(4, 8)
           .concat(generateMockPlayers(5, "Guest", n));
       } else {
+        const clubStore = useClubStore();
         // Get players from the remote database
         const { data, error, status } = await supabase
           .from("members")
-          .select("id, name, avatar_url");
+          .select("id, name, avatar_url")
+          .eq("club_id", clubStore.currentClub?.id);
 
         if (error && status !== 406) {
           console.error(error);
@@ -65,7 +68,7 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
           .from("members")
           .update({ level_id: newLevel.id })
           .eq("id", member.id);
-        if (error) {
+        if (error && status !== 204) {
           console.log(`Failed to change member (${member.name}'s) level`);
           console.error(error);
         }

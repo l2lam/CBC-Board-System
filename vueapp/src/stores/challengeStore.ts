@@ -21,6 +21,7 @@ export const useChallengeStore = defineStore(CHALLENGES_STORE_ID, {
       } else {
         // Get active challenges from the local storage
         this.activeChallenges = localStorage.getItem(CHALLENGES_STORE_ID) ?? [];
+        console.log(this.activeChallenges);
       }
     },
     updateLocalStorage() {
