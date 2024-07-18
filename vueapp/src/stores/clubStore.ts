@@ -25,7 +25,8 @@ export const useClubStore = defineStore(CLUBS_STORE_ID, {
         if (error && status !== 406) {
           console.error(error);
           // Fall back to data from local storage
-          this.allClubs = localStorage.getItem(CLUBS_STORE_ID) || [];
+          this.allClubs =
+            JSON.parse(localStorage.getItem(CLUBS_STORE_ID) || "[]") || [];
         } else {
           this.serializeClubData(data);
 
@@ -36,7 +37,7 @@ export const useClubStore = defineStore(CLUBS_STORE_ID, {
           }
 
           // cache this data in local storage
-          localStorage.setItem(CLUBS_STORE_ID, this.allClubs);
+          localStorage.setItem(CLUBS_STORE_ID, JSON.stringify(this.allClubs));
         }
       }
       this.setCurrentClub();

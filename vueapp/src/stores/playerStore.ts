@@ -39,7 +39,8 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
         if (error && status !== 406) {
           console.error(error);
           // Fall back to data from local storage
-          this.allMembers = localStorage.getItem(PLAYERS_STORE_ID) || [];
+          this.allMembers =
+            JSON.parse(localStorage.getItem(PLAYERS_STORE_ID) || "[]") || [];
         } else {
           this.allMembers = data?.map(
             (player) =>
@@ -51,7 +52,10 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
               )
           );
           // cache this data in local storage
-          localStorage.setItem(PLAYERS_STORE_ID, this.waitingPlayers);
+          localStorage.setItem(
+            PLAYERS_STORE_ID,
+            JSON.stringify(this.waitingPlayers)
+          );
         }
       }
     },

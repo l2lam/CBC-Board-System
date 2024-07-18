@@ -20,12 +20,16 @@ export const useChallengeStore = defineStore(CHALLENGES_STORE_ID, {
         this.allChallenges = [mockChallenge1];
       } else {
         // Get active challenges from the local storage
-        this.activeChallenges = localStorage.getItem(CHALLENGES_STORE_ID) ?? [];
+        this.activeChallenges =
+          JSON.parse(localStorage.getItem(CHALLENGES_STORE_ID) || "[]") ?? [];
         console.log(this.activeChallenges);
       }
     },
     updateLocalStorage() {
-      localStorage.setItem(CHALLENGES_STORE_ID, this.activeChallenges);
+      localStorage.setItem(
+        CHALLENGES_STORE_ID,
+        JSON.stringify(this.activeChallenges)
+      );
     },
     async registerNewChallenge(
       challenger: Member,

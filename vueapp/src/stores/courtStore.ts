@@ -70,7 +70,8 @@ export const useCourtStore = defineStore(COURTS_STORE_ID, {
         if (error && status !== 406) {
           console.error(error);
           // Fall back to data from local storage
-          this.allCourts = localStorage.getItem(COURTS_STORE_ID) || [];
+          this.allCourts =
+            JSON.parse(localStorage.getItem(COURTS_STORE_ID) || "[]") || [];
         } else {
           this.allCourts = data
             ?.sort((a, b) => {
@@ -78,7 +79,7 @@ export const useCourtStore = defineStore(COURTS_STORE_ID, {
             })
             .map((court) => new Court(court.id, court.name));
           // cache this data in local storage
-          localStorage.setItem(COURTS_STORE_ID, this.allCourts);
+          localStorage.setItem(COURTS_STORE_ID, JSON.stringify(this.allCourts));
         }
       }
     },

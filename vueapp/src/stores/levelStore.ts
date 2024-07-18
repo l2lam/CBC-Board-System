@@ -37,7 +37,8 @@ export const useLevelStore = defineStore(LEVELS_STORE_ID, {
         if (error && status !== 406) {
           console.error(error);
           // Fall back to data from local storage
-          this.allLevels = localStorage.getItem(LEVELS_STORE_ID) || [];
+          this.allLevels =
+            JSON.parse(localStorage.getItem(LEVELS_STORE_ID) || "[]") || [];
         } else {
           console.log(data);
           this.allLevels = data?.map(
@@ -45,7 +46,7 @@ export const useLevelStore = defineStore(LEVELS_STORE_ID, {
               new Level(level.id, level.name, level.value, level.rgb_color)
           );
           // cache this data in local storage
-          localStorage.setItem(LEVELS_STORE_ID, this.allLevels);
+          localStorage.setItem(LEVELS_STORE_ID, JSON.stringify(this.allLevels));
         }
       }
     },
