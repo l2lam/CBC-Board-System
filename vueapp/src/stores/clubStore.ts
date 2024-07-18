@@ -28,8 +28,13 @@ export const useClubStore = defineStore(CLUBS_STORE_ID, {
           this.allClubs = localStorage.getItem(CLUBS_STORE_ID) || [];
         } else {
           this.serializeClubData(data);
+
           // If there are no clubs for the user then create default club for them
-          this.createDefaultClub();
+          if (!data || data?.length == 0) {
+            console.log("No clubs found, creating default club");
+            this.createDefaultClub();
+          }
+
           // cache this data in local storage
           localStorage.setItem(CLUBS_STORE_ID, this.allClubs);
         }

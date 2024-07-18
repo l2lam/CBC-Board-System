@@ -4,6 +4,7 @@ import { Player, Member } from "../models/player";
 import { generateMockMembers, generateMockPlayers } from "./mockData";
 import { Level } from "../models/level";
 import { useClubStore } from "./clubStore";
+import { useLevelStore } from "./levelStore";
 
 const PLAYERS_STORE_ID = "players";
 
@@ -32,7 +33,7 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
         // Get players from the remote database
         const { data, error, status } = await supabase
           .from("members")
-          .select("id, name, avatar_url")
+          .select("id, name, level_id, avatar_url")
           .eq("club_id", clubStore.currentClub?.id);
 
         if (error && status !== 406) {
@@ -41,7 +42,13 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
           this.allMembers = localStorage.getItem(PLAYERS_STORE_ID) || [];
         } else {
           this.allMembers = data?.map(
-            (player) => new Member(player.id, player.name, player.avatar_url)
+            (player) =>
+              new Member(
+                player.id,
+                player.name,
+                useLevelStore().levelById(player.level_id),
+                player.avatar_url
+              )
           );
           // cache this data in local storage
           localStorage.setItem(PLAYERS_STORE_ID, this.waitingPlayers);

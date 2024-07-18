@@ -35,14 +35,14 @@ import { useClubStore } from "../stores/clubStore";
 
 const clubStore = useClubStore();
 await clubStore.loadClubs();
-const playerStore = usePlayerStore();
-await playerStore.loadPlayers();
 const levelStore = useLevelStore();
 await levelStore.loadLevels();
 const gameStore = useGameStore();
 await gameStore.loadGames();
 const courtStore = useCourtStore();
 await courtStore.loadCourts();
+const playerStore = usePlayerStore();
+await playerStore.loadPlayers();
 const challengeStore = useChallengeStore();
 await challengeStore.loadChallenges();
 
