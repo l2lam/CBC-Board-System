@@ -1,6 +1,6 @@
 <template>
   <v-layout class="rounded rounded-md h-100">
-    <v-app-bar title="CBC Board System">
+    <v-app-bar :title="clubStore.currentClub?.name">
       <template v-slot:append>
         <v-btn icon="mdi-theme-light-dark" @click="toggleTheme"></v-btn>
       </template>
@@ -31,15 +31,18 @@ import { useCourtStore } from "../stores/courtStore";
 import { useTheme } from "vuetify";
 import { ref } from "vue";
 import { useChallengeStore } from "../stores/challengeStore";
+import { useClubStore } from "../stores/clubStore";
 
-const playerStore = usePlayerStore();
-await playerStore.loadPlayers();
+const clubStore = useClubStore();
+await clubStore.loadClubs();
 const levelStore = useLevelStore();
 await levelStore.loadLevels();
 const gameStore = useGameStore();
 await gameStore.loadGames();
 const courtStore = useCourtStore();
 await courtStore.loadCourts();
+const playerStore = usePlayerStore();
+await playerStore.loadPlayers();
 const challengeStore = useChallengeStore();
 await challengeStore.loadChallenges();
 

@@ -85,7 +85,7 @@ function courts(row) {
   var result = courtStore.allCourts.slice(startIndex, startIndex + nCols);
   var nBlanks = nCols - result.length;
 
-  for (var i = 0; i < nBlanks; i++) result.push(undefined);
+  // for (var i = 0; i < nBlanks; i++) result.push(undefined);
   return result;
 }
 </script>

@@ -31,7 +31,9 @@ export const useGameStore = defineStore(GAMES_ON_DECK_STORE_ID, {
         ];
       } else {
         // Load games from local storage
-        this.gamesOnDeck = localStorage.getItem(GAMES_ON_DECK_STORE_ID) || [];
+        this.gamesOnDeck =
+          JSON.parse(localStorage.getItem(GAMES_ON_DECK_STORE_ID) || "[]") ||
+          [];
       }
     },
     // Remove the game at the given index and return all players in the game to the waiting queue

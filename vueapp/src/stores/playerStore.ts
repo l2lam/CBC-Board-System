@@ -3,6 +3,8 @@ import { supabase, useMockData } from "../supabase";
 import { Player, Member } from "../models/player";
 import { generateMockMembers, generateMockPlayers } from "./mockData";
 import { Level } from "../models/level";
+import { useClubStore } from "./clubStore";
+import { useLevelStore } from "./levelStore";
 
 const PLAYERS_STORE_ID = "players";
 
@@ -27,21 +29,33 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
           .slice(4, 8)
           .concat(generateMockPlayers(5, "Guest", n));
       } else {
+        const clubStore = useClubStore();
         // Get players from the remote database
         const { data, error, status } = await supabase
           .from("members")
-          .select("id, name, avatar_url");
+          .select("id, name, level_id, avatar_url")
+          .eq("club_id", clubStore.currentClub?.id);
 
         if (error && status !== 406) {
           console.error(error);
           // Fall back to data from local storage
-          this.allMembers = localStorage.getItem(PLAYERS_STORE_ID) || [];
+          this.allMembers =
+            JSON.parse(localStorage.getItem(PLAYERS_STORE_ID) || "[]") || [];
         } else {
           this.allMembers = data?.map(
-            (player) => new Member(player.id, player.name, player.avatar_url)
+            (player) =>
+              new Member(
+                player.id,
+                player.name,
+                useLevelStore().levelById(player.level_id),
+                player.avatar_url
+              )
           );
           // cache this data in local storage
-          localStorage.setItem(PLAYERS_STORE_ID, this.waitingPlayers);
+          localStorage.setItem(
+            PLAYERS_STORE_ID,
+            JSON.stringify(this.waitingPlayers)
+          );
         }
       }
     },
@@ -65,7 +79,7 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
           .from("members")
           .update({ level_id: newLevel.id })
           .eq("id", member.id);
-        if (error) {
+        if (error && status !== 204) {
           console.log(`Failed to change member (${member.name}'s) level`);
           console.error(error);
         }
