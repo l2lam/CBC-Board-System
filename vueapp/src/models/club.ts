@@ -8,4 +8,8 @@ export class Club {
     this.name = name;
     this.description = description;
   }
+
+  toString() {
+    return this.name;
+  }
 }
