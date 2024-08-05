@@ -1,11 +1,17 @@
 import { useClubStore } from "../stores/clubStore";
 import { Club } from "./club";
-import { CrudBase, EditField, FieldType } from "./crudBase";
+import {
+  BoolEditField,
+  CrudBase,
+  EditFieldBase,
+  TextEditField,
+  TextFieldType,
+} from "./crudBase";
 
 export class ClubsCrud extends CrudBase<Club> {
-  nameField = new EditField("Name");
-  descriptionField = new EditField("Name");
-  isDefaultField = new EditField("Set as Default", FieldType.BOOL);
+  nameField = new TextEditField("Name");
+  descriptionField = new TextEditField("Description");
+  isDefaultField = new BoolEditField("Set as Default");
   constructor() {
     super("Clubs", "mdi-cards-club");
   }
@@ -14,10 +20,10 @@ export class ClubsCrud extends CrudBase<Club> {
     const clubStore = useClubStore();
     return clubStore.allClubs;
   }
-  getItemEditFields(item: Club): EditField[] {
+  getItemEditFields(item: Club): EditFieldBase[] {
     const clubStore = useClubStore();
-    this.nameField.value = item.name;
-    this.descriptionField.value = item.description;
+    this.nameField.value = item?.name;
+    this.descriptionField.value = item?.description;
     this.isDefaultField.value = item == clubStore.currentClub;
     return [this.nameField, this.descriptionField, this.isDefaultField];
   }

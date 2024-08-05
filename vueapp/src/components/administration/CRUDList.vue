@@ -1,5 +1,5 @@
 <template>
-  <QueueColumn>
+  <QueueColumn v-if="currentScreen == Screen.MAIN">
     <template v-slot:main>
       <div class="d-flex justify-space-between">
         <v-icon :icon="crudModel.icon"></v-icon>
@@ -42,6 +42,12 @@
       </v-btn>
     </template>
   </QueueColumn>
+  <CRUDEdit
+    v-else-if="currentScreen == Screen.EDIT"
+    :crudModel="crudModel"
+    :item="currentItem"
+    @close="returnToMainScreen"
+  ></CRUDEdit>
 </template>
 
 <script setup lang="ts">
@@ -52,6 +58,11 @@ enum Screen {
   EDIT,
 }
 const currentScreen = ref(Screen.MAIN);
+
+function returnToMainScreen() {
+  currentScreen.value = Screen.MAIN;
+  currentItem.value = null;
+}
 
 const dragOptions = {
   animation: 100,
@@ -64,14 +75,18 @@ const crudModel = ref(props.crudModel);
 const itemsList = computed(() => {
   return crudModel.value.itemsList();
 });
+const currentItem = ref(null);
 
 function selectItem(item) {
   console.log("item selected", item);
+  currentItem.value = item;
+  currentScreen.value = Screen.EDIT;
 }
 function removeItem(item) {
   crudModel.value.removeItem(item);
 }
 function addNewItem(item) {
-  crudModel.value.insertItem(item);
+  currentItem.value = null;
+  currentScreen.value = Screen.EDIT;
 }
 </script>

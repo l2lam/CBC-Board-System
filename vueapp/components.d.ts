@@ -13,6 +13,7 @@ declare module 'vue' {
     Challenge: typeof import('./src/components/Challenge.vue')['default']
     Court: typeof import('./src/components/Court.vue')['default']
     CreateGame: typeof import('./src/components/CreateGame.vue')['default']
+    CRUDEdit: typeof import('./src/components/administration/CRUDEdit.vue')['default']
     CRUDList: typeof import('./src/components/administration/CRUDList.vue')['default']
     Game: typeof import('./src/components/Game.vue')['default']
     GuestUpsert: typeof import('./src/components/GuestUpsert.vue')['default']
