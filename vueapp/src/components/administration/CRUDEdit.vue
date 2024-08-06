@@ -64,14 +64,11 @@ const title = computed(
 );
 
 function cancel(item) {
-  console.log("cancelled");
   done();
 }
 
-function save(item) {
-  console.log("saved");
-  if (isNewItem.value) crudModel.value.updateItem(item);
-  else crudModel.value.insertItem(item);
+function save() {
+  crudModel.value.upsertItem(item.value);
   done();
 }
 

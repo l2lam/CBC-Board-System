@@ -58,6 +58,5 @@ export abstract class CrudBase<EntityType> {
   abstract itemsList(): EntityType[];
   abstract getItemEditFields(item): EditFieldBase[];
   abstract removeItem(item: EntityType);
-  abstract insertItem(item: EntityType);
-  abstract updateItem(item: EntityType);
+  abstract upsertItem(item?: EntityType);
 }

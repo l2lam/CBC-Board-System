@@ -78,7 +78,6 @@ const itemsList = computed(() => {
 const currentItem = ref(null);
 
 function selectItem(item) {
-  console.log("item selected", item);
   currentItem.value = item;
   currentScreen.value = Screen.EDIT;
 }
