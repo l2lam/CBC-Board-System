@@ -19,7 +19,7 @@
       <v-list>
         <v-list-item v-for="item in itemsList" :key="item.id" @click="selectItem(item)">
           <v-list-item-title>
-            {{ item }}
+            {{ crudModel.getItemTitle(item) }}
           </v-list-item-title>
           <template v-slot:append>
             <slot name="append">

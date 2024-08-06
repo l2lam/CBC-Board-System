@@ -19,6 +19,10 @@ export class ClubsCrud extends CrudBase<Club> {
     this.clubStore = useClubStore();
   }
 
+  getItemTitle(item: Club): string {
+    return `${item == this.clubStore.currentClub ? "* " : ""}${item}`;
+  }
+
   itemsList(): Club[] {
     return this.clubStore.allClubs;
   }

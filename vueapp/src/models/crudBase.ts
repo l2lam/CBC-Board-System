@@ -55,6 +55,7 @@ export abstract class CrudBase<EntityType> {
     this.icon = icon;
   }
 
+  abstract getItemTitle(item: EntityType): string;
   abstract itemsList(): EntityType[];
   abstract getItemEditFields(item): EditFieldBase[];
   abstract removeItem(item: EntityType);
