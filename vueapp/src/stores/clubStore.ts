@@ -2,6 +2,11 @@ import { defineStore } from "pinia";
 import { supabase, useMockData } from "../supabase";
 import { Club } from "../models/club";
 import { mockClub } from "./mockData";
+import { useLevelStore } from "./levelStore";
+import { useGameStore } from "./gameStore";
+import { useCourtStore } from "./courtStore";
+import { usePlayerStore } from "./playerStore";
+import { useChallengeStore } from "./challengeStore";
 
 const CLUBS_STORE_ID = "clubs";
 const CURRENT_CLUB_ID = "current club id";
@@ -43,6 +48,17 @@ export const useClubStore = defineStore(CLUBS_STORE_ID, {
         }
       }
       this.setCurrentClub();
+
+      const levelStore = useLevelStore();
+      await levelStore.loadLevels();
+      const gameStore = useGameStore();
+      await gameStore.loadGames();
+      const courtStore = useCourtStore();
+      await courtStore.loadCourts();
+      const playerStore = usePlayerStore();
+      await playerStore.loadPlayers();
+      const challengeStore = useChallengeStore();
+      await challengeStore.loadChallenges();
     },
     // Get the current club based on the cached id, or the first club if the id is not cached.
     setCurrentClub(club?: Club) {

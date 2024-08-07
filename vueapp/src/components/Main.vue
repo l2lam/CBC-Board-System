@@ -31,12 +31,7 @@
 </style>
 
 <script setup lang="ts">
-import { usePlayerStore } from "../stores/playerStore";
-import { useLevelStore } from "../stores/levelStore";
-import { useGameStore } from "../stores/gameStore";
-import { useCourtStore } from "../stores/courtStore";
 import { useTheme } from "vuetify";
-import { useChallengeStore } from "../stores/challengeStore";
 import { useClubStore } from "../stores/clubStore";
 import { computed, ref } from "vue";
 
@@ -56,16 +51,6 @@ const title = computed(() => {
 
 const clubStore = useClubStore();
 await clubStore.loadClubs();
-const levelStore = useLevelStore();
-await levelStore.loadLevels();
-const gameStore = useGameStore();
-await gameStore.loadGames();
-const courtStore = useCourtStore();
-await courtStore.loadCourts();
-const playerStore = usePlayerStore();
-await playerStore.loadPlayers();
-const challengeStore = useChallengeStore();
-await challengeStore.loadChallenges();
 
 let isDarkTheme = true;
 const theme = useTheme();
