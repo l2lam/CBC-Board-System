@@ -1,10 +1,12 @@
 export abstract class EditFieldBase {
   label: string;
+  hint: string;
   value: any = null;
 
-  constructor(label: string, value) {
+  constructor(label: string, value: any = null, hint: string = "") {
     this.label = label;
     this.value = value;
+    this.hint = hint;
   }
 }
 
@@ -15,15 +17,20 @@ export enum TextFieldType {
 
 export class TextEditField extends EditFieldBase {
   type: TextFieldType;
-  constructor(label: string, type = TextFieldType.TEXT, value = null) {
-    super(label, value);
+  constructor(
+    label: string,
+    hint: string = "",
+    type = TextFieldType.TEXT,
+    value = null
+  ) {
+    super(label, value, hint);
     this.type = type;
   }
 }
 
 export class BoolEditField extends EditFieldBase {
-  constructor(label: string, value: boolean = false) {
-    super(label, value);
+  constructor(label: string, hint: string = "", value: boolean = false) {
+    super(label, value, hint);
   }
 }
 
@@ -40,8 +47,13 @@ export class OptionItem {
 
 export class OptionsEditField extends EditFieldBase {
   options: OptionItem[];
-  constructor(label: string, options: OptionItem[], value = undefined) {
-    super(label, value);
+  constructor(
+    label: string,
+    hint: string = "",
+    options: OptionItem[],
+    value = undefined
+  ) {
+    super(label, value, hint);
     this.options = options;
   }
 }

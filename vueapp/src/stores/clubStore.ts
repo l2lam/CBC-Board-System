@@ -10,6 +10,7 @@ import { useChallengeStore } from "./challengeStore";
 
 const CLUBS_STORE_ID = "clubs";
 const CURRENT_CLUB_ID = "current club id";
+const clubsTableName = "clubs";
 
 export const useClubStore = defineStore(CLUBS_STORE_ID, {
   state: () => ({
@@ -25,7 +26,7 @@ export const useClubStore = defineStore(CLUBS_STORE_ID, {
       } else {
         // Get data from the remote database
         const { data, error, status } = await supabase
-          .from("clubs")
+          .from(clubsTableName)
           .select("id, name, description")
           .is("deleted_date", null);
 
@@ -94,7 +95,7 @@ export const useClubStore = defineStore(CLUBS_STORE_ID, {
       const userId = await this.getUserId();
       if (userId) {
         const { data, error } = await supabase
-          .from("clubs")
+          .from(clubsTableName)
           .insert({ name: "Default Club Name", profile_id: userId })
           .select();
         if (error) {
@@ -112,7 +113,7 @@ export const useClubStore = defineStore(CLUBS_STORE_ID, {
       if (this.allClubs.length > 1) {
         console.log("removing club");
         const { data, error } = await supabase
-          .from("clubs")
+          .from(clubsTableName)
           .update({ deleted_date: new Date() })
           .eq("id", club.id);
         if (error) {
@@ -141,8 +142,8 @@ export const useClubStore = defineStore(CLUBS_STORE_ID, {
       }
 
       const { data, error } = isNewRecord
-        ? await supabase.from("clubs").insert(record)
-        : await supabase.from("clubs").update(record).eq("id", club.id);
+        ? await supabase.from(clubsTableName).insert(record)
+        : await supabase.from(clubsTableName).update(record).eq("id", club.id);
       if (error) {
         console.error(error);
         console.log("Failed to upsert club");

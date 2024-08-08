@@ -11,6 +11,7 @@ import {
 import { useClubStore } from "./clubStore";
 
 const LEVELS_STORE_ID = "levels";
+const levelTableName = "levels";
 
 export const useLevelStore = defineStore(LEVELS_STORE_ID, {
   state: () => ({ allLevels: [] as Level[] }),
@@ -30,9 +31,10 @@ export const useLevelStore = defineStore(LEVELS_STORE_ID, {
         const clubStore = useClubStore();
         // Get data from the remote database
         const { data, error, status } = await supabase
-          .from("levels")
+          .from(levelTableName)
           .select("id, name, value, rgb_color")
-          .eq("club_id", clubStore.currentClub?.id);
+          .eq("club_id", clubStore.currentClub?.id)
+          .is("deleted_date", null);
 
         if (error && status !== 406) {
           console.error(error);
@@ -52,6 +54,42 @@ export const useLevelStore = defineStore(LEVELS_STORE_ID, {
     },
     levelById(id) {
       return this.allLevels.find((level) => level.id == id);
+    },
+    async removeLevel(level: Level) {
+      console.log("removing level");
+      const { data, error } = await supabase
+        .from(levelTableName)
+        .update({ deleted_date: new Date() })
+        .eq("id", level.id);
+      if (error) {
+        console.error(error);
+        console.log("Failed to delete club");
+      }
+      this.loadLevels();
+    },
+    // Save a club record
+    async saveLevel(level: Level) {
+      const isNewRecord = level.id == undefined;
+      console.log("saving level");
+      let record: any = {
+        name: level.name,
+        rgb_color: level.color,
+        value: level.value,
+      };
+
+      if (isNewRecord) {
+        const clubStore = useClubStore();
+        record.club_id = clubStore.currentClub?.id;
+      }
+
+      const { data, error } = isNewRecord
+        ? await supabase.from(levelTableName).insert(record)
+        : await supabase.from(levelTableName).update(record).eq("id", level.id);
+      if (error) {
+        console.error(error);
+        console.log("Failed to upsert level");
+      }
+      this.loadLevels();
     },
   },
 });
