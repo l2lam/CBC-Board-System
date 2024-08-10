@@ -6,6 +6,10 @@
   <v-main class="queue">
     <CRUDList :crud-model="levelsCrud" />
   </v-main>
+  <v-divider vertical></v-divider>
+  <v-main class="queue">
+    <CRUDList :crud-model="courtsCrud" />
+  </v-main>
 </template>
 
 <style>
@@ -16,7 +20,9 @@
 import { ref } from "vue";
 import { ClubsCrud } from "../models/clubsCrud";
 import { LevelsCrud } from "../models/levelsCrud";
+import { CourtsCrud } from "../models/courtsCrud";
 
 const clubsCrud = ref(new ClubsCrud());
 const levelsCrud = ref(new LevelsCrud());
+const courtsCrud = ref(new CourtsCrud());
 </script>

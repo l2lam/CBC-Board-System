@@ -63,11 +63,11 @@ export const useLevelStore = defineStore(LEVELS_STORE_ID, {
         .eq("id", level.id);
       if (error) {
         console.error(error);
-        console.log("Failed to delete club");
+        console.log("Failed to delete level");
       }
       this.loadLevels();
     },
-    // Save a club record
+    // Save a level record
     async saveLevel(level: Level) {
       const isNewRecord = level.id == undefined;
       console.log("saving level");
