@@ -35,12 +35,12 @@ export class BoolEditField extends EditFieldBase {
 }
 
 export class OptionItem {
-  title: string;
-  subtitle: string;
+  title?: string;
+  subtitle?: string;
   value: any;
-  constructor(value: any, title: string, subtitle: string) {
+  constructor(value: any, title?: string, subtitle?: string) {
     this.value = value;
-    this.title = title;
+    this.title = title ?? value.toString();
     this.subtitle = subtitle;
   }
 }
@@ -50,7 +50,7 @@ export class OptionsEditField extends EditFieldBase {
   constructor(
     label: string,
     hint: string = "",
-    options: OptionItem[],
+    options: OptionItem[] = [],
     value = undefined
   ) {
     super(label, value, hint);

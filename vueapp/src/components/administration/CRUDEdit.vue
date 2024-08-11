@@ -14,6 +14,7 @@
             :label="field.label"
             v-model="field.value"
             :items="field.options"
+            :item-props="true"
           ></v-select>
           <v-checkbox
             v-if="field instanceof BoolEditField"
