@@ -79,7 +79,7 @@ export const useClubStore = defineStore(CLUBS_STORE_ID, {
     },
     // Convert the raw club data into our stored models
     serializeClubData(data) {
-      console.log(data);
+      // console.log(data);
       this.allClubs = data?.map(
         (club) => new Club(club.id, club.name, club.description)
       );

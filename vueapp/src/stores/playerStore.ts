@@ -15,8 +15,12 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
     selectableMembersForWaitingList: (state) =>
       state.allMembers.filter(
         (member) =>
-          !state.waitingPlayers.find((player) => player.name === member.name)
-      ), // TODO: match on id instead of name... move `id` property from `Member` to `Player` class and devise a way to assign a unique id to guests.  Members should already have unique ids
+          member.isActive &&
+          !state.waitingPlayers.find(
+            (player) =>
+              player instanceof Member && (player as Member).id === member.id
+          )
+      ),
   },
   actions: {
     async loadPlayers() {
@@ -34,7 +38,7 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
         // Get players from the remote database
         const { data, error, status } = await supabase
           .from(memberTableName)
-          .select("id, name, level_id, avatar_url")
+          .select("id, name, level_id, avatar_url, is_active")
           .eq("club_id", clubStore.currentClub?.id)
           .is("deleted_date", null);
 
@@ -54,7 +58,8 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
                   player.id,
                   player.name,
                   useLevelStore().levelById(player.level_id),
-                  player.avatar_url
+                  player.avatar_url,
+                  player.is_active
                 )
             );
           // cache this data in local storage
@@ -110,6 +115,7 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
       console.log("saving member");
       let record: any = {
         name: member.name,
+        is_active: member.isActive,
       };
 
       if (isNewRecord) {

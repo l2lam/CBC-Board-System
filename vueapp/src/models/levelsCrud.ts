@@ -25,8 +25,10 @@ export class LevelsCrud extends CrudBase<Level> {
     this.levelStore = useLevelStore();
   }
 
-  getItemTitle(item: Level): string {
-    return item.toString();
+  getItemStyle(item: Level): string {
+    let styles: string[] = [];
+    if (item.color) styles.push(`color: ${item.color}`);
+    return styles.join(";");
   }
 
   itemsList(): Level[] {

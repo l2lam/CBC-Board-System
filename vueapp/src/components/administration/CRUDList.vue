@@ -18,7 +18,7 @@
       <v-divider class="mb-4"></v-divider>
       <v-list>
         <v-list-item v-for="item in itemsList" :key="item.id" @click="selectItem(item)">
-          <v-list-item-title>
+          <v-list-item-title :style="crudModel.getItemStyle(item)">
             {{ crudModel.getItemTitle(item) }}
           </v-list-item-title>
           <template v-slot:append>

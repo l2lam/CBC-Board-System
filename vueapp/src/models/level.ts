@@ -17,6 +17,6 @@ export class Level {
   }
 
   toString(): string {
-    return `${this.value} ${this.name} - ${this.color}`;
+    return `${this.value} ${this.name}`;
   }
 }

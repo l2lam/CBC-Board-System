@@ -67,7 +67,12 @@ export abstract class CrudBase<EntityType> {
     this.icon = icon;
   }
 
-  abstract getItemTitle(item: EntityType): string;
+  getItemStyle(item: EntityType): string {
+    return "";
+  }
+  getItemTitle(item: EntityType): string {
+    return item.toString();
+  }
   abstract itemsList(): EntityType[];
   abstract getItemEditFields(item): EditFieldBase[];
   abstract removeItem(item: EntityType);

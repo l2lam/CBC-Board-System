@@ -21,10 +21,6 @@ export class CourtsCrud extends CrudBase<Court> {
     this.courtStore = useCourtStore();
   }
 
-  getItemTitle(item: Court): string {
-    return item.toString();
-  }
-
   itemsList(): Court[] {
     return this.courtStore.allCourts;
   }

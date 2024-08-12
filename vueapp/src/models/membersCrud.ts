@@ -1,6 +1,7 @@
 import { useLevelStore } from "../stores/levelStore";
 import { usePlayerStore } from "../stores/playerStore";
 import {
+  BoolEditField,
   CrudBase,
   EditFieldBase,
   OptionItem,
@@ -12,6 +13,11 @@ import { Member } from "./player";
 export class MembersCrud extends CrudBase<Member> {
   nameField = new TextEditField("Name");
   levelField: OptionsEditField;
+  isActiveField = new BoolEditField(
+    "Is Active",
+    "Whether or not the person is considered an active member",
+    true
+  );
   playerStore;
 
   constructor() {
@@ -25,8 +31,11 @@ export class MembersCrud extends CrudBase<Member> {
     );
   }
 
-  getItemTitle(item: Member): string {
-    return item.toString();
+  getItemStyle(item: Member): string {
+    let styles: string[] = [];
+    if (item.level) styles.push(`color: ${item.level.color}`);
+    if (!item.isActive) styles.push("text-decoration: line-through");
+    return styles.join(";");
   }
 
   itemsList(): Member[] {
@@ -36,19 +45,23 @@ export class MembersCrud extends CrudBase<Member> {
   getItemEditFields(item: Member): EditFieldBase[] {
     this.nameField.value = item?.name;
     this.levelField.value = item?.level;
-    return [this.nameField, this.levelField];
+    if (item) this.isActiveField.value = item.isActive;
+    return [this.nameField, this.levelField, this.isActiveField];
   }
 
   removeItem(item: Member) {
-    console.log("removing item", item);
+    // console.log("removing item", item);
     this.playerStore.removeMember(item);
   }
 
   upsertItem(item?: Member) {
-    console.log("upserting item", item);
-    if (!item) item = new Member();
+    // console.log("upserting item", item);
+    if (!item) {
+      item = new Member();
+    }
     item.name = this.nameField.value;
     item.level = this.levelField.value;
+    item.isActive = this.isActiveField.value;
     this.playerStore.saveMember(item);
   }
 }
