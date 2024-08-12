@@ -1,11 +1,15 @@
 export class Club {
-  id: number;
+  id?: number;
   name: string;
   description: string;
 
-  constructor(id, name, description = "") {
+  constructor(id?: number, name = "", description = "") {
     this.id = id;
     this.name = name;
     this.description = description;
+  }
+
+  toString() {
+    return this.name;
   }
 }

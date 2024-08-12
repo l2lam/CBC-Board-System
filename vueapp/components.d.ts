@@ -8,13 +8,16 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Account: typeof import('./src/components/Account.vue')['default']
+    Administration: typeof import('./src/components/Administration.vue')['default']
     Auth: typeof import('./src/components/Auth.vue')['default']
     Challenge: typeof import('./src/components/Challenge.vue')['default']
-    copy: typeof import('./src/components/Player copy.vue')['default']
     Court: typeof import('./src/components/Court.vue')['default']
     CreateGame: typeof import('./src/components/CreateGame.vue')['default']
+    CRUDEdit: typeof import('./src/components/administration/CRUDEdit.vue')['default']
+    CRUDList: typeof import('./src/components/administration/CRUDList.vue')['default']
     Game: typeof import('./src/components/Game.vue')['default']
     GuestUpsert: typeof import('./src/components/GuestUpsert.vue')['default']
+    Main: typeof import('./src/components/Main.vue')['default']
     MemberUpsert: typeof import('./src/components/MemberUpsert.vue')['default']
     OnDeck: typeof import('./src/components/OnDeck.vue')['default']
     Player: typeof import('./src/components/Player.vue')['default']

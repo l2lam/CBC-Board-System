@@ -7,6 +7,7 @@ import { useClubStore } from "./clubStore";
 import { useLevelStore } from "./levelStore";
 
 const PLAYERS_STORE_ID = "players";
+const memberTableName = "members";
 
 export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
   state: () => ({ waitingPlayers: [] as Player[], allMembers: [] as Member[] }),
@@ -14,8 +15,12 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
     selectableMembersForWaitingList: (state) =>
       state.allMembers.filter(
         (member) =>
-          !state.waitingPlayers.find((player) => player.name === member.name)
-      ), // TODO: match on id instead of name... move `id` property from `Member` to `Player` class and devise a way to assign a unique id to guests.  Members should already have unique ids
+          member.isActive &&
+          !state.waitingPlayers.find(
+            (player) =>
+              player instanceof Member && (player as Member).id === member.id
+          )
+      ),
   },
   actions: {
     async loadPlayers() {
@@ -32,9 +37,10 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
         const clubStore = useClubStore();
         // Get players from the remote database
         const { data, error, status } = await supabase
-          .from("members")
-          .select("id, name, level_id, avatar_url")
-          .eq("club_id", clubStore.currentClub?.id);
+          .from(memberTableName)
+          .select("id, name, level_id, avatar_url, is_active")
+          .eq("club_id", clubStore.currentClub?.id)
+          .is("deleted_date", null);
 
         if (error && status !== 406) {
           console.error(error);
@@ -42,15 +48,20 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
           this.allMembers =
             JSON.parse(localStorage.getItem(PLAYERS_STORE_ID) || "[]") || [];
         } else {
-          this.allMembers = data?.map(
-            (player) =>
-              new Member(
-                player.id,
-                player.name,
-                useLevelStore().levelById(player.level_id),
-                player.avatar_url
-              )
-          );
+          this.allMembers = data
+            ?.sort((a, b) => {
+              return a.name < b.name ? -1 : b.name < a.name ? 1 : 0;
+            })
+            .map(
+              (player) =>
+                new Member(
+                  player.id,
+                  player.name,
+                  useLevelStore().levelById(player.level_id),
+                  player.avatar_url,
+                  player.is_active
+                )
+            );
           // cache this data in local storage
           localStorage.setItem(
             PLAYERS_STORE_ID,
@@ -76,7 +87,7 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
       member.level = newLevel;
       if (!useMockData) {
         const { data, error, status } = await supabase
-          .from("members")
+          .from(memberTableName)
           .update({ level_id: newLevel.id })
           .eq("id", member.id);
         if (error && status !== 204) {
@@ -84,6 +95,46 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
           console.error(error);
         }
       }
+    },
+    // remove a member record
+    async removeMember(member: Member) {
+      console.log("removing member");
+      const { data, error } = await supabase
+        .from(memberTableName)
+        .update({ deleted_date: new Date() })
+        .eq("id", member.id);
+      if (error) {
+        console.error(error);
+        console.log("Failed to delete member");
+      }
+      this.loadPlayers();
+    },
+    // Save a member record
+    async saveMember(member: Member) {
+      const isNewRecord = member.id == undefined;
+      console.log("saving member");
+      let record: any = {
+        name: member.name,
+        is_active: member.isActive,
+      };
+
+      if (isNewRecord) {
+        const clubStore = useClubStore();
+        record.club_id = clubStore.currentClub?.id;
+      }
+      if (member.level) record.level_id = member.level.id;
+
+      const { data, error } = isNewRecord
+        ? await supabase.from(memberTableName).insert(record)
+        : await supabase
+            .from(memberTableName)
+            .update(record)
+            .eq("id", member.id);
+      if (error) {
+        console.error(error);
+        console.log("Failed to upsert member");
+      }
+      this.loadPlayers();
     },
   },
 });

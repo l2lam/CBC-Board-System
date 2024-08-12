@@ -13,17 +13,29 @@ export class Player {
     this.isGuest = is_guest;
     this.level = level;
   }
+
+  toString(): string {
+    return this.name;
+  }
 }
 
 // A Member is a registered club member
 export class Member extends Player {
-  id: number;
+  id?: number;
+  isActive: boolean;
 
   // The id of the challenge this member is currently participating in
   challenge_id?: number;
 
-  constructor(id, name, level?: Level, avatar_url = "") {
+  constructor(
+    id?: number,
+    name = "",
+    level?: Level,
+    avatar_url = "",
+    isActive = true
+  ) {
     super(name, level, false, avatar_url);
     this.id = id;
+    this.isActive = isActive;
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <Playing v-if="session" :session="session" />
+      <Main v-if="session" :session="session" />
       <Auth v-else />
     </v-main>
   </v-app>
