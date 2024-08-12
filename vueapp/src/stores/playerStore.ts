@@ -5,6 +5,8 @@ import { generateMockMembers, generateMockPlayers } from "./mockData";
 import { Level } from "../models/level";
 import { useClubStore } from "./clubStore";
 import { useLevelStore } from "./levelStore";
+import { useGameStore } from "./gameStore";
+import { useCourtStore } from "./courtStore";
 
 const PLAYERS_STORE_ID = "players";
 const memberTableName = "members";
@@ -15,10 +17,20 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
     selectableMembersForWaitingList: (state) =>
       state.allMembers.filter(
         (member) =>
+          // Only include active members
           member.isActive &&
+          // Don't include members that are already in the waiting queue
           !state.waitingPlayers.find(
             (player) =>
               player instanceof Member && (player as Member).id === member.id
+          ) &&
+          // Don't include members in the on-deck queue
+          !useGameStore().gamesOnDeck.find((game) =>
+            game.players.includes(member)
+          ) &&
+          // Don't include members on a court
+          !useCourtStore().allCourts.find(
+            (court) => court.game && court.game.players.includes(member)
           )
       ),
   },
