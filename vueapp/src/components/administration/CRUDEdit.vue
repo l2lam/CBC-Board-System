@@ -12,6 +12,7 @@
           <v-select
             v-if="field instanceof OptionsEditField"
             :label="field.label"
+            :hint="field.hint"
             v-model="field.value"
             :items="field.options"
             :item-props="true"
@@ -19,11 +20,13 @@
           <v-checkbox
             v-if="field instanceof BoolEditField"
             :label="field.label"
+            :hint="field.hint"
             v-model="field.value"
           ></v-checkbox>
           <v-text-field
             v-else-if="field instanceof TextEditField"
             :label="field.label"
+            :hint="field.hint"
             :type="field.type"
             v-model="field.value"
           >

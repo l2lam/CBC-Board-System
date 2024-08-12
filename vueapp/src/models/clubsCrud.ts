@@ -11,7 +11,10 @@ import {
 export class ClubsCrud extends CrudBase<Club> {
   nameField = new TextEditField("Name");
   descriptionField = new TextEditField("Description");
-  isDefaultField = new BoolEditField("Set as Default");
+  isDefaultField = new BoolEditField(
+    "Set as Default",
+    "Make this club the current/selected club"
+  );
   clubStore;
 
   constructor() {
