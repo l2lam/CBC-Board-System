@@ -32,8 +32,8 @@
 
 <script setup lang="ts">
 import { useTheme } from "vuetify";
-// import { useClubStore } from "../stores/clubStore";
-import { computed, ref } from "vue";
+import { useClubStore } from "../stores/clubStore";
+import { computed, onBeforeMount, ref } from "vue";
 
 enum Screen {
   PLAYING,
@@ -50,8 +50,10 @@ const title = computed(() => {
   }
 });
 
-// const clubStore = useClubStore();
-// await clubStore.loadClubs();
+const clubStore = useClubStore();
+onBeforeMount(async () => {
+  await clubStore.loadClubs();
+});
 
 let isDarkTheme = true;
 const theme = useTheme();
