@@ -21,8 +21,8 @@
         ></v-btn>
       </template>
     </v-app-bar>
-    <Playing v-if="currentScreen == Screen.PLAYING"></Playing>
-    <Administration v-if="currentScreen == Screen.ADMIN"></Administration>
+    <!-- <Playing v-if="currentScreen == Screen.PLAYING"></Playing> -->
+    <!-- <Administration v-if="currentScreen == Screen.ADMIN"></Administration> -->
   </v-layout>
 </template>
 
