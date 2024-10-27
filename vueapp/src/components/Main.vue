@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
 import { useTheme } from "vuetify";
-import { useClubStore } from "../stores/clubStore";
+// import { useClubStore } from "../stores/clubStore";
 import { computed, ref } from "vue";
 
 enum Screen {
@@ -43,14 +43,15 @@ const currentScreen = ref(Screen.PLAYING);
 const title = computed(() => {
   switch (currentScreen.value) {
     case Screen.PLAYING:
-      return clubStore.currentClub?.name;
+      // return clubStore.currentClub?.name;
+      return "Dummy";
     case Screen.ADMIN:
       return "Administration";
   }
 });
 
-const clubStore = useClubStore();
-await clubStore.loadClubs();
+// const clubStore = useClubStore();
+// await clubStore.loadClubs();
 
 let isDarkTheme = true;
 const theme = useTheme();
