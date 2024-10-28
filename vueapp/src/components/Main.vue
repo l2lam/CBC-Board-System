@@ -21,7 +21,7 @@
         ></v-btn>
       </template>
     </v-app-bar>
-    <!-- <Playing v-if="currentScreen == Screen.PLAYING"></Playing> -->
+    <Playing v-if="currentScreen == Screen.PLAYING"></Playing>
     <!-- <Administration v-if="currentScreen == Screen.ADMIN"></Administration> -->
   </v-layout>
 </template>
@@ -43,8 +43,7 @@ const currentScreen = ref(Screen.PLAYING);
 const title = computed(() => {
   switch (currentScreen.value) {
     case Screen.PLAYING:
-      // return clubStore.currentClub?.name;
-      return "Dummy";
+      return clubStore.currentClub?.name;
     case Screen.ADMIN:
       return "Administration";
   }
