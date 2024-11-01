@@ -8,7 +8,7 @@ import {
 import { Level } from "./level";
 
 export class LevelsCrud extends CrudBase<Level> {
-  nameField = new TextEditField("Name");
+  nameField = new TextEditField("Name", "", TextFieldType.TEXT, null, true);
   colorField = new TextEditField(
     "Color",
     "RGB color like #ffffff for white, #000000 for black, etc."

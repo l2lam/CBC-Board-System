@@ -28,6 +28,7 @@
             :label="field.label"
             :hint="field.hint"
             :type="field.type"
+            :autofocus="field.focused"
             v-model="field.value"
           >
           </v-text-field>
@@ -43,7 +44,7 @@
           @click="cancel"
         ></v-btn>
         <v-btn
-          :prepend-icon="isNewItem ? 'mdi-plus' : 'mdi-check'"
+          prepend-icon="mdi-check-circle-outline"
           stacked
           :text="isNewItem ? 'Add' : 'Save'"
           @click="save"
@@ -54,7 +55,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { BoolEditField, OptionsEditField, TextEditField } from "../../models/crudBase";
 
 const emit = defineEmits(["close"]);
@@ -62,6 +63,7 @@ const props = defineProps(["item", "crudModel"]);
 const item = ref(props.item);
 const crudModel = ref(props.crudModel);
 const isNewItem = computed(() => props.item == null);
+const editFieldForceUpdate = ref(true);
 const editFields = computed(() => crudModel.value.getItemEditFields(item.value));
 const title = computed(
   () => `${crudModel.value.title} - ${isNewItem.value ? "New" : "Edit"}`

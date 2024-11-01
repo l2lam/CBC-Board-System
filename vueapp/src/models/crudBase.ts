@@ -2,11 +2,18 @@ export abstract class EditFieldBase {
   label: string;
   hint: string;
   value: any = null;
+  focused: boolean;
 
-  constructor(label: string, value: any = null, hint: string = "") {
+  constructor(
+    label: string,
+    value: any = null,
+    hint: string = "",
+    focused: boolean = false
+  ) {
     this.label = label;
     this.value = value;
     this.hint = hint;
+    this.focused = focused;
   }
 }
 
@@ -21,9 +28,10 @@ export class TextEditField extends EditFieldBase {
     label: string,
     hint: string = "",
     type = TextFieldType.TEXT,
-    value = null
+    value = null,
+    focused: boolean = false
   ) {
-    super(label, value, hint);
+    super(label, value, hint, focused);
     this.type = type;
   }
 }

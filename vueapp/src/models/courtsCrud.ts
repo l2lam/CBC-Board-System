@@ -8,7 +8,7 @@ import {
 } from "./crudBase";
 
 export class CourtsCrud extends CrudBase<Court> {
-  nameField = new TextEditField("Name");
+  nameField = new TextEditField("Name", "", TextFieldType.TEXT, null, true);
   positionField = new TextEditField(
     "Position",
     "The numerical level value used for determining the order to draw the courts",

@@ -7,11 +7,12 @@ import {
   OptionItem,
   OptionsEditField,
   TextEditField,
+  TextFieldType,
 } from "./crudBase";
 import { Member } from "./player";
 
 export class MembersCrud extends CrudBase<Member> {
-  nameField = new TextEditField("Name");
+  nameField = new TextEditField("Name", "", TextFieldType.TEXT, null, true);
   levelField: OptionsEditField;
   isActiveField = new BoolEditField(
     "Is Active",

@@ -9,7 +9,7 @@ import {
 } from "./crudBase";
 
 export class ClubsCrud extends CrudBase<Club> {
-  nameField = new TextEditField("Name");
+  nameField = new TextEditField("Name", "", TextFieldType.TEXT, null, true);
   descriptionField = new TextEditField("Description");
   isDefaultField = new BoolEditField(
     "Set as Default",
