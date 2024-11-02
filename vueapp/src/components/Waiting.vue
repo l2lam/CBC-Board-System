@@ -3,7 +3,7 @@
     <template v-slot:main>
       <div class="d-flex justify-space-between">
         <v-icon icon="mdi-timer-sand"></v-icon>
-        <p class="text-h6 pl-2">Waiting List</p>
+        <p class="text-h6 pl-2">Waiting List - {{ count }}</p>
         <v-spacer></v-spacer>
         <div class="text-end">
           <v-btn
@@ -86,7 +86,7 @@
 </style>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { usePlayerStore } from "../stores/playerStore";
 import draggable from "vuedraggable";
 import Player from "./Player.vue";
@@ -108,6 +108,8 @@ const dragOptions = {
   animation: 100,
   ghostClass: "ghost",
 };
+
+const count = computed(() => playerStore.waitingPlayers.length);
 
 function addGuestPlayer() {
   currentScreen.value = Screen.GUEST;
