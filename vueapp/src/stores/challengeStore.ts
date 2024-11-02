@@ -6,6 +6,7 @@ import { Level } from "../models/level";
 import { mockChallenge1 } from "./mockData";
 import { usePlayerStore } from "./playerStore";
 import { useLevelStore } from "./levelStore";
+import { useClubStore } from "./clubStore";
 
 const CHALLENGES_STORE_ID = "challenges";
 
@@ -20,8 +21,17 @@ export const useChallengeStore = defineStore(CHALLENGES_STORE_ID, {
         this.allChallenges = [mockChallenge1];
       } else {
         // Get active challenges from the local storage
-        this.activeChallenges =
-          JSON.parse(localStorage.getItem(CHALLENGES_STORE_ID) || "[]") ?? [];
+        var clubStore = useClubStore();
+        var cachedChallenges = (
+          JSON.parse(localStorage.getItem(CHALLENGES_STORE_ID) || "[]") ?? []
+        ).filter((c) => c.clubId == clubStore?.currentClub?.id);
+        cachedChallenges.forEach(
+          (c) => (c.scores = c.scores.map((s) => new ChallengeScore(s)))
+        );
+
+        console.log(cachedChallenges);
+
+        this.activeChallenges = cachedChallenges.map((c) => new Challenge(c));
         console.log(this.activeChallenges);
       }
     },
@@ -38,8 +48,10 @@ export const useChallengeStore = defineStore(CHALLENGES_STORE_ID, {
     ): Promise<Challenge> {
       // TODO: persist to supabase
       //const {data, error} = await supabase.rpc('register_challenge', ...)
+      var clubStore = useClubStore();
       var challenge = new Challenge({
         id: challenger.id + this.activeChallenges.length,
+        clubId: clubStore.currentClub?.id,
         date: new Date(),
         challenger,
         targetLevel,
@@ -64,7 +76,6 @@ export const useChallengeStore = defineStore(CHALLENGES_STORE_ID, {
         losers,
       });
       challenge.registerScore(newScore);
-      this.updateLocalStorage();
 
       // Check if challenge is successful and adjust player levels if appropriate
       if (challenge.state() == ChallengeState.SUCCESSFUL) {
@@ -96,7 +107,15 @@ export const useChallengeStore = defineStore(CHALLENGES_STORE_ID, {
             console.log("Incumbent has no lower level to be demoted to");
           }
         }
+
+        // Remove the challenge from the list of active challenges
+        this.removeChallenge(challenge);
       }
+      this.updateLocalStorage();
+    },
+    removeChallenge(challenge: Challenge) {
+      var index = this.activeChallenges.indexOf(challenge);
+      if (index > -1) this.activeChallenges.splice(index, 1);
     },
   },
 });

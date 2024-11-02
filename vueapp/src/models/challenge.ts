@@ -26,6 +26,7 @@ export class ChallengeScore {
 
 export class Challenge {
   id: number;
+  clubId: number;
   date: Date;
   challenger: Member;
   targetLevel;

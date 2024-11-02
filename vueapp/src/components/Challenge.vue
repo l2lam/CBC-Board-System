@@ -33,6 +33,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { Challenge, ChallengeState } from "../models/challenge";
+import moment from "moment";
 
 const props = defineProps<{
   challenge: Challenge;
@@ -40,7 +41,8 @@ const props = defineProps<{
 
 const state = computed(() => {
   let result: string[] = [];
-  switch (props.challenge.state()) {
+  result.push(`Started ${moment(props.challenge?.date).fromNow()}.`);
+  switch (props.challenge?.state()) {
     case ChallengeState.INCOMPLETE:
       result.push("The challenge is still active.");
       break;
