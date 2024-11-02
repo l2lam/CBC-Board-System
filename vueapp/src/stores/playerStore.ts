@@ -26,11 +26,20 @@ export const usePlayerStore = defineStore(PLAYERS_STORE_ID, {
           ) &&
           // Don't include members in the on-deck queue
           !useGameStore().gamesOnDeck.find((game) =>
-            game.players.includes(member)
+            game.players.find(
+              (player) =>
+                player instanceof Member && (player as Member).id === member.id
+            )
           ) &&
           // Don't include members on a court
           !useCourtStore().allCourts.find(
-            (court) => court.game && court.game.players.includes(member)
+            (court) =>
+              court.game &&
+              court.game.players.find(
+                (player) =>
+                  player instanceof Member &&
+                  (player as Member).id === member.id
+              )
           )
       ),
   },
