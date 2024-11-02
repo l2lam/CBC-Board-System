@@ -29,10 +29,10 @@ export const useChallengeStore = defineStore(CHALLENGES_STORE_ID, {
           (c) => (c.scores = c.scores.map((s) => new ChallengeScore(s)))
         );
 
-        console.log(cachedChallenges);
+        // console.log(cachedChallenges);
 
         this.activeChallenges = cachedChallenges.map((c) => new Challenge(c));
-        console.log(this.activeChallenges);
+        // console.log(this.activeChallenges);
       }
     },
     updateLocalStorage() {

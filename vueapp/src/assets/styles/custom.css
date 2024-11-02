@@ -19,11 +19,12 @@
 }
 
 .queue-top {
-  height: 88%;
+  height: 80vh;
+  padding-bottom: 15px;
 }
 
 .queue-bottom {
-  height: 15%;
+  /* height: 15%; */
   overflow: auto;
   text-align: center;
   justify-content: space-evenly;

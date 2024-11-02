@@ -22,13 +22,11 @@
       </v-list>
     </template>
     <template v-slot:actions>
-      <v-row height="100%">
-        <v-col>
-          <v-btn prepend-icon="mdi-gamepad" :stacked="true" @click="goToCreateGameUpsert">
-            + Game
-          </v-btn>
-        </v-col>
-      </v-row>
+      <div class="d-flex justify-space-evenly">
+        <v-btn prepend-icon="mdi-gamepad" :stacked="true" @click="goToCreateGameUpsert">
+          + Game
+        </v-btn>
+      </div>
     </template>
   </QueueColumn>
   <CreateGame
