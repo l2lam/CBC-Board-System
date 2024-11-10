@@ -22,6 +22,11 @@ export class ClubsCrud extends CrudBase<Club> {
     this.clubStore = useClubStore();
   }
 
+  getItemTitle(item: Club): string {
+    if (item == this.clubStore.currentClub) return `👉 ${item.toString()}`;
+    return item.toString();
+  }
+
   getItemStyle(item: Club): string {
     let styles: string[] = [];
     if (item == this.clubStore.currentClub) styles.push("font-weight: bold");
