@@ -5,6 +5,9 @@
     v-bind="dragOptions"
     @drop="drop"
     @dragstart="drag"
+    @touchend="touchend"
+    @touchstart="touchstart"
+    @touchmove="touchmove"
   >
     <template #item="{ element: court }">
       <div>
@@ -47,14 +50,30 @@ const dragOptions = {
   animation: 100,
 };
 
+function touchstart(evt) {
+  console.log("touchstart");
+  drag(evt);
+}
+
+function touchmove(evt) {
+  console.log("touchmove");
+}
+
+function touchend(evt) {
+  console.log("touchend");
+  drop(evt);
+}
+
 // Handle court/game dragging event.  Communicate the data via the event's dataTransfer configuration
 function drag(evt) {
+  console.log("drag");
   evt.dataTransfer.setData("courtId", court.value.id);
   evt.dataTransfer.setData("gameId", court.value.game?.id);
 }
 
 // Handle the drop event when something gets dropped onto a court.
 function drop(evt) {
+  console.log("drop");
   var sourceGameId = evt.dataTransfer.getData("gameId");
   var sourceGame = gameStore.findGameById(sourceGameId);
 
