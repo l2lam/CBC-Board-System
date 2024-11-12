@@ -3,7 +3,7 @@
     <template v-slot:main>
       <div class="d-flex justify-space-between">
         <v-icon :icon="crudModel.icon"></v-icon>
-        <p class="text-h6 pl-2">{{ crudModel.title }}</p>
+        <p class="text-h6 pl-2">{{ `${crudModel.title} - ${itemsList.length}` }}</p>
         <v-spacer></v-spacer>
         <div class="text-end">
           <v-btn

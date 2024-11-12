@@ -3,7 +3,7 @@
     <template v-slot:main>
       <div class="d-flex justify-space-between">
         <v-icon icon="mdi-timer-sand"></v-icon>
-        <p class="text-h6 pl-2">Waiting List - {{ count }}</p>
+        <p class="text-h6 pl-2">Waiting - {{ count }}</p>
         <v-spacer></v-spacer>
         <div class="text-end">
           <v-btn

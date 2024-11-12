@@ -3,7 +3,7 @@
     <template v-slot:main>
       <div class="d-flex">
         <v-icon icon="mdi-pause-circle"></v-icon>
-        <p class="text-h6 pl-2">On Deck</p>
+        <p class="text-h6 pl-2">On Deck - {{ gameStore.gamesOnDeck.length }}</p>
       </div>
       <v-divider class="mb-4"></v-divider>
       <v-list>
