@@ -39,13 +39,12 @@ const courtStore = useCourtStore();
 
 // Handle the drop event when something gets dropped onto a court.
 function drop(evt) {
+  evt.preventDefault();
   var draggedGame = gameStore.draggedGame;
-  console.log("drop", draggedGame);
+  // console.log("drop", draggedGame);
   if (draggedGame) {
     // var sourceGameId = evt.dataTransfer.getData("gameId");
     var sourceGame = gameStore.findGameById(draggedGame.gameId);
-    console.log("source Game", sourceGame);
-    console.log("court", court.value);
 
     // If the game is found and the destination court doesn't contain a game and set the game
     if (sourceGame && !court.value.game) {

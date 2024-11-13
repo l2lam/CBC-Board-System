@@ -154,8 +154,6 @@ function returnPlayersToWaitingQueue() {
 // Handle court/game dragging event.  Communicate the data via the event's dataTransfer configuration
 function drag(evt) {
   gameStore.draggedGame = new DraggedGame(game.value.id, court.value?.id);
-  console.log(`dragging ${gameStore.draggedGame.gameId}`);
-  // evt.dataTransfer.setData("courtId", court.value.id);
-  // evt.dataTransfer.setData("gameId", court.value.game?.id);
+  // console.log(`dragging ${gameStore.draggedGame.gameId}`);
 }
 </script>
