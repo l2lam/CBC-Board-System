@@ -5,20 +5,31 @@ export class Court {
   name: string;
   position: number;
   game?: Game; // The current game on the court
-  isReserved: boolean;
+  reservationMessage: string = "";
 
   constructor(
     id?: number,
     name: string = "",
     position: number = 0,
-    isReserved: boolean = false,
+    reservationMessage = "",
     game: Game | undefined = undefined
   ) {
     this.id = id;
     this.name = name;
     this.position = position;
-    this.isReserved = isReserved;
+    this.reservationMessage = reservationMessage;
     this.game = game;
+  }
+
+  get isReserved(): boolean {
+    return this.reservationMessage ? true : false;
+  }
+
+  assignGame(game: Game) {
+    this.game = game;
+  }
+  removeGame() {
+    this.game = undefined;
   }
 
   toString(): string {

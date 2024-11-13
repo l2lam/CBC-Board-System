@@ -1,5 +1,8 @@
 <template>
   <v-card
+    draggable="true"
+    @dragstart="drag"
+    @touchstart="drag"
     class="mx-auto ma-auto bg-surface-light"
     :class="court ? 'court-card' : 'queue-card'"
     variant="elevated"
@@ -62,7 +65,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { useGameStore } from "../stores/gameStore";
+import { useGameStore, DraggedGame } from "../stores/gameStore";
 import { useCourtStore } from "../stores/courtStore";
 import { usePlayerStore } from "../stores/playerStore";
 import { useChallengeStore } from "../stores/challengeStore";
@@ -146,5 +149,11 @@ function returnPlayersToWaitingQueue() {
     playerStore.addPlayer(player);
   });
   courtStore.removeGameFromCourt(court.value);
+}
+
+// Handle court/game dragging event.  Remember the dragged game in the gameStore
+function drag(evt) {
+  gameStore.draggedGame = new DraggedGame(game.value.id, court.value?.id);
+  // console.log(`dragging ${gameStore.draggedGame.gameId}`);
 }
 </script>
