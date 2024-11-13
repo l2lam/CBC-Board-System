@@ -151,7 +151,7 @@ function returnPlayersToWaitingQueue() {
   courtStore.removeGameFromCourt(court.value);
 }
 
-// Handle court/game dragging event.  Communicate the data via the event's dataTransfer configuration
+// Handle court/game dragging event.  Remember the dragged game in the gameStore
 function drag(evt) {
   gameStore.draggedGame = new DraggedGame(game.value.id, court.value?.id);
   // console.log(`dragging ${gameStore.draggedGame.gameId}`);

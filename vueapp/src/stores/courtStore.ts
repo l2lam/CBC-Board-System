@@ -24,7 +24,7 @@ export const useCourtStore = defineStore(COURTS_STORE_ID, {
             1,
             "Court 1",
             1,
-            false,
+            "",
             new Game([
               new Player("Wendy", mockLevel3),
               new Player("Winnie", mockLevel3),
@@ -39,7 +39,7 @@ export const useCourtStore = defineStore(COURTS_STORE_ID, {
             5,
             "Court 5",
             5,
-            false,
+            "",
             new Game([
               new Player("Dave", mockLevel4),
               new Player("Don", mockLevel4),
@@ -52,7 +52,7 @@ export const useCourtStore = defineStore(COURTS_STORE_ID, {
 
             "Court 6",
             6,
-            false,
+            "",
             new Game([
               new Player("Vivian", mockLevel5),
               new Player("Viola", mockLevel5),
