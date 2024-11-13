@@ -62,7 +62,6 @@ function drop(evt) {
         // If the game came from the on-deck queue then remove it from the queue
         if (!sourceCourtId) {
           gameStore.removeFromOnDeck(sourceGame, false);
-        } else {
         }
       }
     }
