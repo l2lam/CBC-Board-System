@@ -92,27 +92,51 @@ const gameStore = useGameStore();
 const courtStore = useCourtStore();
 const emit = defineEmits(["close"]);
 const targetLevel = ref();
+const DEFAULT_NUMBER_OF_INCUMBENTS_TO_SELECT = 3;
 const incumbents = computed(() => {
-  selectedIncumbents.value = []; // Reset incumbents as a side-effect of changing target levels
+  // Reset incumbents as a side-effect of changing target levels
+  selectedIncumbents.value = [];
+
   // Incumbents can be selected from members that are in the waiting queue or in a non-challenge games
-  return playerStore.waitingPlayers
-    .concat(
-      gameStore.gamesOnDeck
-        .filter((game) => !game.challenge)
-        .reduce((accumulator, game) => {
-          return accumulator.concat(game.players);
-        }, [] as PlayerModel[])
-    )
-    .concat(
-      courtStore.allCourts
-        .filter((court) => court.game && !court.game.challenge)
-        .reduce((accumulator, court) => {
-          return accumulator.concat(court.game.players);
-        }, [] as PlayerModel[])
-    )
-    .filter((player) => !player.isGuest && player.level == targetLevel.value);
+  var playersOnDeck = gameStore.gamesOnDeck
+    .filter((game) => !game.challenge)
+    .reduce((accumulator, game) => {
+      return accumulator.concat(game.players);
+    }, [] as PlayerModel[]);
+  var playersOnCourt = courtStore.allCourts
+    .filter((court) => court.game && !court.game.challenge)
+    .reduce((accumulator, court) => {
+      return accumulator.concat(court.game.players);
+    }, [] as PlayerModel[]);
+  console.log(playersOnCourt);
+
+  var availableIncumbents = playerStore.waitingPlayers
+    .concat(playersOnDeck)
+    .concat(playersOnCourt)
+    .filter((player) => !player.isGuest && player.level?.id == targetLevel.value.id);
+
+  // Randomly select default incumbents for the challenge
+  var n = availableIncumbents.length;
+  if (n > DEFAULT_NUMBER_OF_INCUMBENTS_TO_SELECT) {
+    // These are some prime numbers that are used to cycle through the incumbent list without duplication...
+    // Unless the incumbent list is larger than these primes, then this does not always work
+    const primes = [11321, 11329, 11351, 11353, 11369];
+    var step = n;
+    while (step == n) {
+      step = primes[Math.floor(Math.random() * primes.length)];
+    }
+    var index = 0;
+    for (var i = 0; i < DEFAULT_NUMBER_OF_INCUMBENTS_TO_SELECT; i++) {
+      var index = (index + step) % n;
+      selectedIncumbents.value.push(availableIncumbents[index]);
+    }
+  } else {
+    selectedIncumbents.value = availableIncumbents;
+  }
+
+  return availableIncumbents;
 });
-const selectedIncumbents = ref([]);
+const selectedIncumbents = ref([] as PlayerModel[]);
 
 function goToChallengeSetUp() {
   currentScreen.value = Screen.CHALLENGE;
