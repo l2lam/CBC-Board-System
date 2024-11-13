@@ -93,9 +93,14 @@ export const useCourtStore = defineStore(COURTS_STORE_ID, {
         }
       }
     },
+    assignGameToCourt(court: Court, game: Game) {
+      // Make sure the game doesn't already exists on another court
+      if (this.allCourts.some((c) => c.game?.id == game.id)) return false;
+      court.assignGame(game);
+      return true;
+    },
     removeGameFromCourt(court: Court) {
-      court.isReserved = false;
-      court.game = undefined;
+      court.removeGame();
     },
     async removeCourt(court: Court) {
       console.log("removing level");
