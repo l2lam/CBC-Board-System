@@ -11,4 +11,13 @@ export class Game {
     this.challenge = challenge;
     this.id = players.map((player: Player) => player.name).join();
   }
+
+  removePlayer(player: Player) {
+    for (let i = 0; i < this.players.length; i++) {
+      if (this.players[i].id === player.id) {
+        this.players.splice(i, 1);
+        break;
+      }
+    }
+  }
 }

@@ -108,7 +108,6 @@ const incumbents = computed(() => {
     .reduce((accumulator, court) => {
       return accumulator.concat(court.game.players);
     }, [] as PlayerModel[]);
-  console.log(playersOnCourt);
 
   var availableIncumbents = playerStore.waitingPlayers
     .concat(playersOnDeck)
@@ -148,10 +147,24 @@ async function createChallenge() {
     targetLevel.value,
     selectedIncumbents.value
   );
+
+  // Remove players that are in the challenge from their current games/queues if applicable
+  gameStore.gamesOnDeck.forEach((game) => {
+    selectedIncumbents.value.forEach((player) => {
+      game.removePlayer(player);
+    });
+  });
+  courtStore.allCourts.forEach((court) => {
+    if (court.game)
+      selectedIncumbents.value.forEach((player) => {
+        court.game.removePlayer(player);
+      });
+  });
+
+  // Add the challenge game to the on deck queue
   gameStore.addGameToOnDeckQueue(
     new Game([props.member, ...selectedIncumbents.value], challenge)
   );
-  // TODO: remove players from their games/queues
   done();
 }
 

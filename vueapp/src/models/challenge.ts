@@ -54,7 +54,7 @@ export class Challenge {
     // The challenger is mathematically unsuccessful if there are not enough games left to acquire the number of wins necessary
     var gamesRemaining = this.maxGames - this.scores.length;
     var winsNeeded = this.numberOfWinsToBeSuccessful - wins;
-    console.log(`Wins: ${wins}, GR: ${gamesRemaining}, WN: ${winsNeeded}`);
+    // console.log(`Wins: ${wins}, GR: ${gamesRemaining}, WN: ${winsNeeded}`);
     if (gamesRemaining < winsNeeded) return ChallengeState.UNSUCCESSFUL;
     if (gamesRemaining <= 0 && wins >= this.numberOfWinsToBeSuccessful)
       return ChallengeState.SUCCESSFUL;

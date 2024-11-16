@@ -59,7 +59,7 @@ export const useChallengeStore = defineStore(CHALLENGES_STORE_ID, {
         scores: [],
       });
 
-      this.activeChallenges.push(challenge);
+      this.activeChallenges.unshift(challenge);
       this.updateLocalStorage();
       return challenge;
     },

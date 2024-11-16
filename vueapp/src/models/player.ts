@@ -6,8 +6,10 @@ export class Player {
   avatarURL: string;
   isGuest: boolean;
   level?: Level;
+  id?: number;
 
   constructor(name, level?: Level, is_guest = true, avatar_url = "") {
+    this.id = undefined;
     this.name = name;
     this.avatarURL = avatar_url;
     this.isGuest = is_guest;
@@ -21,7 +23,6 @@ export class Player {
 
 // A Member is a registered club member
 export class Member extends Player {
-  id?: number;
   isActive: boolean;
 
   // The id of the challenge this member is currently participating in
