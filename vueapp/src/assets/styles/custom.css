@@ -7,7 +7,7 @@
 }
 
 .queue-card {
-  min-height: 200px;
+  /* min-height: 240px; */
   width: 95%;
 }
 
@@ -33,4 +33,48 @@
 .ghost {
   opacity: 0.5;
   background: #c8ebfb;
+}
+
+/* The following are styles for the card-flipping feature of the Game vue
+ * Courtesy of https://www.smashingmagazine.com/2020/02/magic-flip-cards-common-sizing-problem/
+ * for getting the card to flip while dynamically sizing to the largest side of the card; ie. without using absolute position
+ */
+.cards {
+  display: grid;
+}
+
+.card {
+  padding: 1%;
+  max-width: 330px;
+  height: fit-content;
+  max-height: 100%;
+  margin-bottom: 5%;
+  border-radius: 5px;
+  perspective: 40rem;
+}
+
+.card-body {
+  display: flex;
+  transform-style: preserve-3d;
+  /* transition: var(--time) transform; */
+  transition: transform 0.8s;
+
+  .card:hover &, .card:focus & {
+    transform: rotateY(180deg);
+  }
+}
+
+.card-front, .card-back {
+  backface-visibility: hidden;
+  min-width: 100%;
+  border-radius: 5px;
+  box-shadow: 0 -1px 1px rgba(0,0,0,0.04), 
+              0 2px 2px rgba(0,0,0,0.04), 
+              0 4px 4px rgba(0,0,0,0.04), 
+              0 8px 8px rgba(0,0,0,0.04),
+              0 16px 16px rgba(0,0,0,0.04); 
+}
+
+.card-back {
+  transform: rotateY(180deg) translate(100%, 0);
 }

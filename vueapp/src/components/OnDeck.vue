@@ -9,7 +9,7 @@
       <v-list>
         <draggable :list="gameStore.gamesOnDeck" item-key="id" v-bind="dragOptions">
           <template #item="{ element }">
-            <div class="d-flex mb-3">
+            <div class="cards">
               <Game :game="element"></Game>
             </div>
           </template>

@@ -76,5 +76,8 @@ export const useGameStore = defineStore(GAMES_ON_DECK_STORE_ID, {
       }
       return game;
     },
+    resetDraggedGame() {
+      this.draggedGame = undefined;
+    },
   },
 });

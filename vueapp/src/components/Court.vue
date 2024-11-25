@@ -1,13 +1,13 @@
 <template>
   <draggable v-model="courts" item-key="id" @drop="drop" @touchend="drop">
     <template #item="{ element: court }">
-      <div>
+      <div class="cards">
         <!-- A court with a game on it -->
         <Game
           v-if="court && court.game"
           :game="court.game"
           :court="court"
-          class="pa-2, ma-2 court-card"
+          class="pa-2 ma-2 court-card"
         ></Game>
         <!-- A court with no game playing on it -->
         <v-card v-else-if="court" class="pa-2 ma-2 court-card">
@@ -39,10 +39,12 @@ const courtStore = useCourtStore();
 
 // Handle the drop event when something gets dropped onto a court.
 function drop(evt) {
-  evt.preventDefault();
+  // evt.preventDefault();
   var draggedGame = gameStore.draggedGame;
-  // console.log("drop", draggedGame);
+  // console.log("drop", draggedGame, court.value);
   if (draggedGame) {
+    if (draggedGame.courtId != court.value.id) gameStore.resetDraggedGame();
+
     // var sourceGameId = evt.dataTransfer.getData("gameId");
     var sourceGame = gameStore.findGameById(draggedGame.gameId);
 
