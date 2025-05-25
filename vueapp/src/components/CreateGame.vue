@@ -1,7 +1,7 @@
 <template>
   <QueueColumn>
     <template v-slot:main>
-      <p class="text-h6">Select Players for Game</p>
+      <p class="text-h6">Select Players for the Game</p>
       <v-list>
         <Player
           :player="player"
@@ -15,7 +15,14 @@
       </v-list>
     </template>
     <template v-slot:actions>
-      <v-btn prepend-icon="mdi-check" :stacked="true" @click="createGame"> Done </v-btn>
+      <v-btn
+        prepend-icon="mdi-check"
+        :stacked="true"
+        @click="createGame"
+        class="attention-btn"
+      >
+        Done
+      </v-btn>
     </template>
   </QueueColumn>
 </template>

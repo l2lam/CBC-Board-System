@@ -56,8 +56,8 @@
 .card-body {
   display: flex;
   transform-style: preserve-3d;
-  /* transition: var(--time) transform; */
   transition: transform 0.8s;
+  transition-delay: 400ms;
 
   .card:hover &, .card:focus & {
     transform: rotateY(180deg);
