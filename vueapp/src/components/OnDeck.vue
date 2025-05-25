@@ -18,9 +18,19 @@
     </template>
     <template v-slot:actions>
       <div class="d-flex justify-space-evenly">
-        <v-btn prepend-icon="mdi-gamepad" :stacked="true" @click="goToCreateGameUpsert">
-          + Game
-        </v-btn>
+        <v-tooltip text="Click here to pick a game" open-delay="200">
+          <template #activator="{ props }">
+            <v-btn
+              prepend-icon="mdi-gamepad"
+              :stacked="true"
+              @click="goToCreateGameUpsert"
+              class="attention-btn"
+              v-bind="props"
+            >
+              + Game
+            </v-btn>
+          </template>
+        </v-tooltip>
       </div>
     </template>
   </QueueColumn>

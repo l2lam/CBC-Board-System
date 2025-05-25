@@ -78,3 +78,20 @@
 .card-back {
   transform: rotateY(180deg) translate(100%, 0);
 }
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(198, 50, 218, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+  }
+}
+
+.attention-btn {
+  animation: pulse 1.5s infinite;
+  border-radius: 8px;
+}
