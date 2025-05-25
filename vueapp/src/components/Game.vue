@@ -148,7 +148,13 @@ async function completeGame() {
 }
 
 function returnPlayersToWaitingQueue() {
-  court.value.game.players.forEach((player) => {
+  // Shuffle players before returning them to the waiting queue
+  const shuffledPlayers = [...court.value.game.players];
+  for (let i = shuffledPlayers.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledPlayers[i], shuffledPlayers[j]] = [shuffledPlayers[j], shuffledPlayers[i]];
+  }
+  shuffledPlayers.forEach((player) => {
     playerStore.addPlayer(player);
   });
   courtStore.removeGameFromCourt(court.value);
