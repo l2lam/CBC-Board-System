@@ -23,6 +23,7 @@
     </v-app-bar>
     <Playing v-if="currentScreen == Screen.PLAYING"></Playing>
     <Administration v-if="currentScreen == Screen.ADMIN"></Administration>
+    <FlyingAnimationOverlay />
   </v-layout>
 </template>
 
@@ -34,6 +35,7 @@
 import { useTheme } from "vuetify";
 import { useClubStore } from "../stores/clubStore";
 import { computed, onBeforeMount, ref } from "vue";
+import FlyingAnimationOverlay from "./FlyingAnimationOverlay.vue";
 
 enum Screen {
   PLAYING,

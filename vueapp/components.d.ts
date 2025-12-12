@@ -15,6 +15,7 @@ declare module 'vue' {
     CreateGame: typeof import('./src/components/CreateGame.vue')['default']
     CRUDEdit: typeof import('./src/components/administration/CRUDEdit.vue')['default']
     CRUDList: typeof import('./src/components/administration/CRUDList.vue')['default']
+    FlyingAnimationOverlay: typeof import('./src/components/FlyingAnimationOverlay.vue')['default']
     Game: typeof import('./src/components/Game.vue')['default']
     GuestUpsert: typeof import('./src/components/GuestUpsert.vue')['default']
     Main: typeof import('./src/components/Main.vue')['default']

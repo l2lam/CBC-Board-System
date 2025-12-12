@@ -25,14 +25,16 @@
         </div>
       </div>
       <v-divider class="mb-4"></v-divider>
-      <v-list>
-        <draggable
-          :list="playerStore.waitingPlayers"
-          itemKey="name"
-          v-bind="dragOptions"
-          :force-fallback="true"
-        >
-          <template #item="{ element }">
+      <draggable
+        id="waiting-list-container"
+        :list="playerStore.waitingPlayers"
+        itemKey="name"
+        v-bind="dragOptions"
+        :force-fallback="true"
+        class="v-list v-list--density-default v-theme--light v-list--one-line bg-transparent"
+      >
+        <template #item="{ element }">
+          <div class="list-item-wrapper">
             <Player :player="element" @click="playerSelected(element)">
               <template v-slot:append>
                 <v-btn
@@ -45,9 +47,9 @@
                 ></v-btn>
               </template>
             </Player>
-          </template>
-        </draggable>
-      </v-list>
+          </div>
+        </template>
+      </draggable>
     </template>
     <template v-slot:actions>
       <div class="d-flex justify-space-evenly">
