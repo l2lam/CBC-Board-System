@@ -3,7 +3,7 @@
     draggable="true"
     @dragstart="drag"
     @touchstart="drag"
-    class="mx-auto bg-surface-light card"
+    class="mx-auto bg-transparent card"
     :class="court ? 'court-card' : 'queue-card'"
     ref="rootElement"
   >
@@ -12,9 +12,9 @@
       {{ challengeGameInfo }}
     </v-card-subtitle>
     <div class="card-body">
-      <div class="card-front">
+      <div class="card-front glass-card">
         <!-- The main view shows the list of players in the game -->
-        <v-list class="bg-surface-light" density="compact">
+        <v-list class="bg-transparent" density="compact">
           <Player
             :player="player"
             v-for="player in game.players"
@@ -22,11 +22,11 @@
           ></Player>
         </v-list>
       </div>
-      <div class="card-back">
+      <div class="card-back glass-card">
         <!-- Challenge games on a court require winners to be selected before completion -->
         <template v-if="court && game.challenge">
           <v-card-subtitle>Select winners:</v-card-subtitle>
-          <v-list>
+          <v-list class="bg-transparent">
             <Player v-for="player in game.players" :key="player.name" :player="player">
               <template v-slot:append>
                 <v-checkbox-btn

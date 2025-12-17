@@ -1,6 +1,6 @@
 <template>
-  <v-layout class="rounded rounded-md h-100">
-    <v-app-bar :title="title">
+  <v-layout class="h-100 bg-transparent">
+    <v-app-bar :title="title" class="glass-panel ma-2" flat color="transparent">
       <template v-slot:append>
         <v-btn
           v-if="currentScreen == Screen.PLAYING"

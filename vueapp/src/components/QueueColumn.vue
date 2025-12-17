@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="pa-4 mx-auto" max-width="600" width="100%" height="100%">
+  <v-sheet class="pa-4 mx-auto glass-panel" max-width="600" width="100%" height="100%" color="transparent">
     <div class="queue-top d-flex flex-column">
       <slot name="main"></slot>
     </div>
