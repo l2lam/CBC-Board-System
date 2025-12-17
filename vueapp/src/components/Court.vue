@@ -10,12 +10,12 @@
           class="pa-2 ma-2 court-card"
         ></Game>
         <!-- A court with no game playing on it -->
-        <v-card v-else-if="court" class="pa-2 ma-2 court-card">
+        <v-card v-else-if="court" class="pa-2 ma-2 court-card glass-card" color="transparent">
           <v-card-title>{{ court.name }}</v-card-title>
           <v-card-subtitle>Available</v-card-subtitle>
         </v-card>
         <!-- Empty space (no court) in the grid -->
-        <v-card v-else class="pa-2 ma-2 court-card"> </v-card>
+        <v-card v-else class="pa-2 ma-2 court-card glass-card" color="transparent"> </v-card>
       </div>
     </template>
   </draggable>

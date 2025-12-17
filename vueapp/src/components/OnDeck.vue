@@ -6,7 +6,7 @@
         <p class="text-h6 pl-2">On Deck - {{ gameStore.gamesOnDeck.length }}</p>
       </div>
       <v-divider class="mb-4"></v-divider>
-      <v-list>
+      <v-list class="bg-transparent">
         <draggable :list="gameStore.gamesOnDeck" item-key="id" v-bind="dragOptions">
           <template #item="{ element }">
             <div class="cards">
@@ -17,14 +17,15 @@
       </v-list>
     </template>
     <template v-slot:actions>
-      <div class="d-flex justify-space-evenly">
+      <div class="d-flex justify-space-evenly align-center" style="position: relative">
+        <v-icon icon="mdi-arrow-down-bold" class="pulsing-arrow"></v-icon>
         <v-tooltip text="Click here to pick a game" open-delay="200">
           <template #activator="{ props }">
             <v-btn
               prepend-icon="mdi-gamepad"
               :stacked="true"
               @click="goToCreateGameUpsert"
-              class="attention-btn"
+              class="attention-btn glass-btn"
               v-bind="props"
             >
               + Game

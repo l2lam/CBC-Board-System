@@ -53,10 +53,11 @@
     </template>
     <template v-slot:actions>
       <div class="d-flex justify-space-evenly">
-        <v-btn prepend-icon="mdi-account-plus" :stacked="true" @click="addMemberPlayers">
+        <v-btn class="glass-btn" prepend-icon="mdi-account-plus" :stacked="true" @click="addMemberPlayers">
           Member
         </v-btn>
         <v-btn
+          class="glass-btn"
           prepend-icon="mdi-account-plus-outline"
           :stacked="true"
           @click="addGuestPlayer"

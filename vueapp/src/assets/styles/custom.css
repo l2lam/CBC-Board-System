@@ -1,3 +1,41 @@
+body {
+  margin: 0;
+  /* Deep, vibrant, animated gradient background */
+  background: linear-gradient(-45deg, #667eea, #764ba2, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient-animation 15s ease infinite;
+  min-height: 100vh;
+  background-attachment: fixed;
+  /* Ensures background stays fixed during scroll */
+}
+
+body.static-background {
+  background: #667eea !important;
+  /* Solid color matching one of the gradient stops */
+  animation: none !important;
+}
+
+/* Override Vuetify's default background so the body background shows through */
+.v-application {
+  background: transparent !important;
+}
+
+/* Glassmorphism Utility */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Dark mode adjustment for glass panel if needed, though the white alpha often works well for 'glass' */
+.v-theme--dark .glass-panel {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 .court-card .queue .courts {
   min-width: 200px;
 }
@@ -14,6 +52,7 @@
 .queue {
   width: 20%;
 }
+
 .courts {
   width: 60%;
 }
@@ -25,7 +64,8 @@
 
 .queue-bottom {
   /* height: 15%; */
-  overflow: auto;
+  overflow: visible;
+  /* Changed from auto to allow giant arrow to overflow */
   text-align: center;
   justify-content: space-evenly;
 }
@@ -59,39 +99,117 @@
   transition: transform 0.8s;
   transition-delay: 400ms;
 
-  .card:hover &, .card:focus & {
+  .card:hover &,
+  .card:focus & {
     transform: rotateY(180deg);
   }
 }
 
-.card-front, .card-back {
+.card-front,
+.card-back {
   backface-visibility: hidden;
   min-width: 100%;
   border-radius: 5px;
-  box-shadow: 0 -1px 1px rgba(0,0,0,0.04), 
-              0 2px 2px rgba(0,0,0,0.04), 
-              0 4px 4px rgba(0,0,0,0.04), 
-              0 8px 8px rgba(0,0,0,0.04),
-              0 16px 16px rgba(0,0,0,0.04); 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* Apply glass effect to cards by default or modify here */
+  background: rgba(255, 255, 255, 0.9);
+  /* Opaque-ish for readability */
+}
+
+/* Glassy cards */
+.glass-card {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.v-theme--dark .glass-card {
+  background: rgba(30, 30, 30, 0.6);
 }
 
 .card-back {
   transform: rotateY(180deg) translate(100%, 0);
 }
 
-@keyframes pulse {
+@keyframes fade-pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(198, 50, 218, 0.7);
+    opacity: 0;
+    transform: translate(-50%, -20px);
   }
-  70% {
-    box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
+
+  50% {
+    opacity: 1;
+    transform: translate(-50%, 0);
   }
+
   100% {
-    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+    opacity: 0;
+    transform: translate(-50%, -20px);
   }
 }
 
-.attention-btn {
-  animation: pulse 1.5s infinite;
+/* Placed after glass-btn to ensure overrides apply */
+.attention-btn.glass-btn {
+  /* Removed layout-shifting animation */
   border-radius: 8px;
+  background: rgba(255, 215, 0, 0.25) !important;
+  /* Golden tint */
+  border: 1px solid rgba(255, 215, 0, 0.8) !important;
+  font-weight: bold;
+  color: #fff !important;
+}
+
+.attention-btn.glass-btn:hover {
+  background: rgba(255, 215, 0, 0.45) !important;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+}
+
+.pulsing-arrow {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  animation: fade-pulse 2s infinite ease-in-out;
+  color: #FFD700 !important;
+  /* Gold */
+  font-size: 8rem !important;
+  /* Giant size */
+  pointer-events: none;
+  /* Don't block clicks */
+  z-index: 2000;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Glass Buttons */
+.glass-btn {
+  background: rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: white !important;
+  transition: all 0.3s ease;
+  text-transform: none;
+  /* Optional: softer look */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.glass-btn:hover {
+  background: rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }

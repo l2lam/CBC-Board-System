@@ -16,7 +16,7 @@
         </div>
       </div>
       <v-divider class="mb-4"></v-divider>
-      <v-list>
+      <v-list class="bg-transparent">
         <v-list-item v-for="item in itemsList" :key="item.id" @click="selectItem(item)">
           <v-list-item-title :style="crudModel.getItemStyle(item)">
             {{ crudModel.getItemTitle(item) }}
@@ -37,7 +37,7 @@
       </v-list>
     </template>
     <template v-slot:actions>
-      <v-btn prepend-icon="mdi-plus-circle" :stacked="true" @click="addNewItem">
+      <v-btn class="glass-btn" prepend-icon="mdi-plus-circle" :stacked="true" @click="addNewItem">
         New
       </v-btn>
     </template>

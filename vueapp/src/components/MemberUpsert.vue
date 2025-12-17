@@ -18,7 +18,7 @@
           </v-select>
         </div>
         <p v-if="targetLevel">Select players for the challenge</p>
-        <v-list v-if="targetLevel">
+        <v-list v-if="targetLevel" class="bg-transparent">
           <Player
             :player="incumbent"
             v-for="incumbent in incumbents"
@@ -37,6 +37,7 @@
     <template v-slot:actions>
       <div v-if="currentScreen == Screen.CHALLENGE" class="d-flex justify-space-evenly">
         <v-btn
+          class="glass-btn"
           prepend-icon="mdi-cancel"
           :stacked="true"
           @click="currentScreen = Screen.MAIN"
@@ -44,6 +45,7 @@
           Cancel
         </v-btn>
         <v-btn
+          class="glass-btn"
           v-if="targetLevel && selectedIncumbents.length > 0"
           prepend-icon="mdi-one-up"
           stacked
@@ -54,12 +56,13 @@
       </div>
       <div v-else-if="currentScreen == Screen.MAIN" class="d-flex justify-space-evenly">
         <v-btn
+          class="glass-btn"
           prepend-icon="mdi-one-up"
           text="Initiate challenge"
           stacked
           @click="goToChallengeSetUp"
         ></v-btn>
-        <v-btn prepend-icon="mdi-check" stacked @click="done"> Done </v-btn>
+        <v-btn class="glass-btn" prepend-icon="mdi-check" stacked @click="done"> Done </v-btn>
       </div>
     </template>
   </QueueColumn>

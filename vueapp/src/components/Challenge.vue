@@ -1,12 +1,12 @@
 <template>
-  <v-card class="ma-6" elevation="10">
+  <v-card class="ma-6 glass-card" color="transparent">
     <v-card-title>
       <PlayerAvatar :player="challenge.challenger" />
       {{ challenge.challenger.name }}
     </v-card-title>
     <v-card-subtitle>{{ state }}</v-card-subtitle>
     <v-card-text>
-      <v-list>
+      <v-list class="bg-transparent">
         <v-list-subheader>Incumbents</v-list-subheader>
         <Player
           v-for="incumbent in challenge.incumbents"
@@ -15,7 +15,7 @@
         >
         </Player>
       </v-list>
-      <v-list v-if="challenge.scores.length > 0">
+      <v-list v-if="challenge.scores.length > 0" class="bg-transparent">
         <v-list-subheader>Scores</v-list-subheader>
         <v-list-item v-for="(score, index) in challenge.scores">
           {{ `Game ${index + 1}: ${score}` }}

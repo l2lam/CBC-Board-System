@@ -1,6 +1,6 @@
 <template>
-  <v-layout class="rounded rounded-md h-100">
-    <v-app-bar :title="title">
+  <v-layout class="h-100 bg-transparent">
+    <v-app-bar :title="title" class="glass-panel ma-2" flat color="transparent">
       <template v-slot:append>
         <v-btn
           v-if="currentScreen == Screen.PLAYING"
@@ -34,7 +34,7 @@
 <script setup lang="ts">
 import { useTheme } from "vuetify";
 import { useClubStore } from "../stores/clubStore";
-import { computed, onBeforeMount, ref } from "vue";
+import { computed, onBeforeMount, onUnmounted, ref, watch } from "vue";
 import FlyingAnimationOverlay from "./FlyingAnimationOverlay.vue";
 
 enum Screen {
@@ -42,6 +42,19 @@ enum Screen {
   ADMIN,
 }
 const currentScreen = ref(Screen.PLAYING);
+
+watch(currentScreen, (newScreen) => {
+  if (newScreen === Screen.ADMIN) {
+    document.body.classList.add("static-background");
+  } else {
+    document.body.classList.remove("static-background");
+  }
+});
+
+onUnmounted(() => {
+  document.body.classList.remove("static-background");
+});
+
 const title = computed(() => {
   switch (currentScreen.value) {
     case Screen.PLAYING:

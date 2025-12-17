@@ -1,17 +1,17 @@
 <template>
-  <v-main class="queue">
+  <v-main class="queue bg-transparent">
     <CRUDList :crud-model="clubsCrud" />
   </v-main>
   <v-divider vertical></v-divider>
-  <v-main class="queue">
+  <v-main class="queue bg-transparent">
     <CRUDList :crud-model="memberCrud" />
   </v-main>
   <v-divider vertical></v-divider>
-  <v-main class="queue">
+  <v-main class="queue bg-transparent">
     <CRUDList :crud-model="levelsCrud" />
   </v-main>
   <v-divider vertical></v-divider>
-  <v-main class="queue">
+  <v-main class="queue bg-transparent">
     <CRUDList :crud-model="courtsCrud" />
   </v-main>
 </template>

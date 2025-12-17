@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="pa-4 mx-auto overflow-auto" width="100%" height="100%">
+  <v-sheet class="pa-4 mx-auto overflow-auto glass-panel" width="100%" height="100%" color="transparent">
     <!-- <v-container fluid fill-height class="overflow-auto" height="-webkit-fill-available"> -->
     <div class="d-flex justify-center">
       <v-icon :icon="headingIcon"></v-icon>
@@ -7,6 +7,7 @@
       <v-spacer></v-spacer>
       <div class="text-end">
         <v-btn
+          class="glass-btn"
           v-if="currentScreen == Screen.VENUES"
           :icon="CHALLENGES_ICON"
           density="compact"
@@ -14,6 +15,7 @@
           @click="currentScreen = Screen.CHALLENGES"
         ></v-btn>
         <v-btn
+          class="glass-btn"
           v-else-if="currentScreen == Screen.CHALLENGES"
           :icon="VENUES_ICON"
           density="compact"

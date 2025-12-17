@@ -2,7 +2,7 @@
   <QueueColumn>
     <template v-slot:main>
       <p class="text-h6">Select Players for the Game</p>
-      <v-list>
+      <v-list class="bg-transparent">
         <Player
           :player="player"
           v-for="player in playerStore.waitingPlayers"
@@ -19,7 +19,7 @@
         prepend-icon="mdi-check"
         :stacked="true"
         @click="createGame"
-        class="attention-btn"
+        class="attention-btn glass-btn"
       >
         Done
       </v-btn>

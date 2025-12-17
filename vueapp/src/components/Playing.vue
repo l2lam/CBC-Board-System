@@ -1,13 +1,13 @@
 <template>
-  <v-main class="queue">
+  <v-main class="queue bg-transparent">
     <Waiting />
   </v-main>
   <v-divider vertical></v-divider>
-  <v-main class="queue h-screen">
+  <v-main class="queue h-screen bg-transparent">
     <OnDeck />
   </v-main>
   <v-divider vertical></v-divider>
-  <v-main class="courts h-screen">
+  <v-main class="courts h-screen bg-transparent">
     <Venue />
   </v-main>
 </template>
