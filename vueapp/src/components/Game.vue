@@ -75,9 +75,14 @@ import { computed, ref } from "vue";
 import { useGameStore, DraggedGame } from "../stores/gameStore";
 import { useCourtStore } from "../stores/courtStore";
 import { usePlayerStore } from "../stores/playerStore";
+import { Game } from "../models/game";
+import { Court } from "../models/court";
+import { Player } from "../models/player";
+import PlayerAvatar from "./PlayerAvatar.vue";
 import { useChallengeStore } from "../stores/challengeStore";
 import { useAnimationStore } from "../stores/animationStore";
 import { ChallengeState } from "../models/challenge";
+import confetti from "canvas-confetti";
 
 const props = defineProps(["game", "court"]);
 const game = ref(props.game);
@@ -95,7 +100,7 @@ const title = computed(() => {
   if (court.value) return court.value.name;
   return undefined;
 });
-const selectedWinners = ref([]);
+const selectedWinners = ref<Player[]>([]);
 const challengeGameInfo = computed(() => {
   let result = "";
   let challenge = game.value.challenge;
@@ -140,6 +145,12 @@ async function completeGame() {
 
     // If the challenge is complete then return players to the waiting queue
     if (challenge.state() != ChallengeState.INCOMPLETE) {
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 },
+        zIndex: 10001,
+      });
       returnPlayersToWaitingQueue();
     }
     // Otherwise send the challenge game back to the on-deck queue
@@ -147,6 +158,12 @@ async function completeGame() {
       addGameFromCourtToQueue();
     }
   } else {
+    confetti({
+      particleCount: 150,
+      spread: 70,
+      origin: { y: 0.6 },
+      zIndex: 10001,
+    });
     returnPlayersToWaitingQueue();
   }
 }
