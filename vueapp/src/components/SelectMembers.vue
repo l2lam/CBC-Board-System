@@ -2,7 +2,7 @@
   <QueueColumn>
     <template v-slot:main>
       <p class="text-h6">Select members to add</p>
-      <v-list>
+      <v-list class="bg-transparent">
         <Player
           :player="member"
           v-for="member in playerStore.selectableMembersForWaitingList"
@@ -15,7 +15,12 @@
       </v-list>
     </template>
     <template v-slot:actions>
-      <v-btn prepend-icon="mdi-check" :stacked="true" @click="addSelectedMembers">
+      <v-btn
+        prepend-icon="mdi-check"
+        :stacked="true"
+        @click="addSelectedMembers"
+        class="glass-btn"
+      >
         Done
       </v-btn>
     </template>

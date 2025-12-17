@@ -37,7 +37,7 @@
       </v-list>
     </template>
     <template v-slot:actions>
-      <v-btn prepend-icon="mdi-plus-circle" :stacked="true" @click="addNewItem">
+      <v-btn class="glass-btn" prepend-icon="mdi-plus-circle" :stacked="true" @click="addNewItem">
         New
       </v-btn>
     </template>

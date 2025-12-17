@@ -50,16 +50,17 @@
         ></v-select>
         <!-- Actions for games on a court -->
         <v-card-actions v-if="court">
-          <v-btn text="REMOVE" @click="addGameFromCourtToQueue()"></v-btn>
+          <v-btn class="glass-btn ma-1" text="REMOVE" @click="addGameFromCourtToQueue()"></v-btn>
           <v-btn
             :disabled="game.challenge && selectedWinners.length == 0"
             text="COMPLETE GAME"
+            class="glass-btn ma-1"
             @click="completeGame"
           ></v-btn>
         </v-card-actions>
         <!-- Actions in the game is in the on-deck queue -->
         <v-card-actions v-else>
-          <v-btn text="CANCEL" @click="removeGameFromQueue"></v-btn>
+          <v-btn class="glass-btn ma-1" text="CANCEL" @click="removeGameFromQueue"></v-btn>
         </v-card-actions>
       </div>
     </div>

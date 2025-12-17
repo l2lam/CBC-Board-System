@@ -38,12 +38,14 @@
     <template v-slot:actions>
       <div class="d-flex justify-space-evenly">
         <v-btn
+          class="glass-btn"
           prepend-icon="mdi-cancel"
           :stacked="true"
           text="CANCEL"
           @click="cancel"
         ></v-btn>
         <v-btn
+          class="glass-btn"
           prepend-icon="mdi-check-circle-outline"
           stacked
           :text="isNewItem ? 'Add' : 'Save'"

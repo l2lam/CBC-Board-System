@@ -19,7 +19,7 @@
         prepend-icon="mdi-check"
         :stacked="true"
         @click="createGame"
-        class="attention-btn"
+        class="attention-btn glass-btn"
       >
         Done
       </v-btn>

@@ -7,6 +7,7 @@
       <v-spacer></v-spacer>
       <div class="text-end">
         <v-btn
+          class="glass-btn"
           v-if="currentScreen == Screen.VENUES"
           :icon="CHALLENGES_ICON"
           density="compact"
@@ -14,6 +15,7 @@
           @click="currentScreen = Screen.CHALLENGES"
         ></v-btn>
         <v-btn
+          class="glass-btn"
           v-else-if="currentScreen == Screen.CHALLENGES"
           :icon="VENUES_ICON"
           density="compact"

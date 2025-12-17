@@ -5,6 +5,8 @@
         :title="isNewPlayer ? 'New Guest' : 'Edit Guest'"
         class="mx-auto"
         width="100%"
+        color="transparent"
+        flat
       >
         <template v-slot:prepend>
           <PlayerAvatar :player="guest" />
@@ -31,6 +33,7 @@
     <template v-slot:actions>
       <div class="d-flex justify-space-evenly">
         <v-btn
+          class="glass-btn"
           v-if="isNewPlayer"
           prepend-icon="mdi-cancel"
           :stacked="true"
@@ -38,6 +41,7 @@
           @click="done"
         ></v-btn>
         <v-btn
+          class="glass-btn"
           :prepend-icon="isNewPlayer ? 'mdi-plus' : 'mdi-check'"
           stacked
           :text="isNewPlayer ? 'Add' : 'Done'"
