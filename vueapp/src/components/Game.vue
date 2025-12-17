@@ -75,9 +75,16 @@ import { computed, ref } from "vue";
 import { useGameStore, DraggedGame } from "../stores/gameStore";
 import { useCourtStore } from "../stores/courtStore";
 import { usePlayerStore } from "../stores/playerStore";
+import { Game } from "../models/game";
+import { Court } from "../models/court";
+import { Player as PlayerModel } from "../models/player";
+import Player from "./Player.vue";
+import PlayerAvatar from "./PlayerAvatar.vue";
 import { useChallengeStore } from "../stores/challengeStore";
 import { useAnimationStore } from "../stores/animationStore";
 import { ChallengeState } from "../models/challenge";
+import confetti from "canvas-confetti";
+import { playSound } from "../utils/audio";
 
 const props = defineProps(["game", "court"]);
 const game = ref(props.game);
@@ -95,7 +102,7 @@ const title = computed(() => {
   if (court.value) return court.value.name;
   return undefined;
 });
-const selectedWinners = ref([]);
+const selectedWinners = ref<PlayerModel[]>([]);
 const challengeGameInfo = computed(() => {
   let result = "";
   let challenge = game.value.challenge;
@@ -140,6 +147,13 @@ async function completeGame() {
 
     // If the challenge is complete then return players to the waiting queue
     if (challenge.state() != ChallengeState.INCOMPLETE) {
+      playSound("victory.mp3");
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 },
+        zIndex: 10001,
+      });
       returnPlayersToWaitingQueue();
     }
     // Otherwise send the challenge game back to the on-deck queue
@@ -147,6 +161,13 @@ async function completeGame() {
       addGameFromCourtToQueue();
     }
   } else {
+    playSound("victory.mp3");
+    confetti({
+      particleCount: 150,
+      spread: 70,
+      origin: { y: 0.6 },
+      zIndex: 10001,
+    });
     returnPlayersToWaitingQueue();
   }
 }
@@ -163,12 +184,14 @@ function returnPlayersToWaitingQueue() {
         const rect = listItems[index].getBoundingClientRect();
         playersToAnimate.push({ player, rect });
       } else {
-        // If element not found (rare), just add immediately (or maybe skip animation and add later? safer to just add now to be sure)
-        // Actually, let's just collect those who have rects for animation.
-        // Those without rects can't fly. We should add them directly.
+        // If element not found (rare), just add immediately
         playerStore.addPlayer(player);
       }
     });
+
+    if (playersToAnimate.length > 0) {
+       playSound("whoosh.mp3", 0.3); // Subtle whoosh
+    }
 
     // Shuffle players before returning them to the waiting queue so winners don't always get priority
     for (let i = playersToAnimate.length - 1; i > 0; i--) {
