@@ -7,7 +7,7 @@
         <v-spacer></v-spacer>
         <div class="text-end">
           <v-btn
-            v-if="enablePlayerRemoval"
+            v-if="enableEditMode"
             color="secondary"
             icon="mdi-close-circle-multiple-outline"
             variant="text"
@@ -16,11 +16,11 @@
             @click="playerStore.removeAllPlayers()"
           ></v-btn>
           <v-btn
-            :icon="enablePlayerRemoval ? 'mdi-delete-off' : 'mdi-delete'"
+            :icon="enableEditMode ? 'mdi-pencil-off' : 'mdi-pencil'"
             variant="text"
             density="compact"
-            v-tooltip="'Enable removal of players'"
-            @click="enablePlayerRemoval = !enablePlayerRemoval"
+            v-tooltip="enableEditMode ? 'Disable edit mode' : 'Enable edit mode'"
+            @click="enableEditMode = !enableEditMode"
           ></v-btn>
         </div>
       </div>
@@ -31,14 +31,15 @@
         itemKey="name"
         v-bind="dragOptions"
         :force-fallback="true"
+        :disabled="enableEditMode"
         class="v-list v-list--density-default v-theme--light v-list--one-line bg-transparent"
       >
         <template #item="{ element }">
-          <div class="list-item-wrapper">
-            <Player :player="element" @click="playerSelected(element)">
+          <div class="list-item-wrapper" :class="{ 'edit-mode': enableEditMode }">
+            <Player :player="element" @click="enableEditMode ? playerSelected(element) : null">
               <template v-slot:append>
                 <v-btn
-                  v-if="enablePlayerRemoval"
+                  v-if="enableEditMode"
                   color="secondary"
                   icon="mdi-close-circle-outline"
                   variant="text"
@@ -98,6 +99,10 @@
   -moz-user-select: none;
   -ms-user-select: none;
 }
+
+.list-item-wrapper.edit-mode {
+  cursor: pointer;
+}
 </style>
 
 <style>
@@ -122,7 +127,7 @@ enum Screen {
 const playerStore = usePlayerStore();
 const currentScreen = ref(Screen.WAITING);
 const currentPlayer = ref(null);
-const enablePlayerRemoval = ref(false);
+const enableEditMode = ref(false);
 const dragOptions = {
   animation: 100,
   ghostClass: "ghost",
