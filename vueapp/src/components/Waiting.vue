@@ -84,6 +84,22 @@
   ></SelectMembers>
 </template>
 
+<style scoped>
+#waiting-list-container {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.list-item-wrapper {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+</style>
+
 <style>
 @import "@/assets/styles/custom.css";
 </style>
