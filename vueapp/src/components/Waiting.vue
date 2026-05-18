@@ -1,20 +1,21 @@
 <template>
   <QueueColumn v-if="currentScreen == Screen.WAITING">
     <template v-slot:main>
-      <div class="d-flex justify-space-between">
+      <div class="d-flex justify-space-between align-center">
         <v-icon icon="mdi-timer-sand"></v-icon>
         <p class="text-h6 pl-2">Waiting - {{ count }}</p>
+        <v-btn
+          v-if="enableEditMode"
+          color="error"
+          icon="mdi-close-circle-multiple-outline"
+          variant="text"
+          density="compact"
+          class="ml-2"
+          v-tooltip="'Remove all players'"
+          @click="confirmRemoveAll = true"
+        ></v-btn>
         <v-spacer></v-spacer>
         <div class="text-end">
-          <v-btn
-            v-if="enableEditMode"
-            color="secondary"
-            icon="mdi-close-circle-multiple-outline"
-            variant="text"
-            density="compact"
-            v-tooltip="'Remove all players'"
-            @click="playerStore.removeAllPlayers()"
-          ></v-btn>
           <v-btn
             :icon="enableEditMode ? 'mdi-pencil-off' : 'mdi-pencil'"
             variant="text"
@@ -51,6 +52,18 @@
           </div>
         </template>
       </draggable>
+
+      <v-dialog v-model="confirmRemoveAll" max-width="400">
+        <v-card>
+          <v-card-title class="text-h5">Confirm Removal</v-card-title>
+          <v-card-text>Are you sure you want to remove all players from the waiting list?</v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="secondary" variant="text" @click="confirmRemoveAll = false">Cancel</v-btn>
+            <v-btn color="error" variant="text" @click="executeRemoveAll">Remove All</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </template>
     <template v-slot:actions>
       <div class="d-flex justify-space-evenly">
@@ -128,6 +141,7 @@ const playerStore = usePlayerStore();
 const currentScreen = ref(Screen.WAITING);
 const currentPlayer = ref(null);
 const enableEditMode = ref(false);
+const confirmRemoveAll = ref(false);
 const dragOptions = {
   animation: 100,
   ghostClass: "ghost",
@@ -154,5 +168,11 @@ function playerSelected(player) {
   currentPlayer.value = player;
   if (player.isGuest) currentScreen.value = Screen.GUEST;
   else currentScreen.value = Screen.MEMBER;
+}
+
+function executeRemoveAll() {
+  playerStore.removeAllPlayers();
+  confirmRemoveAll.value = false;
+  enableEditMode.value = false;
 }
 </script>
